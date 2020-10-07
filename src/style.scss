@@ -50,6 +50,30 @@ $auro-spacing-options: none;
   }
 }
 
+:host([dkOverlay]) {
+  .dialogOverlay {
+    &--open, &--modal {
+      background: rgba(0, 0, 0, 0.5);
+    }
+  }
+}
+
+:host([ltOverlay]) {
+  .dialogOverlay {
+    &--open, &--modal {
+      background: rgba(0, 0, 0, 0.2);
+    }
+  }
+}
+
+:host([noOverlay]) {
+  .dialogOverlay {
+    &--open, &--modal {
+      display: none;
+    }
+  }
+}
+
 :host([sm]) {
   .dialog {
     max-height: 30%;

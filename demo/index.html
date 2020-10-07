@@ -195,6 +195,66 @@
         </template>
       </demo-snippet>
 
+      <!-- -->
+
+      <h2>auro-dialog dkoverlay example</h2>
+      <demo-snippet>
+        <template>
+          <button onclick="fireDemo('#dialogDkOverlay');">Default Dialog w/ Dark Overlay</button>
+
+          <auro-dialog id="dialogDkOverlay" dkoverlay>
+            <span slot="header">Dialog w/footer</span>
+            <span slot="content">
+              <long-text count="500"></long-text>
+            </span>
+
+            <span slot="footer">
+              <button onclick="closeDemo('#dialogDkOverlay');">Close</button>
+            </span>
+          </auro-dialog>
+          </template>
+      </demo-snippet>
+
+      <!-- -->
+
+      <h2>auro-dialog ltoverlay example</h2>
+      <demo-snippet>
+        <template>
+          <button onclick="fireDemo('#dialogLtOverlay');">Default Dialog w/ Light Overlay</button>
+
+          <auro-dialog id="dialogLtOverlay" ltoverlay>
+            <span slot="header">Dialog w/footer</span>
+            <span slot="content">
+              <long-text count="500"></long-text>
+            </span>
+
+            <span slot="footer">
+              <button onclick="closeDemo('#dialogLtOverlay');">Close</button>
+            </span>
+          </auro-dialog>
+        </template>
+      </demo-snippet>
+
+      <!-- -->
+
+      <h2>auro-dialog nooverlay example</h2>
+      <demo-snippet>
+        <template>
+          <button onclick="fireDemo('#dialogNoOverlay');">Default Dialog w/ No Overlay</button>
+
+          <auro-dialog id="dialogNoOverlay" nooverlay>
+            <span slot="header">Dialog w/footer</span>
+            <span slot="content">
+              <long-text count="500"></long-text>
+            </span>
+
+            <span slot="footer">
+              <button onclick="closeDemo('#dialogNoOverlay');">Close</button>
+            </span>
+          </auro-dialog>
+        </template>
+      </demo-snippet>
+
 
 
 

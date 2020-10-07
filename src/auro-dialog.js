@@ -18,6 +18,9 @@ import closeIcon from '@alaskaairux/orion-icons/dist/icons/close-lg_es6.js';
  * @attr {Boolean} modal - Modal dialog restricts the user to take an action (no default close actions)
  * @attr {Boolean} sm - Sets dialog box to small style
  * @attr {Boolean} md - Sets dialog box to medium style
+ * @attr {Boolean} dkoverlay - Sets the dialog overlay to dark style
+ * @attr {Boolean} ltoverlay - Sets the dialog overlay to light style
+ * @attr {Boolean} nooverlay - Disables the dialog overlay
  * @attr {Boolean} open - Sets state of dialog to open
  * @slot header - Text to display as the header of the modal
  * @slot content - Injects content into the body of the modal

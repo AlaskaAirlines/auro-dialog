@@ -40,27 +40,16 @@ class AuroDialog extends LitElement {
      * @private internal variable
      */
     this.svg = this.dom.body.firstChild;
-
-    /**
-     * @private internal variable
-     */
-    this.zero = 0;
-
-    /**
-     * @private internal variable set state of aria-hidden
-     * @returns {string} - Value is opposite of this.open state
-     */
-    this.ariaHiddenState = 'true';
   }
 
   // function to define props used within the scope of this component
   static get properties() {
     return {
       modal: { type: Boolean },
-      open:   {
+      open: {
         type: Boolean,
         reflect: true
-        }
+      }
     };
   }
 
@@ -70,13 +59,10 @@ class AuroDialog extends LitElement {
       slotWrapper = this.shadowRoot.querySelector("#footerWrapper");
 
     this.dialog = this.shadowRoot.getElementById('dialog');
-    this.slt = slot.assignedNodes();
 
-    if (this.slt.length === this.zero) {
-      return slotWrapper.classList.remove("dialog-footer");
+    if (slot.assignedNodes().length === 0) {
+      slotWrapper.classList.remove("dialog-footer");
     }
-
-    return null
   }
 
   /**
@@ -106,30 +92,6 @@ class AuroDialog extends LitElement {
     this.dispatchEvent(toggleEvent);
   }
 
-  /**
-   * @private function for the purpose of setting visual state of the dialog
-   * @returns {string} - Returns CSS selector
-   */
-  display() {
-    if (this.open) {
-      setTimeout(() => {
-        this.dialog.classList.remove('dialog--hidden');
-      }, 0);
-
-      setTimeout(() => {
-        this.dialog.classList.add('dialog--open');
-      }, 100);
-    } else {
-      setTimeout(() => {
-        this.dialog.classList.remove('dialog--open');
-      }, 1);
-
-      setTimeout(() => {
-        this.dialog.classList.add('dialog--hidden');
-      }, 500);
-    }
-  }
-
   static get styles() {
     return [
       styleCss,
@@ -144,18 +106,16 @@ class AuroDialog extends LitElement {
       'dialogOverlay--modal': this.modal && this.open,
       'dialogOverlay--open': this.open
     },
-
-     contentClasses = {
+      contentClasses = {
       'dialog': true,
-      'dialog--hidden': true
-    }
-
+      'dialog--open': this.open
+    };
 
     return html`
       <div class="${classMap(classes)}" id="dialog-overlay" @click=${this.modal ? null : this.toggleOverlayViewable}>
       </div>
 
-      <dialog id="dialog" @click=${this.display()} class="${classMap(contentClasses)}" aria-labelledby="dialog-header">
+      <dialog id="dialog" class="${classMap(contentClasses)}" aria-labelledby="dialog-header">
         <div class="dialog-header">
           <h1 class="heading heading--700 util_stackMarginNone--top" id="dialog-header">
             <slot name="header">Default header ...</slot>

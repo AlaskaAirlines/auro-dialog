@@ -126,13 +126,11 @@ $auro-spacing-options: none;
   background: var(--auro-color-background-lightest);
   z-index: -1;
   overflow: auto;
-
-  &--hidden {
-    display: none;
-  }
+  visibility: hidden;
 
   // open modifier
   &--open {
+    visibility: visible;
     opacity: 1;
     transform: translateY(0%);
     z-index: var(--auro-depth-modal);

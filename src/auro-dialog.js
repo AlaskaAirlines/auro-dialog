@@ -40,6 +40,8 @@ class AuroDialog extends LitElement {
      * @private internal variable
      */
     this.svg = this.dom.body.firstChild;
+
+    this._open = false;
   }
 
   // function to define props used within the scope of this component
@@ -53,7 +55,19 @@ class AuroDialog extends LitElement {
     };
   }
 
-  // This function removes a CSS selector if the footer slot is empty
+  get open() {
+    return this._open;
+  }
+
+  set open(val) {
+    const oldVal = this._open;
+
+    this._open = val;
+    this.requestUpdate('open', oldVal).then(() => {
+      this.open ? this.openDialog() : this.closeDialog()
+    });
+  }
+
   firstUpdated() {
     const slot = this.shadowRoot.querySelector("#footer"),
       slotWrapper = this.shadowRoot.querySelector("#footerWrapper");
@@ -66,29 +80,41 @@ class AuroDialog extends LitElement {
   }
 
   /**
-   * @private function for allowing the overlay to be clickable when the modal is open
-   * @param {object} evt - Accepts event
-   * @returns {void}
+   * @private handles click on overlay
+   * @param {object} evt - click event
    */
-  toggleOverlayViewable(evt) {
-    if (this.open) {
-      this.toggleViewable(evt)
+  handleOverlayClick(evt) {
+    if (this.open && !this.modal) {
+      this.handleCloseButtonClick(evt);
     }
   }
 
   /**
-   * @private function for the purpose of determining open/close state of modal and locking page scroll when dialog is open
-   * @param {object} evt - Accepts event
-   * @returns {boolean} - Returns open state
+   * @private handles click on close button
+   * @param {object} evt - click event
    */
-  toggleViewable(evt) {
-    const toggleEvent = document.createEvent("HTMLEvents"),
-      html = document.querySelector('html');
-
-    html.style.overflow = '';
-    toggleEvent.initEvent("toggle", true, false);
+  handleCloseButtonClick(evt) {
+    // TODO: do we need to?
     evt.stopPropagation();
-    this.open = !this.open;
+    this.open = false;
+  }
+
+  /**
+   * @private opens the dialog
+   */
+  openDialog() {
+    console.log('open');
+  }
+
+  /**
+   * @private closes the dialog
+   */
+  closeDialog() {
+    // TODO: why is this here? should we set this in openDialog()?
+    document.documentElement.style.overflow = '';
+    // TODO: why is this using old event syntax?
+    const toggleEvent = document.createEvent("HTMLEvents");
+    toggleEvent.initEvent("toggle", true, false);
     this.dispatchEvent(toggleEvent);
   }
 
@@ -111,10 +137,11 @@ class AuroDialog extends LitElement {
       'dialog--open': this.open
     };
 
+    // TODO: should we be using <dialog>?
     return html`
-      <div class="${classMap(classes)}" id="dialog-overlay" @click=${this.modal ? null : this.toggleOverlayViewable}>
+      <div class="${classMap(classes)}" id="dialog-overlay" @click=${this.handleOverlayClick}>
       </div>
-
+  
       <dialog id="dialog" class="${classMap(contentClasses)}" aria-labelledby="dialog-header">
         <div class="dialog-header">
           <h1 class="heading heading--700 util_stackMarginNone--top" id="dialog-header">
@@ -123,7 +150,7 @@ class AuroDialog extends LitElement {
           ${this.modal
             ? html``
             : html`
-              <button class="dialog-header--action" id="dialog-close" @click="${this.toggleViewable}">
+              <button class="dialog-header--action" id="dialog-close" @click="${this.handleCloseButtonClick}">
                 <div>${this.svg}</div>
                 <div class="util_displayHiddenVisually">Click me to close</div>
               </button>

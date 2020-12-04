@@ -77,12 +77,10 @@ describe('auro-dialog', () => {
       </auro-dialog>
     `);
 
-    const header = el.shadowRoot.querySelector('#dialog-header');
-
     el.open = true;
     await el.updated;
     await sleep(100);
-    expect(el.shadowRoot.activeElement).to.equal(header);
+    expect(el.shadowRoot.activeElement).to.equal(el.dialog);
   });
 
   it('makes other elements on the page inert', async () => {
@@ -103,10 +101,12 @@ describe('auro-dialog', () => {
     await el.updated;
     await sleep(100);
     expect(button.inert).to.be.true;
+    expect(button.hasAttribute('aria-hidden')).to.be.true;
     el.open = false;
     await el.updated;
     await sleep(100);
     expect(button.inert).to.be.false;
+    expect(button.hasAttribute('aria-hidden')).to.be.false;
     expect(document.activeElement).to.equal(button);
   })
 });

@@ -1,5 +1,6 @@
-export function inertSiblings(node) {
+export function makeSiblingsInert(node) {
   const inertElements = [];
+  const hiddenElements = [];
 
   function handleInert(node) {
     if (node.parentNode) {
@@ -8,6 +9,11 @@ export function inertSiblings(node) {
         if (elem !== node && elem.nodeType === Node.ELEMENT_NODE) {
           elem.inert = true;
           inertElements.push(elem);
+
+          if (!elem.hasAttribute('aria-hidden')) {
+            elem.setAttribute('aria-hidden', true);
+            hiddenElements.push(elem);
+          }
         }
       }
       if (node.parentNode !== document.body) {
@@ -17,5 +23,5 @@ export function inertSiblings(node) {
   }
 
   handleInert(node);
-  return inertElements;
+  return [inertElements, hiddenElements];
 }

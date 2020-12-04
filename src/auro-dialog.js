@@ -12,7 +12,7 @@ import 'inert-polyfill/inert-polyfill.min.js';
 import styleCss from "./style-css.js";
 import styleCssFixed from './style-fixed-css.js';
 import closeIcon from '@alaskaairux/orion-icons/dist/icons/close-lg_es6.js';
-import { inertSiblings } from './util.js';
+import { makeSiblingsInert } from './util.js';
 
 // See https://git.io/JJ6SJ for "How to document your components using JSDoc"
 /**
@@ -45,6 +45,7 @@ class AuroDialog extends LitElement {
 
     this._open = false;
     this.inertElements = [];
+    this.hiddenElements = [];
   }
 
   // function to define props used within the scope of this component
@@ -93,6 +94,12 @@ class AuroDialog extends LitElement {
     }
   }
 
+  focus() {
+    if (this.open) {
+      this.dialog.focus();
+    }
+  }
+
   /**
    * @private handles click on overlay
    * @param {object} evt - click event
@@ -124,8 +131,8 @@ class AuroDialog extends LitElement {
    */
   openDialog() {
     this.triggerElement = document.activeElement;
-    this.shadowRoot.querySelector('#dialog-header').focus();
-    this.inertElements = inertSiblings(this);
+    this.focus();
+    [this.inertElements, this.hiddenElements] = makeSiblingsInert(this);
   }
 
   /**
@@ -140,6 +147,7 @@ class AuroDialog extends LitElement {
     this.dispatchEvent(toggleEvent);
 
     this.inertElements.forEach(el => el.removeAttribute('inert'));
+    this.hiddenElements.forEach(el => el.removeAttribute('aria-hidden'));
     this.triggerElement.focus();
   }
 
@@ -167,9 +175,9 @@ class AuroDialog extends LitElement {
       <div class="${classMap(classes)}" id="dialog-overlay" @click=${this.handleOverlayClick}>
       </div>
   
-      <dialog id="dialog" class="${classMap(contentClasses)}" aria-labelledby="dialog-header">
+      <div role="dialog" id="dialog" class="${classMap(contentClasses)}" aria-labelledby="dialog-header" tabindex="-1">
         <div class="dialog-header">
-          <h1 class="heading heading--700 util_stackMarginNone--top" id="dialog-header" tabindex="-1">
+          <h1 class="heading heading--700 util_stackMarginNone--top" id="dialog-header">
             <slot name="header">Default header ...</slot>
           </h1>
           ${this.modal
@@ -187,7 +195,7 @@ class AuroDialog extends LitElement {
         <div class="dialog-footer" id="footerWrapper">
           <slot name="footer" id="footer"></slot>
         </div>
-      </dialog>
+      </div>
     `;
   }
 }

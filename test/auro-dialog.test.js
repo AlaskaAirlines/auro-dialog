@@ -106,11 +106,36 @@ describe('auro-dialog', () => {
     el.open = false;
     await el.updated;
     await sleep(100);
-    console.log(button);
     expect(button.inert).to.be.false;
     expect(document.activeElement).to.equal(button);
   })
 });
+
+it('closes when ESC pressed', async () => {
+  const el = await fixture(html`
+    <auro-dialog open>
+      <span slot="header">It's a dialog</span>
+      <span slot="content">Hello World!</span>
+    </auro-dialog>
+  `);
+
+  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+  await el.updated;
+  expect(el.open).to.be.false;
+})
+
+it('does not closes when ESC pressed if modal', async () => {
+  const el = await fixture(html`
+    <auro-dialog open modal>
+      <span slot="header">It's a dialog</span>
+      <span slot="content">Hello World!</span>
+    </auro-dialog>
+  `);
+
+  window.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
+  await el.updated;
+  expect(el.open).to.be.true;
+})
 
 
 function sleep(ms) {

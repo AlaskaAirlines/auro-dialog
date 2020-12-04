@@ -71,6 +71,17 @@ class AuroDialog extends LitElement {
     });
   }
 
+  connectedCallback() {
+    super.connectedCallback();
+    this.keydownEventHandler = this.handleKeydown.bind(this);
+    window.addEventListener('keydown', this.keydownEventHandler);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener('keydown', this.keydownEventHandler);
+  }
+
   firstUpdated() {
     const slot = this.shadowRoot.querySelector("#footer"),
       slotWrapper = this.shadowRoot.querySelector("#footerWrapper");
@@ -100,6 +111,12 @@ class AuroDialog extends LitElement {
     // TODO: do we need to?
     evt.stopPropagation();
     this.open = false;
+  }
+
+  handleKeydown({ key, keyCode }) {
+    if (this.open && !this.modal && (key === 'Escape' || keyCode === 27)) {
+      this.open = false;
+    }
   }
 
   /**

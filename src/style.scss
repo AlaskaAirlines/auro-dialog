@@ -109,9 +109,7 @@ $auro-spacing-options: none;
 // Default selector setting mobile-first specs
 .dialog {
 
-  // baseline dialog UI / mobile-first
-  @include auro_transition(all, 0.3s, ease-in-out);
-
+  transition: all 0.3s ease-in-out, visibility 0s linear; // TODO: visibility transition
   position: fixed;
   display: block;
   width: 100%;

@@ -1,4 +1,4 @@
-import { fixture, html, expect, oneEvent } from '@open-wc/testing';
+import { fixture, html, expect, oneEvent, waitUntil } from '@open-wc/testing';
 import sinon from 'sinon';
 import '../src/auro-dialog.js';
 
@@ -23,6 +23,7 @@ describe('auro-dialog', () => {
       </auro-dialog>
     `);
 
+    // TODO: ???
     await expect(el).to.be.accessible();
   });
 
@@ -67,4 +68,51 @@ describe('auro-dialog', () => {
     await listener;
     expect(el.getAttribute('dialogOverlay--open')).to.equal(null);
   });
+
+  it('handles focus on open', async () => {
+    const el = await fixture(html`
+      <auro-dialog>
+        <span slot="header">It's a dialog</span>
+        <span slot="content">Hello World!</span>
+      </auro-dialog>
+    `);
+
+    const header = el.shadowRoot.querySelector('#dialog-header');
+
+    el.open = true;
+    await el.updated;
+    await sleep(100);
+    expect(el.shadowRoot.activeElement).to.equal(header);
+  });
+
+  it('makes other elements on the page inert', async () => {
+    const open = function() {
+      el.open = true;
+    }
+    const el = await fixture(html`
+      <auro-dialog>
+        <span slot="header">It's a dialog</span>
+        <span slot="content">Hello World!</span>
+      </auro-dialog>
+      <button @click=${open}>Open dialog</button>
+    `);
+
+    const button = document.querySelector('button');
+    button.focus();
+    button.click();
+    await el.updated;
+    await sleep(100);
+    expect(button.inert).to.be.true;
+    el.open = false;
+    await el.updated;
+    await sleep(100);
+    console.log(button);
+    expect(button.inert).to.be.false;
+    expect(document.activeElement).to.equal(button);
+  })
 });
+
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}

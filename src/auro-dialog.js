@@ -8,9 +8,11 @@ import { classMap } from 'lit-html/directives/class-map';
 
 // Import touch detection lib
 import "focus-visible/dist/focus-visible.min.js";
+import 'inert-polyfill/inert-polyfill.min.js';
 import styleCss from "./style-css.js";
 import styleCssFixed from './style-fixed-css.js';
 import closeIcon from '@alaskaairux/orion-icons/dist/icons/close-lg_es6.js';
+import { inertSiblings } from './util.js';
 
 // See https://git.io/JJ6SJ for "How to document your components using JSDoc"
 /**
@@ -42,6 +44,7 @@ class AuroDialog extends LitElement {
     this.svg = this.dom.body.firstChild;
 
     this._open = false;
+    this.inertElements = [];
   }
 
   // function to define props used within the scope of this component
@@ -103,7 +106,9 @@ class AuroDialog extends LitElement {
    * @private opens the dialog
    */
   openDialog() {
-    console.log('open');
+    this.triggerElement = document.activeElement;
+    this.shadowRoot.querySelector('#dialog-header').focus();
+    this.inertElements = inertSiblings(this);
   }
 
   /**
@@ -116,6 +121,9 @@ class AuroDialog extends LitElement {
     const toggleEvent = document.createEvent("HTMLEvents");
     toggleEvent.initEvent("toggle", true, false);
     this.dispatchEvent(toggleEvent);
+
+    this.inertElements.forEach(el => el.removeAttribute('inert'));
+    this.triggerElement.focus();
   }
 
   static get styles() {
@@ -144,7 +152,7 @@ class AuroDialog extends LitElement {
   
       <dialog id="dialog" class="${classMap(contentClasses)}" aria-labelledby="dialog-header">
         <div class="dialog-header">
-          <h1 class="heading heading--700 util_stackMarginNone--top" id="dialog-header">
+          <h1 class="heading heading--700 util_stackMarginNone--top" id="dialog-header" tabindex="-1">
             <slot name="header">Default header ...</slot>
           </h1>
           ${this.modal
@@ -152,7 +160,7 @@ class AuroDialog extends LitElement {
             : html`
               <button class="dialog-header--action" id="dialog-close" @click="${this.handleCloseButtonClick}">
                 <div>${this.svg}</div>
-                <div class="util_displayHiddenVisually">Click me to close</div>
+                <div class="util_displayHiddenVisually">Close</div>
               </button>
           `}
         </div>

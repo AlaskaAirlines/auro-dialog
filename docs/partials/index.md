@@ -16,33 +16,49 @@ This file is generated based on a template fetched from `./docs/partials/demo.md
 
 ## Additional Information
 
-> Interdum et malesuada fames ac ante ipsum primis in faucibus. Nam fermentum libero ipsum, ac tempor sapien blandit in. Nam tincidunt non felis molestie varius.
+<!-- AURO-GENERATED-CONTENT:START (FILE:src=./readmeAddlInfo.md) -->
+<!-- AURO-GENERATED-CONTENT:END -->
 
-|convallis|tristique|nisl dignissim|eleifend|
-|---|---|---|---|
-|√|√|||
-|||√|√|
+## Set Up
 
-Aenean at blandit lorem. Fusce imperdiet mi nec gravida maximus. Quisque nisl libero, condimentum in nisi a, imperdiet lacinia arcu.
+Triggering the dialog relies on functions being installed. See the following example code that is installed into this demo.
 
 ```javascript
-toggleDialog = (elName) => {
-  let dialog = document.querySelector(elName);
-  const html = document.querySelector('html');
+function toggleDialog(elem) {
+  let dialog = document.querySelector(elem);
 
-  html.style.overflow = 'hidden';
-  dialog.removeAttribute("open");
-  dialog.setAttribute("open", true);
+  dialog.hasAttribute('open')
+  ? dialog.removeAttribute("open")
+  : (dialog.removeAttribute("open"),
+    dialog.setAttribute("open", true));
 }
 
-toggleDialogClose = (elName) => {
-  let dialog = document.querySelector(elName);
-  const html = document.querySelector('html');
-
-  html.style.overflow = '';
-  dialog.removeAttribute("open");
-}
+// This function can be retrieved from https://cdn.jsdelivr.net/npm/@aurodesignsystem/auro-dialog@latest/dist/toggleDialog.js
 ```
+
+Once the JavaScript is added to the scope of the experience, the next part is adding a trigger. In this example, the button component will toggle a dialog with the ID of `#demo1`.
+
+```javascript
+<auro-button onClick="toggleDialog('#demo1')">Open Default Dialog</auro-button>
+```
+
+## The Structure
+
+The structure of the dialog itself consists of three slots. The `header`, `content` and `footer` slots. See the scaffolding example below for adding content to the component.
+
+```javascript
+  <auro-dialog id="[unique ID]">
+    <span slot="header">[header content]</span>
+    <span slot="content">
+      [body content]
+    </span>
+    <span slot="footer">
+      [footer content]
+    </span>
+  </auro-dialog>
+```
+
+It should be noted that the `footer` slot is reserved for the placement of action buttons.
 
 ## Example(s)
 
@@ -68,21 +84,21 @@ There are two important parts of every Auro component. The <a href="https://deve
 To protect from versioning conflicts with other instances of the component being loaded, it is recommended to use our `registerComponent(name)` method and pass in a unique name.
 
 ```js
-import './node_modules/@alaskaairux/auro-dialog';
+import './node_modules/@aurodesignsystem/auro-dialog';
 registerComponent('custom-dialog');
 ```
 
 This will create a new custom element that you can use in your HTML that will function identically to the `auro-dialog` element.
 
 <div class="exampleWrapper">
-  <custom-header display="display">Salutations World!</custom-header>
+  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../../apiExamples/custom.html) -->
+  <!-- AURO-GENERATED-CONTENT:END -->
 </div>
 
 <auro-accordion lowProfile justifyRight>
   <span slot="trigger">See code</span>
 
-  ```html
-  <custom-header display="display">Salutations World!</custom-header>
-  ```
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../../apiExamples/custom.html) -->
+<!-- AURO-GENERATED-CONTENT:END -->
 
 </auro-accordion>

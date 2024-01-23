@@ -1,0 +1,46 @@
+<div>
+  <auro-button onClick="toggleDialog('#popover-dialog')">Open dialog with popover</auro-button>
+</div>
+
+<auro-dialog id="popover-dialog" sm lg>
+  <span slot="header">Small Modal Dialog</span>
+  <div slot="content">
+    <p>
+      When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.
+    </p>
+    <p>
+      Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.
+    </p>
+    <auro-header level="3" display="500">
+      Before checking your bags, remember to:
+    </auro-header>
+    <auro-popover>
+      <div class="content">
+        <ul>
+          <li>Caerphilly croque monsieur fondue</li>
+          <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
+          <li>Cheddar cheese and biscuits chalk and cheese</li>
+          <li>Camembert de normandie stinking bishop bavarian bergkase</li>
+        </ul>
+      </div>
+      <auro-hyperlink slot="trigger" href="#">Hover on me</auro-hyperlink>
+    </auro-popover>
+    <auro-combobox>
+      <span slot="label">Name</span>
+      <auro-menu>
+        <auro-menuoption value="Apples" id="option-0">Apples</auro-menuoption>
+        <auro-menuoption value="Oranges" id="option-1">Oranges</auro-menuoption>
+        <auro-menuoption value="Peaches" id="option-2">Peaches</auro-menuoption>
+        <auro-menuoption value="Grapes" id="option-3">Grapes</auro-menuoption>
+        <auro-menuoption value="Cherries" id="option-4">Cherries</auro-menuoption>
+        <auro-menuoption static nomatch>No matching option</auro-menuoption>
+      </auro-menu>
+    </auro-combobox>
+  </div>
+  <div slot="footer">
+    <auro-button onClick="toggleDialog('#popover-dialog')">
+      I understand
+      <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
+    </auro-button>
+  </div>
+</auro-dialog>

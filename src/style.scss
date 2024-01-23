@@ -3,26 +3,30 @@
 
 // ---------------------------------------------------------------------
 
-// Import Auro tokens
-@import "./../node_modules/@alaskaairux/design-tokens/dist/tokens/SCSSVariables";
-@import "./../node_modules/@alaskaairux/design-tokens/dist/tokens/SassCustomProperties";
+/* stylelint-disable at-rule-empty-line-before, custom-property-pattern, declaration-empty-line-before, order/properties-order, color-function-notation, max-nesting-depth,
+   selector-class-pattern, scss/selector-no-redundant-nesting-selector, declaration-block-no-duplicate-properties, scss/double-slash-comment-empty-line-before,
+   scss/selector-nest-combinators, rule-empty-line-before,  no-descending-specificity, no-duplicate-selectors */
 
-@import "./../node_modules/@alaskaairux/webcorestylesheets/dist/breakpoints";
-@import "./../node_modules/@alaskaairux/webcorestylesheets/dist/core";
-@import "./../node_modules/@alaskaairux/webcorestylesheets/dist/animation";
-@import "./../node_modules/@alaskaairux/webcorestylesheets/dist/headings";
-@import "./../node_modules/@alaskaairux/webcorestylesheets/dist/utilityClasses/displayProperties";
+// Import Auro tokens
+@import "./../node_modules/@aurodesignsystem/design-tokens/dist/tokens/SCSSVariables";
+@import "./../node_modules/@aurodesignsystem/design-tokens/dist/tokens/SassCustomProperties";
+
+@import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/breakpoints";
+@import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/core";
+@import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/animation";
+@import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/headings";
+@import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/utilityClasses/displayProperties";
 
 $auro-spacing-types: stack;
 $auro-spacing-options: none;
-@import "./../node_modules/@alaskaairux/design-tokens/dist/tokens/SCSSVariableMap";
-@import "./../node_modules/@alaskaairux/webcorestylesheets/dist/utilityMixins/spacingUtility";
+@import "./../node_modules/@aurodesignsystem/design-tokens/dist/tokens/SCSSVariableMap";
+@import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/utilityMixins/spacingUtility";
 
 // container styles - defines the look of the outer custom component
 :host {
-  --insetPaddingXl: 0 var(--auro-size-xl) var(--auro-size-xl) var(--auro-size-xl);
-  --insetPaddingXxl: 0 var(--auro-size-xxl) var(--auro-size-xxl) var(--auro-size-xxl);
-  --insetPaddingXxxl: 0 var(--auro-size-xxxl) var(--auro-size-xxxl) var(--auro-size-xxxl);
+  --insetPaddingXl: 0 var(--ds-size-400, $ds-size-400) var(--ds-size-400, $ds-size-400) var(--ds-size-400, $ds-size-400);
+  --insetPaddingXxl: 0 var(--ds-size-600, $ds-size-600) var(--ds-size-600, $ds-size-600) var(--ds-size-600, $ds-size-600);
+  --insetPaddingXxxl: 0 var(--ds-size-800, $ds-size-800) var(--ds-size-800, $ds-size-800) var(--ds-size-800, $ds-size-800);
 }
 
 // layout styles - define any layout specifications for UI that is contained WITHIN the component
@@ -41,7 +45,7 @@ $auro-spacing-options: none;
 
   // Open modifier for default dialog state
   &--open {
-    z-index: var(--auro-depth-overlay);
+    z-index: var(--ds-depth-overlay);
 
     transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 0);
 
@@ -50,7 +54,7 @@ $auro-spacing-options: none;
 
   // Modal modifier for modal/blocking state
   &--modal {
-    z-index: var(--auro-depth-overlay);
+    z-index: var(--ds-depth-overlay);
 
     transition: background 0.3s cubic-bezier(0.4, 0, 0.5, 0);
 
@@ -78,8 +82,8 @@ $auro-spacing-options: none;
 
   opacity: 0;
   border: 0;
-  background: var(--auro-color-background-lightest);
-  color: var(--auro-color-text-primary-on-light);
+  background: var(--ds-color-background-lightest, $ds-color-background-lightest);
+  color: var(--ds-color-text-primary-default, $ds-color-text-primary-default);
   // baseline dialog UI / mobile-first
 
   @include auro_transition(all, 0.3s, ease-in-out);
@@ -108,7 +112,7 @@ $auro-spacing-options: none;
 
   // open modifier
   &--open {
-    z-index: var(--auro-depth-modal);
+    z-index: var(--ds-depth-modal, $ds-depth-modal);
 
     visibility: visible;
 
@@ -119,7 +123,7 @@ $auro-spacing-options: none;
 
   // footer slot
   &-footer {
-    padding-top: var(--auro-size-xl);
+    padding-top: var(--ds-size-400, $ds-size-400);
 
     @include auro_breakpoint--md {
       ::slotted(*) {
@@ -134,10 +138,10 @@ $auro-spacing-options: none;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding-top: var(--auro-size-xxxl);
+  padding-top: var(--ds-size-800, $ds-size-800);
 
   & svg {
-    fill: var(--auro-color-text-secondary-on-light);
+    fill: var(--ds-color-text-secondary-default, $ds-color-text-secondary-default);
   }
 
   &--action {
@@ -146,7 +150,7 @@ $auro-spacing-options: none;
 
     border: none;
     border: 2px solid transparent;
-    border-radius: var(--auro-border-radius);
+    border-radius: var(--ds-border-radius, $ds-border-radius);
     background-color: transparent;
 
     &:hover {
@@ -159,26 +163,16 @@ $auro-spacing-options: none;
   position: relative;
 }
 
-:host(.focus-visible) {
-  .dialog:focus {
-    outline: 3px solid var(--auro-color-border-active-on-light);
-    outline-offset: -3px;
-  }
-  .dialog-header--action:focus {
-    border-color: var(--auro-color-border-active-on-light);
-  }
-}
-
 // sets dynamic placement of close-X based on padding specs
 :host([unformatted]) {
   .dialog-header--action {
     position: absolute;
-    top: var(--auro-size-xl);
-    right: var(--auro-size-xl);
+    top: var(--ds-size-400, $ds-size-400);
+    right: var(--ds-size-400, $ds-size-400);
 
     @include auro_breakpoint--md {
-      top: var(--auro-size-xxxl);
-      right: var(--auro-size-xxxl);
+      top: var(--ds-size-800, $ds-size-800);
+      right: var(--ds-size-800, $ds-size-800);
     }
   }
 }
@@ -186,7 +180,7 @@ $auro-spacing-options: none;
 // sets X from black to white
 :host([unformatted][onDark]) {
   .dialog-header--action {
-    color: var(--auro-color-base-white);
+    color: var(--ds-color-base-white, $ds-color-base-white);
   }
 }
 

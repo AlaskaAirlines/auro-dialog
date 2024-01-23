@@ -76,7 +76,7 @@
   </auro-dialog>
   <!-- AURO-GENERATED-CONTENT:END -->
 </div>
-<auro-accordion lowProfile justifyRight>
+<auro-accordion alignRight>
   <span slot="trigger">See code</span>
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./../../apiExamples/basic.html) -->
 <!-- The below code snippet is automatically added from ./../../apiExamples/basic.html -->
@@ -173,7 +173,7 @@ The size attribute effects the `width` of the desktop dialog. Its `height` is di
   </auro-dialog>
   <!-- AURO-GENERATED-CONTENT:END -->
 </div>
-<auro-accordion lowProfile justifyRight>
+<auro-accordion alignRight>
   <span slot="trigger">See code</span>
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./../../apiExamples/sizeOptions.html) -->
 <!-- The below code snippet is automatically added from ./../../apiExamples/sizeOptions.html -->
@@ -312,7 +312,7 @@ When using this state, the modal dialog must include a button action to dismiss 
   </auro-dialog>
   <!-- AURO-GENERATED-CONTENT:END -->
 </div>
-<auro-accordion lowProfile justifyRight>
+<auro-accordion alignRight>
   <span slot="trigger">See code</span>
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./../../apiExamples/modal.html) -->
 <!-- The below code snippet is automatically added from ./../../apiExamples/modal.html -->
@@ -439,7 +439,7 @@ The use of these combinations will set the first value to the dialog for a deskt
   </auro-dialog>
   <!-- AURO-GENERATED-CONTENT:END -->
 </div>
-<auro-accordion lowProfile justifyRight>
+<auro-accordion alignRight>
   <span slot="trigger">See code</span>
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./../../apiExamples/decoupled.html) -->
 <!-- The below code snippet is automatically added from ./../../apiExamples/decoupled.html -->
@@ -547,7 +547,7 @@ This is a use case where there is a popover and combobox component inside the di
   </auro-dialog>
   <!-- AURO-GENERATED-CONTENT:END -->
 </div>
-<auro-accordion lowProfile justifyRight>
+<auro-accordion alignRight>
   <span slot="trigger">See code</span>
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./../../apiExamples/popoverAndDropdown.html) -->
 <!-- The below code snippet is automatically added from ./../../apiExamples/popoverAndDropdown.html -->
@@ -642,7 +642,7 @@ Within the scope of the auro-dialog there is `aria-labelledby="dialog-header"`. 
   </auro-dialog>
   <!-- AURO-GENERATED-CONTENT:END -->
 </div>
-<auro-accordion lowProfile justifyRight>
+<auro-accordion alignRight>
   <span slot="trigger">See code</span>
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./../../apiExamples/accessibility.html) -->
 <!-- The below code snippet is automatically added from ./../../apiExamples/accessibility.html -->
@@ -694,7 +694,7 @@ When using the dialog with the `unformatted` attribute, some may want to adjust 
   </auro-dialog>
   <!-- AURO-GENERATED-CONTENT:END -->
 </div>
-<auro-accordion lowProfile justifyRight>
+<auro-accordion alignRight>
   <span slot="trigger">See code</span>
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./../../apiExamples/editCloseButton.html) -->
 <!-- The below code snippet is automatically added from ./../../apiExamples/editCloseButton.html -->

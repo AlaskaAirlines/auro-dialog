@@ -3,7 +3,7 @@
 
 // ---------------------------------------------------------------------
 
-/* eslint-disable no-underscore-dangle, jsdoc/no-undefined-types, lit-a11y/click-events-have-key-events */
+/* eslint-disable no-underscore-dangle, jsdoc/no-undefined-types, lit-a11y/click-events-have-key-events, jsdoc/require-description-complete-sentence */
 
 import { LitElement, html } from "lit";
 import { classMap } from 'lit/directives/class-map.js';
@@ -21,7 +21,7 @@ const ESCAPE_KEYCODE = 27,
 
 // See https://git.io/JJ6SJ for "How to document your components using JSDoc"
 /**
- * auro-dialog appear above the page and require the user's attention. // eslint-disable-line jsdoc/require-description-complete-sentence
+ * auro-dialog appear above the page and require the user's attention.
  *
  * @attr {Boolean} modal - Modal dialog restricts the user to take an action (no default close actions)
  * @attr {Boolean} fixed - Uses fixed pixel values for element shape

@@ -1,5 +1,12 @@
 # Semantic Release Automated Changelog
 
+## [1.0.1](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.0...v1.0.1) (2024-01-27)
+
+
+### Performance Improvements
+
+* update index per SSR support ([e6c9dde](https://github.com/AlaskaAirlines/auro-dialog/commit/e6c9dde8eee2b9e1d2989f4d7782a1cc113f4cd5))
+
 # 1.0.0 (2024-01-24)
 
 

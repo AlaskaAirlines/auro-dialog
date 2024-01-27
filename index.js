@@ -1,4 +1,4 @@
-import { AuroDialog } from './src/auro-dialog';
+import { AuroDialog } from './src/auro-dialog.js';
 
 /**
  * Register Custom Element.

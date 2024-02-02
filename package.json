@@ -143,7 +143,7 @@
     "bundler:test": "rollup -c -w",
     "scssLint": "stylelint \"./src/**/*.scss\"",
     "dev": "concurrently --kill-others \"npm run build:watch\" \"npm run serve\"",
-    "dist:js": "copyfiles -u 1 -V './src/**/*.js' ./dist",
+    "dist:js": "copyfiles -u 1 -V './src/**/*.js' './apiExamples/**/*.js' ./dist",
     "esLint": "./node_modules/.bin/eslint src/**/*.js",
     "linters": "npm-run-all scssLint esLint",
     "preCommit": "node scripts/pre-commit.mjs",

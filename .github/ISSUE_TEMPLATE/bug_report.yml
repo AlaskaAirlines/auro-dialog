@@ -4,7 +4,7 @@ title: '[issue summary] Please verify version before submitting new issue'
 labels:
   - 'Type: Bug'
   - not-reviewed
-  - '[namespace]-[name]'
+  - 'auro-dialog'
 body:
   - type: markdown
     attributes:
@@ -13,7 +13,7 @@ body:
   - type: input
     id: version
     attributes:
-      label: Please verify the version of [namespace]-[name] you have installed
+      label: Please verify the version of auro-dialog you have installed
   - type: markdown
     attributes:
       value: >

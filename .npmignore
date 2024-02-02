@@ -13,7 +13,7 @@ coverage/
 docs/
 scripts/
 test/
-apiExamples/
+apiExamples/*.html
 docTemplates/
 demo/**/*.css
 demo/**/*.scss

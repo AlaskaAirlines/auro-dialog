@@ -1,5 +1,13 @@
 # Semantic Release Automated Changelog
 
+## [1.0.3](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.2...v1.0.3) (2024-02-05)
+
+
+### Bug Fixes
+
+* **dist:** add apiExample js to dist folder [#6](https://github.com/AlaskaAirlines/auro-dialog/issues/6) ([565af94](https://github.com/AlaskaAirlines/auro-dialog/commit/565af94c93c89a1d63662d1d2f65eef4f304686a))
+* **label:** update labels to auro-dialog ([7ab983f](https://github.com/AlaskaAirlines/auro-dialog/commit/7ab983fb11fa93ba5b8eb501fe3320caec610576))
+
 ## [1.0.2](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.1...v1.0.2) (2024-01-31)
 
 

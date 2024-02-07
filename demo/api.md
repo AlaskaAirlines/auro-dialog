@@ -630,7 +630,6 @@ Within the scope of the auro-dialog there is `aria-labelledby="dialog-header"`. 
   <div>
     <auro-button onClick="toggleDialog('#unformattedMdDialog')">Unformatted Medium Dialog</auro-button>
   </div>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/auro-dialog@latest/dist/style-unformatted.css" />
   <auro-dialog id="unformattedMdDialog" unformatted md lg ondark>
     <span slot="content">
       <img style="display: block; width: 100%" src="https://blog.alaskaair.com/wp-content/uploads/2020/11/111-psp-blog-img-guide.jpg" alt="alaska airlines pride lights" />
@@ -651,7 +650,6 @@ Within the scope of the auro-dialog there is `aria-labelledby="dialog-header"`. 
 <div>
   <auro-button onClick="toggleDialog('#unformattedMdDialog')">Unformatted Medium Dialog</auro-button>
 </div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/auro-dialog@latest/dist/style-unformatted.css" />
 <auro-dialog id="unformattedMdDialog" unformatted md lg ondark>
   <span slot="content">
     <img style="display: block; width: 100%" src="https://blog.alaskaair.com/wp-content/uploads/2020/11/111-psp-blog-img-guide.jpg" alt="alaska airlines pride lights" />
@@ -675,7 +673,6 @@ When using the dialog with the `unformatted` attribute, some may want to adjust 
   <div>
     <auro-button onClick="toggleDialog('#unformattedCustomMdDialog')">Unformatted w/custom close button</auro-button>
   </div>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/auro-dialog@latest/dist/style-unformatted.css" />
   <style>
     .example::part(close-button) {
       top: var(--ds-size-400);
@@ -703,7 +700,6 @@ When using the dialog with the `unformatted` attribute, some may want to adjust 
 <div>
   <auro-button onClick="toggleDialog('#unformattedCustomMdDialog')">Unformatted w/custom close button</auro-button>
 </div>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/auro-dialog@latest/dist/style-unformatted.css" />
 <style>
   .example::part(close-button) {
     top: var(--ds-size-400);

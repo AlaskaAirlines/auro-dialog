@@ -1,5 +1,12 @@
 # Semantic Release Automated Changelog
 
+## [1.0.4](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.3...v1.0.4) (2024-02-11)
+
+
+### Performance Improvements
+
+* update for ESM support ([7fd7b6d](https://github.com/AlaskaAirlines/auro-dialog/commit/7fd7b6dd95e7311ba956f83ce3a181980caf998d))
+
 ## [1.0.3](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.2...v1.0.3) (2024-02-05)
 
 

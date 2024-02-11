@@ -3,7 +3,7 @@
 
 // ---------------------------------------------------------------------
 
-import ComponentBase from './componentBase';
+import ComponentBase from './componentBase.js';
 
 // build the component class
 export class AuroDialog extends ComponentBase {

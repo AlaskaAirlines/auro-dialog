@@ -7,7 +7,6 @@
 
 | Attribute | Type      | Description                                      |
 |-----------|-----------|--------------------------------------------------|
-| [fixed](#fixed)   | `Boolean` | Uses fixed pixel values for element shape        |
 | [md](#md)      | `Boolean` | Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile. |
 | [onDark](#onDark)  | `Boolean` | Sets close icon to white for dark backgrounds    |
 | [sm](#sm)      | `Boolean` | Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile. |

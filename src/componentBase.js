@@ -9,9 +9,7 @@ import { LitElement, html } from "lit";
 import { classMap } from 'lit/directives/class-map.js';
 
 import styleCss from "./style-css.js";
-import styleCssFixed from './style-fixed-css.js';
 import styleUnformattedCss from './style-unformatted-css.js';
-import styleUnformattedCssFixed from './style-unformatted-fixed-css.js';
 import closeIcon from '@alaskaairux/icons/dist/icons/interface/x-lg.mjs';
 
 /* eslint-disable one-var, prefer-destructuring */
@@ -213,9 +211,7 @@ export default class ComponentBase extends LitElement {
   static get styles() {
     return [
       styleCss,
-      styleCssFixed,
-      styleUnformattedCss,
-      styleUnformattedCssFixed
+      styleUnformattedCss
     ];
   }
 

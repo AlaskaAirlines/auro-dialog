@@ -1,5 +1,14 @@
 # Semantic Release Automated Changelog
 
+## [1.0.5](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.4...v1.0.5) (2024-02-13)
+
+
+### Performance Improvements
+
+* **demo:** update demo file names ([cb48514](https://github.com/AlaskaAirlines/auro-dialog/commit/cb48514e0893b405d0eba3d46e002e3c814804b6))
+* **fixed:** remove fixed support ([6cbd252](https://github.com/AlaskaAirlines/auro-dialog/commit/6cbd252f3a7f51575db4b8b3d2c1a4e2e363cb51))
+* **imports:** update style unformatted import [#8](https://github.com/AlaskaAirlines/auro-dialog/issues/8) ([3ce2507](https://github.com/AlaskaAirlines/auro-dialog/commit/3ce2507c17963f719f6180d15d75996cbac58bf2))
+
 ## [1.0.4](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.3...v1.0.4) (2024-02-11)
 
 

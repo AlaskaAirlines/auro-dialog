@@ -1,8 +1,9 @@
-function toggleDialog(elem) {
-  let dialog = document.querySelector(elem);
+export function toggleDialog(dialogID) {
+  const dialog = document.querySelector(dialogID);
 
-  dialog.hasAttribute('open')
-  ? dialog.removeAttribute("open")
-  : (dialog.removeAttribute("open"),
-    dialog.setAttribute("open", true));
+  if (dialog.hasAttribute('open')) {
+    dialog.removeAttribute('open');
+  } else {
+    dialog.setAttribute('open', true);
+  }
 }

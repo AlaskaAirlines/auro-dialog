@@ -24,16 +24,15 @@ This file is generated based on a template fetched from `./docs/partials/index.m
 Triggering the dialog relies on functions being installed. See the following example code that is installed into this demo.
 
 ```javascript
-function toggleDialog(elem) {
-  let dialog = document.querySelector(elem);
+function toggleDialog(dialogID) {
+  const dialog = document.querySelector(dialogID);
 
-  dialog.hasAttribute('open')
-  ? dialog.removeAttribute("open")
-  : (dialog.removeAttribute("open"),
-    dialog.setAttribute("open", true));
+  if (dialog.hasAttribute('open')) {
+    dialog.removeAttribute('open');
+  } else {
+    dialog.setAttribute('open', true);
+  }
 }
-
-// This function can be retrieved from https://cdn.jsdelivr.net/npm/@aurodesignsystem/auro-dialog@latest/dist/toggleDialog.js
 ```
 
 Once the JavaScript is added to the scope of the experience, the next part is adding a trigger. In this example, the button component will toggle a dialog with the ID of `#demo1`.

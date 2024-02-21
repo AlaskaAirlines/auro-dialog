@@ -1,5 +1,13 @@
 # Semantic Release Automated Changelog
 
+## [1.0.7](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.6...v1.0.7) (2024-02-21)
+
+
+### Performance Improvements
+
+* **deps:** update dependencies ([c16a351](https://github.com/AlaskaAirlines/auro-dialog/commit/c16a3511ab43356af8ef35138edc21679b6ab631))
+* **examples:** implement minified js system [#10](https://github.com/AlaskaAirlines/auro-dialog/issues/10) ([0f336c2](https://github.com/AlaskaAirlines/auro-dialog/commit/0f336c2e30db48a2227b8394ca8cb12ec8899e5a))
+
 ## [1.0.6](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.5...v1.0.6) (2024-02-13)
 
 

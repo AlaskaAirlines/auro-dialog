@@ -1,5 +1,18 @@
 # Semantic Release Automated Changelog
 
+## [1.0.8](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.7...v1.0.8) (2024-02-23)
+
+
+### Bug Fixes
+
+* **unformatted:** fix error from unformatted dialog opening ([7371148](https://github.com/AlaskaAirlines/auro-dialog/commit/73711488f5ca69b78dadc89552af89bac88573c2))
+
+
+### Performance Improvements
+
+* **deps:** update deps ([791254c](https://github.com/AlaskaAirlines/auro-dialog/commit/791254c25a0061b8669976754115819f3edb9e49))
+* **min:** update min file system for docsite ([f86089a](https://github.com/AlaskaAirlines/auro-dialog/commit/f86089a8b02bbb1c1aa416e315f6b9fb9a831369))
+
 ## [1.0.7](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.6...v1.0.7) (2024-02-21)
 
 

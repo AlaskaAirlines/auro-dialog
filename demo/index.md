@@ -78,7 +78,7 @@ It should be noted that the `footer` slot is reserved for the placement of actio
   <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../../apiExamples/basic.html) -->
   <!-- The below content is automatically added from ./../../apiExamples/basic.html -->
   <div>
-    <auro-button onClick="toggleDialog('#defaultDialog')">Open default dialog</auro-button>
+    <auro-button id="openBasic">Open default dialog</auro-button>
   </div>
   <auro-dialog id="defaultDialog">
     <span slot="header">Default Dialog</span>
@@ -94,7 +94,7 @@ It should be noted that the `footer` slot is reserved for the placement of actio
       </ul>
     </div>
     <div slot="footer">
-      <auro-button secondary onClick="toggleDialog('#defaultDialog')">Close</auro-button>
+      <auro-button secondary id="closeBasic">Close</auro-button>
     </div>
   </auro-dialog>
   <!-- AURO-GENERATED-CONTENT:END -->
@@ -106,7 +106,7 @@ It should be noted that the `footer` slot is reserved for the placement of actio
 
 ```html
 <div>
-  <auro-button onClick="toggleDialog('#defaultDialog')">Open default dialog</auro-button>
+  <auro-button id="openBasic">Open default dialog</auro-button>
 </div>
 <auro-dialog id="defaultDialog">
   <span slot="header">Default Dialog</span>
@@ -122,7 +122,7 @@ It should be noted that the `footer` slot is reserved for the placement of actio
     </ul>
   </div>
   <div slot="footer">
-    <auro-button secondary onClick="toggleDialog('#defaultDialog')">Close</auro-button>
+    <auro-button secondary id="closeBasic">Close</auro-button>
   </div>
 </auro-dialog>
 ```
@@ -147,7 +147,7 @@ This will create a new custom element that you can use in your HTML that will fu
   <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../../apiExamples/custom.html) -->
   <!-- The below content is automatically added from ./../../apiExamples/custom.html -->
   <div>
-    <auro-button onClick="toggleDialog('#customDialog')">Open default dialog</auro-button>
+    <auro-button id="openCustom">Open default dialog</auro-button>
   </div>
   <custom-dialog id="customDialog">
     <span slot="header">Default Dialog</span>
@@ -163,7 +163,7 @@ This will create a new custom element that you can use in your HTML that will fu
       </ul>
     </div>
     <div slot="footer">
-      <auro-button secondary onClick="toggleDialog('#customDialog')">Close</auro-button>
+      <auro-button secondary id="closeCustom">Close</auro-button>
     </div>
   </custom-dialog>
   <!-- AURO-GENERATED-CONTENT:END -->
@@ -175,7 +175,7 @@ This will create a new custom element that you can use in your HTML that will fu
 
 ```html
 <div>
-  <auro-button onClick="toggleDialog('#customDialog')">Open default dialog</auro-button>
+  <auro-button id="openCustom">Open default dialog</auro-button>
 </div>
 <custom-dialog id="customDialog">
   <span slot="header">Default Dialog</span>
@@ -191,7 +191,7 @@ This will create a new custom element that you can use in your HTML that will fu
     </ul>
   </div>
   <div slot="footer">
-    <auro-button secondary onClick="toggleDialog('#customDialog')">Close</auro-button>
+    <auro-button secondary id="closeCustom">Close</auro-button>
   </div>
 </custom-dialog>
 ```

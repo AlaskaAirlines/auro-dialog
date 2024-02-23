@@ -1,5 +1,5 @@
 <div>
-  <auro-button onClick="toggleDialog('#popover-dialog')">Open dialog with popover</auro-button>
+  <auro-button id="openPopAndDrop">Open dialog with popover</auro-button>
 </div>
 
 <auro-dialog id="popover-dialog" sm lg>
@@ -38,7 +38,7 @@
     </auro-combobox>
   </div>
   <div slot="footer">
-    <auro-button onClick="toggleDialog('#popover-dialog')">
+    <auro-button id="closePopAndDrop">
       I understand
       <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
     </auro-button>

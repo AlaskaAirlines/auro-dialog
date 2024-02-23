@@ -90,7 +90,7 @@ import "@aurodesignsystem/auro-dialog";
 
 ```html
 <div>
-  <auro-button onClick="toggleDialog('#defaultDialog')">Open default dialog</auro-button>
+  <auro-button id="openBasic">Open default dialog</auro-button>
 </div>
 <auro-dialog id="defaultDialog">
   <span slot="header">Default Dialog</span>
@@ -106,7 +106,7 @@ import "@aurodesignsystem/auro-dialog";
     </ul>
   </div>
   <div slot="footer">
-    <auro-button secondary onClick="toggleDialog('#defaultDialog')">Close</auro-button>
+    <auro-button secondary id="closeBasic">Close</auro-button>
   </div>
 </auro-dialog>
 ```
@@ -152,7 +152,7 @@ The `<auro-dialog>` component should be used in situations where users may:
 
 ```html
 <div>
-  <auro-button onClick="toggleDialog('#defaultDialog')">Open default dialog</auro-button>
+  <auro-button id="openBasic">Open default dialog</auro-button>
 </div>
 <auro-dialog id="defaultDialog">
   <span slot="header">Default Dialog</span>
@@ -168,7 +168,7 @@ The `<auro-dialog>` component should be used in situations where users may:
     </ul>
   </div>
   <div slot="footer">
-    <auro-button secondary onClick="toggleDialog('#defaultDialog')">Close</auro-button>
+    <auro-button secondary id="closeBasic">Close</auro-button>
   </div>
 </auro-dialog>
 ```

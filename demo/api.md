@@ -54,7 +54,7 @@
   <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../../apiExamples/basic.html) -->
   <!-- The below content is automatically added from ./../../apiExamples/basic.html -->
   <div>
-    <auro-button onClick="toggleDialog('#defaultDialog')">Open default dialog</auro-button>
+    <auro-button id="openBasic">Open default dialog</auro-button>
   </div>
   <auro-dialog id="defaultDialog">
     <span slot="header">Default Dialog</span>
@@ -70,7 +70,7 @@
       </ul>
     </div>
     <div slot="footer">
-      <auro-button secondary onClick="toggleDialog('#defaultDialog')">Close</auro-button>
+      <auro-button secondary id="closeBasic">Close</auro-button>
     </div>
   </auro-dialog>
   <!-- AURO-GENERATED-CONTENT:END -->
@@ -82,7 +82,7 @@
 
 ```html
 <div>
-  <auro-button onClick="toggleDialog('#defaultDialog')">Open default dialog</auro-button>
+  <auro-button id="openBasic">Open default dialog</auro-button>
 </div>
 <auro-dialog id="defaultDialog">
   <span slot="header">Default Dialog</span>
@@ -98,7 +98,7 @@
     </ul>
   </div>
   <div slot="footer">
-    <auro-button secondary onClick="toggleDialog('#defaultDialog')">Close</auro-button>
+    <auro-button secondary id="closeBasic">Close</auro-button>
   </div>
 </auro-dialog>
 ```
@@ -115,11 +115,11 @@ The size attribute effects the `width` of the desktop dialog. Its `height` is di
   <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../../apiExamples/sizeOptions.html) -->
   <!-- The below content is automatically added from ./../../apiExamples/sizeOptions.html -->
   <div>
-    <auro-button onClick="toggleDialog('#defaultDialog')">Open default dialog</auro-button>
-    <auro-button onClick="toggleDialog('#mediumDialog')">Open medium dialog</auro-button>
-    <auro-button onClick="toggleDialog('#smallDialog')">Open small dialog</auro-button>
+    <auro-button id="openDefaultSize">Open default dialog</auro-button>
+    <auro-button id="openMediumSize">Open medium dialog</auro-button>
+    <auro-button id="openSmallSize">Open small dialog</auro-button>
   </div>
-  <auro-dialog id="defaultDialog">
+  <auro-dialog id="defaultSizeDialog">
     <span slot="header">Default Dialog</span>
     <div slot="content">
       <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -133,10 +133,10 @@ The size attribute effects the `width` of the desktop dialog. Its `height` is di
       </ul>
     </div>
     <div slot="footer">
-      <auro-button secondary onClick="toggleDialog('#defaultDialog')">Close</auro-button>
+      <auro-button secondary id="closeDefaultSize">Close</auro-button>
     </div>
   </auro-dialog>
-  <auro-dialog id="mediumDialog" md>
+  <auro-dialog id="mediumSizeDialog" md>
     <span slot="header">Medium Dialog</span>
     <div slot="content">
       <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -150,10 +150,10 @@ The size attribute effects the `width` of the desktop dialog. Its `height` is di
       </ul>
     </div>
     <div slot="footer">
-      <auro-button secondary onClick="toggleDialog('#mediumDialog')">Close</auro-button>
+      <auro-button secondary id="closeMediumSize">Close</auro-button>
     </div>
   </auro-dialog>
-  <auro-dialog id="smallDialog" sm>
+  <auro-dialog id="smallSizeDialog" sm>
     <span slot="header">Small Dialog</span>
     <div slot="content">
       <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -167,7 +167,7 @@ The size attribute effects the `width` of the desktop dialog. Its `height` is di
       </ul>
     </div>
     <div slot="footer">
-      <auro-button secondary onClick="toggleDialog('#smallDialog')">Close</auro-button>
+      <auro-button secondary id="closeSmallSize">Close</auro-button>
     </div>
   </auro-dialog>
   <!-- AURO-GENERATED-CONTENT:END -->
@@ -179,11 +179,11 @@ The size attribute effects the `width` of the desktop dialog. Its `height` is di
 
 ```html
 <div>
-  <auro-button onClick="toggleDialog('#defaultDialog')">Open default dialog</auro-button>
-  <auro-button onClick="toggleDialog('#mediumDialog')">Open medium dialog</auro-button>
-  <auro-button onClick="toggleDialog('#smallDialog')">Open small dialog</auro-button>
+  <auro-button id="openDefaultSize">Open default dialog</auro-button>
+  <auro-button id="openMediumSize">Open medium dialog</auro-button>
+  <auro-button id="openSmallSize">Open small dialog</auro-button>
 </div>
-<auro-dialog id="defaultDialog">
+<auro-dialog id="defaultSizeDialog">
   <span slot="header">Default Dialog</span>
   <div slot="content">
     <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -197,10 +197,10 @@ The size attribute effects the `width` of the desktop dialog. Its `height` is di
     </ul>
   </div>
   <div slot="footer">
-    <auro-button secondary onClick="toggleDialog('#defaultDialog')">Close</auro-button>
+    <auro-button secondary id="closeDefaultSize">Close</auro-button>
   </div>
 </auro-dialog>
-<auro-dialog id="mediumDialog" md>
+<auro-dialog id="mediumSizeDialog" md>
   <span slot="header">Medium Dialog</span>
   <div slot="content">
     <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -214,10 +214,10 @@ The size attribute effects the `width` of the desktop dialog. Its `height` is di
     </ul>
   </div>
   <div slot="footer">
-    <auro-button secondary onClick="toggleDialog('#mediumDialog')">Close</auro-button>
+    <auro-button secondary id="closeMediumSize">Close</auro-button>
   </div>
 </auro-dialog>
-<auro-dialog id="smallDialog" sm>
+<auro-dialog id="smallSizeDialog" sm>
   <span slot="header">Small Dialog</span>
   <div slot="content">
     <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -231,7 +231,7 @@ The size attribute effects the `width` of the desktop dialog. Its `height` is di
     </ul>
   </div>
   <div slot="footer">
-    <auro-button secondary onClick="toggleDialog('#smallDialog')">Close</auro-button>
+    <auro-button secondary id="closeSmallSize">Close</auro-button>
   </div>
 </auro-dialog>
 ```
@@ -248,9 +248,9 @@ When using this state, the modal dialog must include a button action to dismiss 
   <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../../apiExamples/modal.html) -->
   <!-- The below content is automatically added from ./../../apiExamples/modal.html -->
   <div>
-    <auro-button onClick="toggleDialog('#defaultModalDialog')">Open default modal</auro-button>
-    <auro-button onClick="toggleDialog('#mediumModalDialog')">Open medium modal</auro-button>
-    <auro-button onClick="toggleDialog('#smallModalDialog')">Open small modal</auro-button>
+    <auro-button id="openDefaultModal">Open default modal</auro-button>
+    <auro-button id="openMediumModal">Open medium modal</auro-button>
+    <auro-button id="openSmallModal">Open small modal</auro-button>
   </div>
   <auro-dialog id="defaultModalDialog" modal>
     <span slot="header">Default Modal Dialog</span>
@@ -266,7 +266,7 @@ When using this state, the modal dialog must include a button action to dismiss 
       </ul>
     </div>
     <div slot="footer">
-      <auro-button onClick="toggleDialog('#defaultModalDialog')">I understand
+      <auro-button id="closeDefaultModal">I understand
         <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
       </auro-button>
     </div>
@@ -285,7 +285,7 @@ When using this state, the modal dialog must include a button action to dismiss 
       </ul>
     </div>
     <div slot="footer">
-      <auro-button onClick="toggleDialog('#mediumModalDialog')">I understand
+      <auro-button id="closeMediumModal">I understand
         <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
       </auro-button>
     </div>
@@ -304,7 +304,7 @@ When using this state, the modal dialog must include a button action to dismiss 
       </ul>
     </div>
     <div slot="footer">
-      <auro-button onClick="toggleDialog('#smallModalDialog')">I understand
+      <auro-button id="closeSmallModal">I understand
         <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
       </auro-button>
     </div>
@@ -318,9 +318,9 @@ When using this state, the modal dialog must include a button action to dismiss 
 
 ```html
 <div>
-  <auro-button onClick="toggleDialog('#defaultModalDialog')">Open default modal</auro-button>
-  <auro-button onClick="toggleDialog('#mediumModalDialog')">Open medium modal</auro-button>
-  <auro-button onClick="toggleDialog('#smallModalDialog')">Open small modal</auro-button>
+  <auro-button id="openDefaultModal">Open default modal</auro-button>
+  <auro-button id="openMediumModal">Open medium modal</auro-button>
+  <auro-button id="openSmallModal">Open small modal</auro-button>
 </div>
 <auro-dialog id="defaultModalDialog" modal>
   <span slot="header">Default Modal Dialog</span>
@@ -336,7 +336,7 @@ When using this state, the modal dialog must include a button action to dismiss 
     </ul>
   </div>
   <div slot="footer">
-    <auro-button onClick="toggleDialog('#defaultModalDialog')">I understand
+    <auro-button id="closeDefaultModal">I understand
       <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
     </auro-button>
   </div>
@@ -355,7 +355,7 @@ When using this state, the modal dialog must include a button action to dismiss 
     </ul>
   </div>
   <div slot="footer">
-    <auro-button onClick="toggleDialog('#mediumModalDialog')">I understand
+    <auro-button id="closeMediumModal">I understand
       <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
     </auro-button>
   </div>
@@ -374,7 +374,7 @@ When using this state, the modal dialog must include a button action to dismiss 
     </ul>
   </div>
   <div slot="footer">
-    <auro-button onClick="toggleDialog('#smallModalDialog')">I understand
+    <auro-button id="closeSmallModal">I understand
       <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
     </auro-button>
   </div>
@@ -393,8 +393,8 @@ The use of these combinations will set the first value to the dialog for a deskt
   <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../../apiExamples/decoupled.html) -->
   <!-- The below content is automatically added from ./../../apiExamples/decoupled.html -->
   <div>
-    <auro-button onClick="toggleDialog('#smLgDialog')">Open [sm lg] dialog</auro-button>
-    <auro-button onClick="toggleDialog('#smMdDialog')">Open [md lg] dialog</auro-button>
+    <auro-button id="openSmLg">Open [sm lg] dialog</auro-button>
+    <auro-button id="openMdLg">Open [md lg] dialog</auro-button>
   </div>
   <auro-dialog id="smLgDialog" sm lg>
     <span slot="header">Small Modal Dialog</span>
@@ -410,13 +410,13 @@ The use of these combinations will set the first value to the dialog for a deskt
       </ul>
     </div>
     <div slot="footer">
-      <auro-button onClick="toggleDialog('#smLgDialog')">
+      <auro-button id="closeSmLg">
         I understand
         <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
       </auro-button>
     </div>
   </auro-dialog>
-  <auro-dialog id="smMdDialog" md lg>
+  <auro-dialog id="mdLgDialog" md lg>
     <span slot="header">Medium Modal Dialog</span>
     <div slot="content">
       <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -430,7 +430,7 @@ The use of these combinations will set the first value to the dialog for a deskt
       </ul>
     </div>
     <div slot="footer">
-      <auro-button onClick="toggleDialog('#smMdDialog')">
+      <auro-button id="closeMdLg">
         I understand
         <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
       </auro-button>
@@ -445,8 +445,8 @@ The use of these combinations will set the first value to the dialog for a deskt
 
 ```html
 <div>
-  <auro-button onClick="toggleDialog('#smLgDialog')">Open [sm lg] dialog</auro-button>
-  <auro-button onClick="toggleDialog('#smMdDialog')">Open [md lg] dialog</auro-button>
+  <auro-button id="openSmLg">Open [sm lg] dialog</auro-button>
+  <auro-button id="openMdLg">Open [md lg] dialog</auro-button>
 </div>
 <auro-dialog id="smLgDialog" sm lg>
   <span slot="header">Small Modal Dialog</span>
@@ -462,13 +462,13 @@ The use of these combinations will set the first value to the dialog for a deskt
     </ul>
   </div>
   <div slot="footer">
-    <auro-button onClick="toggleDialog('#smLgDialog')">
+    <auro-button id="closeSmLg">
       I understand
       <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
     </auro-button>
   </div>
 </auro-dialog>
-<auro-dialog id="smMdDialog" md lg>
+<auro-dialog id="mdLgDialog" md lg>
   <span slot="header">Medium Modal Dialog</span>
   <div slot="content">
     <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -482,7 +482,7 @@ The use of these combinations will set the first value to the dialog for a deskt
     </ul>
   </div>
   <div slot="footer">
-    <auro-button onClick="toggleDialog('#smMdDialog')">
+    <auro-button id="closeMdLg">
       I understand
       <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
     </auro-button>
@@ -500,7 +500,7 @@ This is a use case where there is a popover and combobox component inside the di
   <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../../apiExamples/popoverAndDropdown.html) -->
   <!-- The below content is automatically added from ./../../apiExamples/popoverAndDropdown.html -->
   <div>
-    <auro-button onClick="toggleDialog('#popover-dialog')">Open dialog with popover</auro-button>
+    <auro-button id="openPopAndDrop">Open dialog with popover</auro-button>
   </div>
   <auro-dialog id="popover-dialog" sm lg>
     <span slot="header">Small Modal Dialog</span>
@@ -538,7 +538,7 @@ This is a use case where there is a popover and combobox component inside the di
       </auro-combobox>
     </div>
     <div slot="footer">
-      <auro-button onClick="toggleDialog('#popover-dialog')">
+      <auro-button id="closePopAndDrop">
         I understand
         <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
       </auro-button>
@@ -553,7 +553,7 @@ This is a use case where there is a popover and combobox component inside the di
 
 ```html
 <div>
-  <auro-button onClick="toggleDialog('#popover-dialog')">Open dialog with popover</auro-button>
+  <auro-button id="openPopAndDrop">Open dialog with popover</auro-button>
 </div>
 <auro-dialog id="popover-dialog" sm lg>
   <span slot="header">Small Modal Dialog</span>
@@ -591,7 +591,7 @@ This is a use case where there is a popover and combobox component inside the di
     </auro-combobox>
   </div>
   <div slot="footer">
-    <auro-button onClick="toggleDialog('#popover-dialog')">
+    <auro-button id="closePopAndDrop">
       I understand
       <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
     </auro-button>
@@ -627,7 +627,7 @@ Within the scope of the auro-dialog there is `aria-labelledby="dialog-header"`. 
   <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../../apiExamples/accessibility.html) -->
   <!-- The below content is automatically added from ./../../apiExamples/accessibility.html -->
   <div>
-    <auro-button onClick="toggleDialog('#unformattedMdDialog')">Unformatted Medium Dialog</auro-button>
+    <auro-button id="openAccessibility">Unformatted Medium Dialog</auro-button>
   </div>
   <auro-dialog id="unformattedMdDialog" unformatted md lg ondark>
     <span slot="content">
@@ -647,7 +647,7 @@ Within the scope of the auro-dialog there is `aria-labelledby="dialog-header"`. 
 
 ```html
 <div>
-  <auro-button onClick="toggleDialog('#unformattedMdDialog')">Unformatted Medium Dialog</auro-button>
+  <auro-button id="openAccessibility">Unformatted Medium Dialog</auro-button>
 </div>
 <auro-dialog id="unformattedMdDialog" unformatted md lg ondark>
   <span slot="content">
@@ -670,7 +670,7 @@ When using the dialog with the `unformatted` attribute, some may want to adjust 
   <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../../apiExamples/editCloseButton.html) -->
   <!-- The below content is automatically added from ./../../apiExamples/editCloseButton.html -->
   <div>
-    <auro-button onClick="toggleDialog('#unformattedCustomMdDialog')">Unformatted w/custom close button</auro-button>
+    <auro-button id="openEditDialog">Unformatted w/custom close button</auro-button>
   </div>
   <style>
     .example::part(close-button) {
@@ -697,7 +697,7 @@ When using the dialog with the `unformatted` attribute, some may want to adjust 
 
 ```html
 <div>
-  <auro-button onClick="toggleDialog('#unformattedCustomMdDialog')">Unformatted w/custom close button</auro-button>
+  <auro-button id="openEditDialog">Unformatted w/custom close button</auro-button>
 </div>
 <style>
   .example::part(close-button) {

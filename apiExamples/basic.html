@@ -1,5 +1,5 @@
 <div>
-  <auro-button onClick="toggleDialog('#defaultDialog')">Open default dialog</auro-button>
+  <auro-button id="openBasic">Open default dialog</auro-button>
 </div>
 
 <auro-dialog id="defaultDialog">
@@ -16,6 +16,6 @@
     </ul>
   </div>
   <div slot="footer">
-    <auro-button secondary onClick="toggleDialog('#defaultDialog')">Close</auro-button>
+    <auro-button secondary id="closeBasic">Close</auro-button>
   </div>
 </auro-dialog>

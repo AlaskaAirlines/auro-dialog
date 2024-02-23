@@ -1,15 +1,17 @@
-import { toggleDialog } from "../apiExamples/toggleDialog";
+import { initBasicExample } from "../apiExamples/basic";
+import { initCustomExample } from "../apiExamples/custom";
 
-export function initDialogIndexExamples(initCount) {
+export function initExamples(initCount) {
   initCount = initCount || 0;
 
   try {
-    toggleDialog();
-  } catch (error) {
+    initBasicExample();
+    initCustomExample();
+  } catch (err) {
     if (initCount <= 20) {
       // setTimeout handles issue where content is sometimes loaded after the functions get called
       setTimeout(() => {
-        initDialogIndexExamples(initCount + 1);
+        initExamples(initCount + 1);
       }, 100);
     }
   }

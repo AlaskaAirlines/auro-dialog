@@ -159,13 +159,15 @@ export default class ComponentBase extends LitElement {
 
     const closeButton = this.shadowRoot.getElementById('dialog-close');
 
-    lastFocusableElement.addEventListener('focusout', () => {
-      if (closeButton !== null) { // eslint-disable-line no-negated-condition
-        closeButton.focus();
-      } else {
-        firstFocusableElement.focus();
-      }
-    });
+    if (lastFocusableElement) {
+      lastFocusableElement.addEventListener('focusout', () => {
+        if (closeButton !== null) { // eslint-disable-line no-negated-condition
+          closeButton.focus();
+        } else {
+          firstFocusableElement.focus();
+        }
+      });
+    }
   }
 
   /**

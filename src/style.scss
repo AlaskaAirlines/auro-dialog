@@ -16,16 +16,31 @@
 @import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/headings";
 @import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/utilityClasses/displayProperties";
 
-$auro-spacing-types: stack;
-$auro-spacing-options: none;
 @import "./../node_modules/@aurodesignsystem/design-tokens/dist/tokens/SCSSVariableMap";
 @import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/utilityMixins/spacingUtility";
+
+$auro-spacing-types: stack;
+$auro-spacing-options: none;
+
+$ds-color-background-black-opacity-20: rgba(0, 0, 0, 0.2);
+$ds-color-background-black-opacity-50: rgba(0, 0, 0, 0.5);
+$ds-color-background-black-opacity-12: rgba(0, 0, 0, 0.12);
+$ds-color-background-black-opacity-10: rgba(0, 0, 0, 0.1);
+
+$ds-color-ui-transparent-default: transparent;
 
 // container styles - defines the look of the outer custom component
 :host {
   --insetPaddingXl: 0 var(--ds-size-400, $ds-size-400) var(--ds-size-400, $ds-size-400) var(--ds-size-400, $ds-size-400);
   --insetPaddingXxl: 0 var(--ds-size-600, $ds-size-600) var(--ds-size-600, $ds-size-600) var(--ds-size-600, $ds-size-600);
   --insetPaddingXxxl: 0 var(--ds-size-800, $ds-size-800) var(--ds-size-800, $ds-size-800) var(--ds-size-800, $ds-size-800);
+
+  --ds-color-background-black-opacity-20: rgba(0, 0, 0, 0.2);
+  --ds-color-background-black-opacity-50: rgba(0, 0, 0, 0.5);
+  --ds-color-background-black-opacity-12: rgba(0, 0, 0, 0.12);
+  --ds-color-background-black-opacity-10: rgba(0, 0, 0, 0.1);
+
+  --ds-color-ui-transparent-default: transparent;
 }
 
 // layout styles - define any layout specifications for UI that is contained WITHIN the component
@@ -48,7 +63,7 @@ $auro-spacing-options: none;
 
     transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 0);
 
-    background: rgba(0, 0, 0, 0.2);
+    background: var(--ds-color-background-black-opacity-20, $ds-color-background-black-opacity-20);
   }
 
   // Modal modifier for modal/blocking state
@@ -57,7 +72,7 @@ $auro-spacing-options: none;
 
     transition: background 0.3s cubic-bezier(0.4, 0, 0.5, 0);
 
-    background: rgba(0, 0, 0, 0.5);
+    background: var(--ds-color-background-black-opacity-50, $ds-color-background-black-opacity-50);
   }
 }
 
@@ -98,7 +113,7 @@ $auro-spacing-options: none;
 
     transform: scale(0);
 
-    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.12), 0 1px 10px 0 rgba(0,0,0,0.1);
+    box-shadow: 0 10px 20px 0 var(--ds-color-background-black-opacity-12, $ds-color-background-black-opacity-12), 0 1px 10px 0 var(--ds-color-background-black-opacity-10, $ds-color-background-black-opacity-10);
 
     &--open {
       transform: scale(1);
@@ -140,7 +155,7 @@ $auro-spacing-options: none;
   padding-top: var(--ds-size-800, $ds-size-800);
 
   & svg {
-    fill: var(--ds-color-text-secondary-default, $ds-color-text-secondary-default);
+    color: var(--ds-color-icon-primary-default, $ds-color-icon-primary-default);
   }
 
   &--action {
@@ -148,9 +163,9 @@ $auro-spacing-options: none;
     padding: 0;
 
     border: none;
-    border: 2px solid transparent;
+    border: 2px solid var(--ds-color-ui-transparent-default, $ds-color-ui-transparent-default);
     border-radius: var(--ds-border-radius, $ds-border-radius);
-    background-color: transparent;
+    background-color: var(--ds-color-ui-transparent-default, $ds-color-ui-transparent-default);
 
     &:hover {
       cursor: pointer;
@@ -179,7 +194,7 @@ $auro-spacing-options: none;
 // sets X from black to white
 :host([unformatted][onDark]) {
   .dialog-header--action {
-    color: var(--ds-color-base-white, $ds-color-base-white);
+    color: var(--ds-color-icon-emphasis-inverse, $ds-color-icon-emphasis-inverse);
   }
 }
 

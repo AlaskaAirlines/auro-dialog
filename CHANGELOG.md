@@ -1,5 +1,12 @@
 # Semantic Release Automated Changelog
 
+## [1.0.9](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.8...v1.0.9) (2024-04-05)
+
+
+### Bug Fixes
+
+* **scroll:** make dialog content scroll [#15](https://github.com/AlaskaAirlines/auro-dialog/issues/15) ([4f69654](https://github.com/AlaskaAirlines/auro-dialog/commit/4f696542e23d345fe5f1f26215b18e519609e6b8))
+
 ## [1.0.8](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.7...v1.0.8) (2024-02-23)
 
 

@@ -10,6 +10,9 @@ import { classMap } from 'lit/directives/class-map.js';
 
 import styleCss from "./style-css.js";
 import styleUnformattedCss from './style-unformatted-css.js';
+import colorCss from "./color-css.js";
+import tokensCss from "./tokens-css.js";
+
 import closeIcon from '@alaskaairux/icons/dist/icons/interface/x-lg.mjs';
 
 /* eslint-disable one-var, prefer-destructuring */
@@ -213,7 +216,9 @@ export default class ComponentBase extends LitElement {
   static get styles() {
     return [
       styleCss,
-      styleUnformattedCss
+      styleUnformattedCss,
+      colorCss,
+      tokensCss
     ];
   }
 

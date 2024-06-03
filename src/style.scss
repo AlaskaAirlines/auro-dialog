@@ -47,8 +47,6 @@ $auro-spacing-options: none;
     z-index: var(--ds-depth-overlay);
 
     transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 0);
-
-    background: rgba(0, 0, 0, 0.2);
   }
 
   // Modal modifier for modal/blocking state
@@ -56,8 +54,6 @@ $auro-spacing-options: none;
     z-index: var(--ds-depth-overlay);
 
     transition: background 0.3s cubic-bezier(0.4, 0, 0.5, 0);
-
-    background: rgba(0, 0, 0, 0.5);
   }
 }
 
@@ -81,11 +77,10 @@ $auro-spacing-options: none;
 
   opacity: 0;
   border: 0;
-  background: var(--ds-color-background-lightest, $ds-color-background-lightest);
-  color: var(--ds-color-text-primary-default, $ds-color-text-primary-default);
-  // baseline dialog UI / mobile-first
 
+  // baseline dialog UI / mobile-first
   @include auro_transition(all, 0.3s, ease-in-out);
+
   // 1024px breakpoint / large dialog size is default
   @include auro_breakpoint--md {
     top: 10%;
@@ -97,8 +92,6 @@ $auro-spacing-options: none;
     padding: var(--insetPaddingXxxl);
 
     transform: scale(0);
-
-    box-shadow: 0 10px 20px 0 rgba(0,0,0,0.12), 0 1px 10px 0 rgba(0,0,0,0.1);
 
     &--open {
       transform: scale(1);
@@ -139,18 +132,9 @@ $auro-spacing-options: none;
   justify-content: space-between;
   padding-top: var(--ds-size-800, $ds-size-800);
 
-  & svg {
-    fill: var(--ds-color-text-secondary-default, $ds-color-text-secondary-default);
-  }
-
   &--action {
     margin: 0;
     padding: 0;
-
-    border: none;
-    border: 2px solid transparent;
-    border-radius: var(--ds-border-radius, $ds-border-radius);
-    background-color: transparent;
 
     &:hover {
       cursor: pointer;
@@ -179,13 +163,6 @@ $auro-spacing-options: none;
       top: var(--ds-size-800, $ds-size-800);
       right: var(--ds-size-800, $ds-size-800);
     }
-  }
-}
-
-// sets X from black to white
-:host([unformatted][onDark]) {
-  .dialog-header--action {
-    color: var(--ds-color-base-white, $ds-color-base-white);
   }
 }
 

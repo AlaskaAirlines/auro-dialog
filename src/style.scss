@@ -28,9 +28,10 @@ $auro-spacing-options: none;
   --insetPaddingXxxl: 0 var(--ds-size-800, $ds-size-800) var(--ds-size-800, $ds-size-800) var(--ds-size-800, $ds-size-800);
 }
 
-// layout styles - define any layout specifications for UI that is contained WITHIN the component
-// never define layout that would cause effect on element outside the scope of this component
-
+[auro-icon] {
+  height: var(--ds-size-300, $ds-size-300);
+  width: var(--ds-size-300, $ds-size-300);
+}
 
 // container shape styles
 .dialogOverlay {

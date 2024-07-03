@@ -33,9 +33,4 @@
   border: 2px solid transparent;
   border-radius: var(--ds-border-radius, $ds-border-radius);
   background-color: transparent;
-  color: var(--ds-auro-dialog-close-button-color);
-}
-
-:host([unformatted][onDark]) {
-  --ds-auro-dialog-close-button-color: var(--ds-color-icon-primary-inverse, #{$ds-color-icon-primary-inverse});
 }

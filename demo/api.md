@@ -8,7 +8,6 @@
 | Attribute | Type      | Description                                      |
 |-----------|-----------|--------------------------------------------------|
 | [md](#md)      | `Boolean` | Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile. |
-| [onDark](#onDark)  | `Boolean` | Sets close icon to white for dark backgrounds    |
 | [sm](#sm)      | `Boolean` | Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile. |
 
 ## Properties
@@ -16,6 +15,7 @@
 | Property         | Attribute     | Type          | Default | Description                                      |
 |------------------|---------------|---------------|---------|--------------------------------------------------|
 | [modal](#modal)          | `modal`       | `Boolean`     | false   | Modal dialog restricts the user to take an action (no default close actions) |
+| [onDark](#onDark)         | `onDark`      | `Boolean`     |         | Sets close icon to white for dark backgrounds    |
 | [open](#open)           | `open`        | `Boolean`     |         | Sets state of dialog to open                     |
 | [triggerElement](#triggerElement) |               | `HTMLElement` |         | The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened. |
 | [unformatted](#unformatted)    | `unformatted` | `Boolean`     | false   | Unformatted dialog window, edge-to-edge fill for content |
@@ -733,9 +733,8 @@ The component may be restyled using the following code sample and changing the v
   --ds-auro-dialog-background-color: var(--ds-color-background-primary-100-default, #{$ds-color-background-primary-100-default});
   --ds-auro-dialog-boxshadow-color-one: rgb(0 0 0 / 0.12);
   --ds-auro-dialog-boxshadow-color-two: rgb(0 0 0 / 0.1);
-  --ds-auro-dialog-close-button-color: var(--ds-color-icon-primary-default, #{$ds-color-icon-primary-default});
-  --ds-auro-dialog-overlay-open-background-color: rgb(0 0 0 / 0.2);
   --ds-auro-dialog-overlay-modal-background-color: rgb(0 0 0 / 0.5);
+  --ds-auro-dialog-overlay-open-background-color: rgb(0 0 0 / 0.2);
   --ds-auro-dialog-text-color: var(--ds-color-text-primary-default, #{$ds-color-text-primary-default});
 }
 ```

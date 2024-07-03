@@ -3,9 +3,10 @@
 
 // ---------------------------------------------------------------------
 
-/* eslint-disable no-underscore-dangle, jsdoc/no-undefined-types, lit-a11y/click-events-have-key-events, jsdoc/require-description-complete-sentence */
+/* eslint-disable jsdoc/no-undefined-types, lit-a11y/click-events-have-key-events, jsdoc/require-description-complete-sentence, lit/binding-positions, lit/no-invalid-html, prefer-destructuring */
 
-import { LitElement, html } from "lit";
+import { LitElement } from "lit";
+import { html } from 'lit/static-html.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import styleCss from "./style-css.js";
@@ -13,9 +14,13 @@ import styleUnformattedCss from './style-unformatted-css.js';
 import colorCss from "./color-css.js";
 import tokensCss from "./tokens-css.js";
 
-import closeIcon from '@alaskaairux/icons/dist/icons/interface/x-lg.mjs';
+import { AuroDependencyVersioning } from '@aurodesignsystem/auro-library/scripts/runtime/dependencyTagVersioning.mjs';
 
-/* eslint-disable one-var, prefer-destructuring */
+import { AuroButton } from '@aurodesignsystem/auro-button/src/auro-button.js';
+import buttonVersion from './buttonVersion';
+
+import { AuroIcon } from '@aurodesignsystem/auro-icon/src/auro-icon.js';
+import iconVersion from './iconVersion';
 
 const ESCAPE_KEYCODE = 27,
   FOCUS_TIMEOUT = 50;
@@ -48,24 +53,30 @@ export default class ComponentBase extends LitElement {
   constructor() {
     super();
 
-    /**
-     * @private
-     */
-    this.dom = new DOMParser().parseFromString(closeIcon.svg, 'text/html');
-
-    /**
-     * @private
-     */
-    this.svg = this.dom.body.firstChild;
-
     this.modal = false;
     this.unformatted = false;
+
+    const versioning = new AuroDependencyVersioning();
+
+    /**
+     * @private
+     */
+    this.buttonTag = versioning.generateTag('auro-button', buttonVersion, AuroButton);
+
+    /**
+     * @private
+     */
+    this.iconTag = versioning.generateTag('auro-icon', iconVersion, AuroIcon);
   }
 
   static get properties() {
     return {
       modal: { type: Boolean },
       unformatted: {
+        type: Boolean,
+        reflect: true
+      },
+      onDark: {
         type: Boolean,
         reflect: true
       },
@@ -164,7 +175,7 @@ export default class ComponentBase extends LitElement {
 
     if (lastFocusableElement) {
       lastFocusableElement.addEventListener('focusout', () => {
-        if (closeButton !== null) { // eslint-disable-line no-negated-condition
+        if (closeButton !== null) {
           closeButton.focus();
         } else {
           firstFocusableElement.focus();
@@ -230,10 +241,10 @@ export default class ComponentBase extends LitElement {
     return this.modal
       ? html``
       : html`
-        <button class="dialog-header--action" id="dialog-close" @click="${this.handleCloseButtonClick}" part="close-button">
-          <span>${this.svg}</span>
+        <${this.buttonTag} variant="flat" class="dialog-header--action" id="dialog-close" @click="${this.handleCloseButtonClick}" part="close-button">
+          <${this.iconTag} customSize customColor ?onDark=${this.onDark} category="interface" name="x-lg"></${this.iconTag}>
           <span class="util_displayHiddenVisually">Close</span>
-        </button>
+        </${this.buttonTag}>
       `;
   }
 

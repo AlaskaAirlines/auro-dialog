@@ -1,5 +1,13 @@
 # Semantic Release Automated Changelog
 
+# [1.1.0-beta.1](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.9...v1.1.0-beta.1) (2024-07-04)
+
+
+### Features
+
+* refactor color token structure with tier 3 tokens [#13](https://github.com/AlaskaAirlines/auro-dialog/issues/13) ([179e468](https://github.com/AlaskaAirlines/auro-dialog/commit/179e4684d5611f788c18537eeefe837915011b87))
+* **version:** use custom versioned auro components ([8de7e7c](https://github.com/AlaskaAirlines/auro-dialog/commit/8de7e7c4bfdb8576be99a767121cf3cc68a0f12f))
+
 ## [1.0.9](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.8...v1.0.9) (2024-04-05)
 
 

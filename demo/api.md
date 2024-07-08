@@ -8,6 +8,7 @@
 | Attribute | Type      | Description                                      |
 |-----------|-----------|--------------------------------------------------|
 | [md](#md)      | `Boolean` | Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile. |
+| [onDark](#onDark)  | `Boolean` | Sets close icon to white for dark backgrounds    |
 | [sm](#sm)      | `Boolean` | Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile. |
 
 ## Properties
@@ -15,7 +16,6 @@
 | Property         | Attribute     | Type          | Default | Description                                      |
 |------------------|---------------|---------------|---------|--------------------------------------------------|
 | [modal](#modal)          | `modal`       | `Boolean`     | false   | Modal dialog restricts the user to take an action (no default close actions) |
-| [onDark](#onDark)         | `onDark`      | `Boolean`     |         | Sets close icon to white for dark backgrounds    |
 | [open](#open)           | `open`        | `Boolean`     |         | Sets state of dialog to open                     |
 | [triggerElement](#triggerElement) |               | `HTMLElement` |         | The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened. |
 | [unformatted](#unformatted)    | `unformatted` | `Boolean`     | false   | Unformatted dialog window, edge-to-edge fill for content |

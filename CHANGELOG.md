@@ -1,5 +1,12 @@
 # Semantic Release Automated Changelog
 
+# [1.1.0-beta.2](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2024-07-08)
+
+
+### Performance Improvements
+
+* **button:** use new version of flat variant button ([17ce223](https://github.com/AlaskaAirlines/auro-dialog/commit/17ce223fa6a5a91dbda69b316b76220397eea7a7))
+
 # [1.1.0-beta.1](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.9...v1.1.0-beta.1) (2024-07-04)
 
 

@@ -76,10 +76,6 @@ export default class ComponentBase extends LitElement {
         type: Boolean,
         reflect: true
       },
-      onDark: {
-        type: Boolean,
-        reflect: true
-      },
       open: {
         type: Boolean,
         reflect: true
@@ -241,8 +237,8 @@ export default class ComponentBase extends LitElement {
     return this.modal
       ? html``
       : html`
-        <${this.buttonTag} variant="flat" class="dialog-header--action" id="dialog-close" @click="${this.handleCloseButtonClick}" part="close-button">
-          <${this.iconTag} customSize customColor ?onDark=${this.onDark} category="interface" name="x-lg"></${this.iconTag}>
+        <${this.buttonTag} variant="flat" ?onDark=${this.hasAttribute('onDark')} class="dialog-header--action" id="dialog-close" @click="${this.handleCloseButtonClick}" part="close-button">
+          <${this.iconTag} customSize customColor category="interface" name="x-lg"></${this.iconTag}>
           <span class="util_displayHiddenVisually">Close</span>
         </${this.buttonTag}>
       `;

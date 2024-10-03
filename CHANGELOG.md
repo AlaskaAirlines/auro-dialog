@@ -1,5 +1,28 @@
 # Semantic Release Automated Changelog
 
+# [2.0.0-beta.1](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.1.0-beta.2...v2.0.0-beta.1) (2024-10-03)
+
+
+### Bug Fixes
+
+* resolve minor color theming issues ([04aed67](https://github.com/AlaskaAirlines/auro-dialog/commit/04aed672c13d2ec1e3be8f80025e7ffc8f18e6d1))
+
+
+### Features
+
+* add tag name as attribute when custom registered ([e749245](https://github.com/AlaskaAirlines/auro-dialog/commit/e749245d29676388bf40c32b263f32a5f1fc5a68))
+
+
+### Performance Improvements
+
+* refactor custom component registration config ([5c1afc8](https://github.com/AlaskaAirlines/auro-dialog/commit/5c1afc8f4e8bd38114a03f0b95a0f5f81b25e763))
+* update dependencies ([eea1e4f](https://github.com/AlaskaAirlines/auro-dialog/commit/eea1e4f3f84f172558fc6fba6784dbbbf81f2ef1))
+
+
+### BREAKING CHANGES
+
+* trigger major release for color theme support #13
+
 # [1.1.0-beta.2](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.1.0-beta.1...v1.1.0-beta.2) (2024-07-08)
 
 

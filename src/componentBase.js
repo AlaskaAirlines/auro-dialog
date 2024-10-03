@@ -14,6 +14,8 @@ import styleUnformattedCss from './style-unformatted-css.js';
 import colorCss from "./color-css.js";
 import tokensCss from "./tokens-css.js";
 
+import AuroLibraryRuntimeUtils from '@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs';
+
 import { AuroDependencyVersioning } from '@aurodesignsystem/auro-library/scripts/runtime/dependencyTagVersioning.mjs';
 
 import { AuroButton } from '@aurodesignsystem/auro-button/src/auro-button.js';
@@ -67,6 +69,12 @@ export default class ComponentBase extends LitElement {
      * @private
      */
     this.iconTag = versioning.generateTag('auro-icon', iconVersion, AuroIcon);
+
+
+    /**
+     * @private
+     */
+    this.runtimeUtils = new AuroLibraryRuntimeUtils();
   }
 
   static get properties() {
@@ -87,6 +95,9 @@ export default class ComponentBase extends LitElement {
   }
 
   firstUpdated() {
+    // Add the tag name as an attribute if it is different than the component name
+    this.runtimeUtils.handleComponentTagRename(this, 'auro-dialog');
+
     const slot = this.shadowRoot.querySelector("#footer"),
       slotWrapper = this.shadowRoot.querySelector("#footerWrapper");
 

@@ -1,5 +1,12 @@
 # Semantic Release Automated Changelog
 
+## [2.0.1](https://github.com/AlaskaAirlines/auro-dialog/compare/v2.0.0...v2.0.1) (2024-10-08)
+
+
+### Bug Fixes
+
+* moves auro library to dependencies in package.json [#23](https://github.com/AlaskaAirlines/auro-dialog/issues/23) ([7251994](https://github.com/AlaskaAirlines/auro-dialog/commit/7251994d2f6f00b2faf3bd7fab5b584483bcb0e2))
+
 # [2.0.0](https://github.com/AlaskaAirlines/auro-dialog/compare/v1.0.9...v2.0.0) (2024-10-04)
 
 

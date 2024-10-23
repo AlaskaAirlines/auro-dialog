@@ -1,5 +1,5 @@
 import { fixture, html, expect, oneEvent, waitUntil, elementUpdated } from '@open-wc/testing';
-import '../src/auro-dialog.js';
+import '../index.js';
 // import './nested-shadow.js';
 
 describe('auro-dialog', () => {

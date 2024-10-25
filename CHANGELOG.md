@@ -1,5 +1,17 @@
 # Semantic Release Automated Changelog
 
+# [2.1.0](https://github.com/AlaskaAirlines/auro-dialog/compare/v2.0.1...v2.1.0) (2024-10-25)
+
+
+### Features
+
+* **api:** add register static method [#26](https://github.com/AlaskaAirlines/auro-dialog/issues/26) ([a5882af](https://github.com/AlaskaAirlines/auro-dialog/commit/a5882af95970c0973bd97eed2a86c653948c8ef3))
+
+
+### Performance Improvements
+
+* update dependency versions ([ac77559](https://github.com/AlaskaAirlines/auro-dialog/commit/ac775591e2aa2bbd07a06e90434410f4398684ae))
+
 ## [2.0.1](https://github.com/AlaskaAirlines/auro-dialog/compare/v2.0.0...v2.0.1) (2024-10-08)
 
 

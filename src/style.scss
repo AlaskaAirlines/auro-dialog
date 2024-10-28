@@ -29,8 +29,7 @@ $auro-spacing-options: none;
 }
 
 [auro-icon] {
-  height: var(--ds-size-300, $ds-size-300);
-  width: var(--ds-size-300, $ds-size-300);
+  --ds-auro-icon-size: var(--ds-size-300, $ds-size-300);
 }
 
 // container shape styles

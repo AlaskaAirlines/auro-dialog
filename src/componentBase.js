@@ -249,7 +249,7 @@ export default class ComponentBase extends LitElement {
       ? html``
       : html`
         <${this.buttonTag} variant="flat" ?onDark=${this.hasAttribute('onDark')} class="dialog-header--action" id="dialog-close" @click="${this.handleCloseButtonClick}" part="close-button">
-          <${this.iconTag} customSize customColor category="interface" name="x-lg"></${this.iconTag}>
+          <${this.iconTag} customColor category="interface" name="x-lg"></${this.iconTag}>
           <span class="util_displayHiddenVisually">Close</span>
         </${this.buttonTag}>
       `;

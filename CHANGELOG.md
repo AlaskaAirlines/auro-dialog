@@ -1,5 +1,18 @@
 # Semantic Release Automated Changelog
 
+# [2.2.0](https://github.com/AlaskaAirlines/auro-dialog/compare/v2.1.0...v2.2.0) (2024-11-01)
+
+
+### Features
+
+* apply latest token ds-auro-icon-size [#28](https://github.com/AlaskaAirlines/auro-dialog/issues/28) ([a0f0f45](https://github.com/AlaskaAirlines/auro-dialog/commit/a0f0f451866f435e12e769dafdadffe056927973))
+* update auro-icon package [#28](https://github.com/AlaskaAirlines/auro-dialog/issues/28) ([7eb9665](https://github.com/AlaskaAirlines/auro-dialog/commit/7eb96656f66fa619f0a0d38ef4d126c4e7f68d7d))
+
+
+### Performance Improvements
+
+* update dependencies ([af459cf](https://github.com/AlaskaAirlines/auro-dialog/commit/af459cfd5db990bb930df17facbad18bd24ae4fd))
+
 # [2.1.0](https://github.com/AlaskaAirlines/auro-dialog/compare/v2.0.1...v2.1.0) (2024-10-25)
 
 

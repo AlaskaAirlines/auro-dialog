@@ -4,7 +4,7 @@ The README.md file is a compiled document. No edits should be made directly to t
 README.md is created by running `npm run build:docs`.
 
 This file is generated based on a template fetched from
-`https://raw.githubusercontent.com/AlaskaAirlines/WC-Generator/master/componentDocs/README.md`
+`https://raw.githubusercontent.com/AlaskaAirlines/WC-Generator/master/componentDocs/README_updated_paths.md`
 and copied to `./componentDocs/README.md` each time the the docs are compiled.
 
 The following sections are editable by making changes to the following files:
@@ -19,16 +19,16 @@ The following sections are editable by making changes to the following files:
 
 # Dialog
 
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/description.md) -->
-<!-- The below content is automatically added from ./../docs/partials/description.md -->
+<!-- AURO-GENERATED-CONTENT:START (FILE:src=./docs/partials/description.md) -->
+<!-- The below content is automatically added from ./docs/partials/description.md -->
 The `<auro-dialog>` component is an intrusive interactive component, not passive. The component is best used when there is a requirement the user be made aware of the content being shown, moving focus from the main content to the dialog content.
 
 The component also supports a modal (blocking) state where the user must interact with the content of the component in order to continue. Passive dismissal of the content is not allowed. Users of this state must add a trigger for the user to move beyond this content.
 
 Auro holds the opinions of the [Nielsen Norman Group](https://www.nngroup.com/articles/modal-nonmodal-dialog/) on dialog and modal use to be true.
 <!-- AURO-GENERATED-CONTENT:END -->
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/readmeAddlInfo.md) -->
-<!-- The below content is automatically added from ./../docs/partials/readmeAddlInfo.md -->
+<!-- AURO-GENERATED-CONTENT:START (FILE:src=./docs/partials/readmeAddlInfo.md) -->
+<!-- The below content is automatically added from ./docs/partials/readmeAddlInfo.md -->
 **Important Notice**: This component no longer lives within the `auro-interruption` repository, as that is now being deprecated. `<auro-dialog>` is now a standalone component and users will be required to install it seperately. See the [Install Page](https://auro.alaskaair.com/components/auro/dialog/install) for instructions on how to install the component.
 <!-- AURO-GENERATED-CONTENT:END -->
 
@@ -76,8 +76,8 @@ import "@aurodesignsystem/auro-dialog";
 
 <!-- AURO-GENERATED-CONTENT:END -->
 **Reference component in HTML**
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/basic.html) -->
-<!-- The below code snippet is automatically added from ./../apiExamples/basic.html -->
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./apiExamples/basic.html) -->
+<!-- The below code snippet is automatically added from ./apiExamples/basic.html -->
 
 ```html
 <div>
@@ -119,15 +119,15 @@ In cases where the project is not able to process JS assets, there are pre-proce
 ```html
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@aurodesignsystem/design-tokens@4.10.0/dist/tokens/CSSCustomProperties.css" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@aurodesignsystem/webcorestylesheets@5.1.1/dist/bundled/essentials.css" />
-<script src="https://cdn.jsdelivr.net/npm/@aurodesignsystem/auro-dialog@2.0.1/dist/auro-dialog__bundled.js" type="module"></script>
+<script src="https://cdn.jsdelivr.net/npm/@aurodesignsystem/auro-dialog@2.2.1/dist/auro-dialog__bundled.js" type="module"></script>
 ```
 
 <!-- AURO-GENERATED-CONTENT:END -->
 
 ## auro-dialog use cases
 
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/useCases.md) -->
-<!-- The below content is automatically added from ./../docs/partials/useCases.md -->
+<!-- AURO-GENERATED-CONTENT:START (FILE:src=./docs/partials/useCases.md) -->
+<!-- The below content is automatically added from ./docs/partials/useCases.md -->
 The `<auro-dialog>` component should be used in situations where users may:
 
 * Be prompted to take an action before doing anything else or going back
@@ -138,8 +138,8 @@ The `<auro-dialog>` component should be used in situations where users may:
 
 ### Default auro-dialog
 
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/basic.html) -->
-<!-- The below code snippet is automatically added from ./../apiExamples/basic.html -->
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./apiExamples/basic.html) -->
+<!-- The below code snippet is automatically added from ./apiExamples/basic.html -->
 
 ```html
 <div>

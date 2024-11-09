@@ -6,17 +6,17 @@ This file is generated based on a template fetched from `./docs/partials/index.m
 
 # Dialog
 
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./description.md) -->
+<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/description.md) -->
 <!-- AURO-GENERATED-CONTENT:END -->
 
 ## auro-dialog use cases
 
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./useCases.md) -->
+<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/useCases.md) -->
 <!-- AURO-GENERATED-CONTENT:END -->
 
 ## Additional Information
 
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./readmeAddlInfo.md) -->
+<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/readmeAddlInfo.md) -->
 <!-- AURO-GENERATED-CONTENT:END -->
 
 ## Set Up
@@ -62,14 +62,14 @@ It should be noted that the `footer` slot is reserved for the placement of actio
 ## Example(s)
 
 <div class="exampleWrapper">
-  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../../apiExamples/basic.html) -->
+  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/basic.html) -->
   <!-- AURO-GENERATED-CONTENT:END -->
 </div>
 
 <auro-accordion alignRight>
   <span slot="trigger">See code</span>
 
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../../apiExamples/basic.html) -->
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/basic.html) -->
 <!-- AURO-GENERATED-CONTENT:END -->
 
 </auro-accordion>
@@ -91,14 +91,14 @@ AuroDialog.register('custom-dialog');
 This will create a new custom element that you can use in your HTML that will function identically to the `auro-dialog` element.
 
 <div class="exampleWrapper">
-  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../../apiExamples/custom.html) -->
+  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/custom.html) -->
   <!-- AURO-GENERATED-CONTENT:END -->
 </div>
 
 <auro-accordion alignRight>
   <span slot="trigger">See code</span>
 
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../../apiExamples/custom.html) -->
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/custom.html) -->
 <!-- AURO-GENERATED-CONTENT:END -->
 
 </auro-accordion>

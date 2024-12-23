@@ -3,7 +3,7 @@
 
 // ---------------------------------------------------------------------
 
-/* eslint-disable jsdoc/no-undefined-types, lit-a11y/click-events-have-key-events, jsdoc/require-description-complete-sentence, lit/binding-positions, lit/no-invalid-html, prefer-destructuring */
+/* eslint-disable jsdoc/no-undefined-types, lit-a11y/click-events-have-key-events, jsdoc/require-description-complete-sentence, lit/binding-positions, lit/no-invalid-html, prefer-destructuring, max-lines */
 
 import { LitElement } from "lit";
 import { html } from 'lit/static-html.js';
@@ -197,7 +197,16 @@ export default class ComponentBase extends LitElement {
    */
   handleOverlayClick() {
     if (this.open && !this.modal) {
-      this.handleCloseButtonClick();
+      const dropdownComponents = [...this.querySelectorAll('auro-combobox, [auro-combobox], auro-select, [auro-select]')];
+      const dropdowns = [
+        ...this.querySelectorAll('auro-dropdown, [auro-dropdown]'),
+        ...dropdownComponents.map((comp) => comp.dropdown),
+      ];
+
+      const isAnyDropdownOpen = dropdowns.reduce((prev, cur) => prev || cur.isPopoverVisible, false);
+      if (!isAnyDropdownOpen) {
+        this.handleCloseButtonClick();
+      }
     }
   }
 

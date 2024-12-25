@@ -203,7 +203,7 @@ export default class ComponentBase extends LitElement {
         ...dropdownComponents.map((comp) => comp.dropdown),
       ];
 
-      const isAnyDropdownOpen = dropdowns.reduce((prev, cur) => prev || cur.isPopoverVisible, false);
+      const isAnyDropdownOpen = dropdowns.some((dropdown) => dropdown.isPopoverVisible);
       if (!isAnyDropdownOpen) {
         this.handleCloseButtonClick();
       }

@@ -1,5 +1,18 @@
 # Semantic Release Automated Changelog
 
+## [2.3.2](https://github.com/AlaskaAirlines/auro-dialog/compare/v2.3.1...v2.3.2) (2024-12-27)
+
+
+### Bug Fixes
+
+* close any open dropdown or related components with overlay clicks [#40](https://github.com/AlaskaAirlines/auro-dialog/issues/40) ([1face94](https://github.com/AlaskaAirlines/auro-dialog/commit/1face94b13d142e3b5cb73155b447cc121e29a8b))
+* dialog stays open with overlay clickes if datepicker was open ([40b2e49](https://github.com/AlaskaAirlines/auro-dialog/commit/40b2e49d2dee748db60f5ce47f78d998ff0b7e31))
+
+
+### Performance Improvements
+
+* update dependencies ([d54e0a9](https://github.com/AlaskaAirlines/auro-dialog/commit/d54e0a9a7f0cf3135eec141244f90bc4eed83ae5))
+
 ## [2.3.1](https://github.com/AlaskaAirlines/auro-dialog/compare/v2.3.0...v2.3.1) (2024-12-21)
 
 

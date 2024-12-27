@@ -197,7 +197,7 @@ export default class ComponentBase extends LitElement {
    */
   handleOverlayClick() {
     if (this.open && !this.modal) {
-      const dropdownComponents = [...this.querySelectorAll('auro-combobox, [auro-combobox], auro-select, [auro-select]')];
+      const dropdownComponents = [...this.querySelectorAll('auro-combobox, [auro-combobox], auro-select, [auro-select], auro-datepicker, [auro-datepicker]')];
       const dropdowns = [
         ...this.querySelectorAll('auro-dropdown, [auro-dropdown]'),
         ...dropdownComponents.map((comp) => comp.dropdown),

@@ -24,7 +24,7 @@
   color: var(--ds-auro-dialog-text-color);
 
   // 1024px breakpoint / large dialog size is default
-  @include auro_breakpoint--md {
+  @include auro_grid-breakpoint--md {
     box-shadow: var(--ds-auro-dialog-boxshadow-color);
   }
 }

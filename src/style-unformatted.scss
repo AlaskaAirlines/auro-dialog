@@ -6,7 +6,7 @@
 [unformatted] .unformattedWrapper {
   padding: var(--ds-size-400, $ds-size-400);
 
-  @include auro_breakpoint--md {
+  @include auro_grid-breakpoint--md {
     padding: var(--ds-size-800, $ds-size-800);
     padding-top: var(--ds-size-400, $ds-size-400);
   }

@@ -82,7 +82,7 @@ $auro-spacing-options: none;
   @include auro_transition(all, 0.3s, ease-in-out);
 
   // 1024px breakpoint / large dialog size is default
-  @include auro_breakpoint--md {
+  @include auro_grid-breakpoint--md {
     top: 10%;
     bottom: unset;
 
@@ -98,7 +98,7 @@ $auro-spacing-options: none;
     }
   }
 
-  @include auro_breakpoint--lg {
+  @include auro_grid-breakpoint--lg {
     max-width: 986px;
   }
 
@@ -117,7 +117,7 @@ $auro-spacing-options: none;
   &-footer {
     padding-top: var(--ds-size-400, $ds-size-400);
 
-    @include auro_breakpoint--md {
+    @include auro_grid-breakpoint--md {
       ::slotted(*) {
         display: flex;
         justify-content: flex-end;
@@ -159,7 +159,7 @@ $auro-spacing-options: none;
     top: var(--ds-size-400, $ds-size-400);
     right: var(--ds-size-400, $ds-size-400);
 
-    @include auro_breakpoint--md {
+    @include auro_grid-breakpoint--md {
       top: var(--ds-size-800, $ds-size-800);
       right: var(--ds-size-800, $ds-size-800);
     }
@@ -171,7 +171,7 @@ $auro-spacing-options: none;
     max-height: 30%;
   }
 
-  @include auro_breakpoint--md {
+  @include auro_grid-breakpoint--md {
     .dialog {
       top: 10%;
 
@@ -180,7 +180,7 @@ $auro-spacing-options: none;
       padding: var(--insetPaddingXxl);
     }
   }
-  @include auro_breakpoint--lg {
+  @include auro_grid-breakpoint--lg {
     .dialog {
       max-width: 740px;
     }
@@ -192,7 +192,7 @@ $auro-spacing-options: none;
     max-height: 50%;
   }
 
-  @include auro_breakpoint--md {
+  @include auro_grid-breakpoint--md {
     .dialog {
       top: 10%;
 
@@ -200,7 +200,7 @@ $auro-spacing-options: none;
       max-height: 80%;
     }
   }
-  @include auro_breakpoint--lg {
+  @include auro_grid-breakpoint--lg {
     .dialog {
       top: 10%;
 
@@ -211,7 +211,7 @@ $auro-spacing-options: none;
 
 :host([sm][lg]),
 :host([md][lg]) {
-  @include auro_breakpoint--md {
+  @include auro_grid-breakpoint--md {
     .dialog {
       max-height: 80%;
     }

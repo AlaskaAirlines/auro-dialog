@@ -1,5 +1,13 @@
 # Semantic Release Automated Changelog
 
+## [2.3.3](https://github.com/AlaskaAirlines/auro-dialog/compare/v2.3.2...v2.3.3) (2025-02-08)
+
+
+### Performance Improvements
+
+* update dependencies ([bbe2813](https://github.com/AlaskaAirlines/auro-dialog/commit/bbe28139ac18864ad2385f67e7d6aaa9a88d6798))
+* update mixin per new WCSS spec ([99b8790](https://github.com/AlaskaAirlines/auro-dialog/commit/99b879083c23db0522777b395734e789cdcdfd3e))
+
 ## [2.3.2](https://github.com/AlaskaAirlines/auro-dialog/compare/v2.3.1...v2.3.2) (2024-12-27)
 
 

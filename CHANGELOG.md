@@ -1,5 +1,20 @@
 # Semantic Release Automated Changelog
 
+# [3.0.0](https://github.com/AlaskaAirlines/auro-dialog/compare/v2.3.3...v3.0.0) (2025-02-28)
+
+
+* feat!: move peer dependencies to "real" dependencies ([d16d380](https://github.com/AlaskaAirlines/auro-dialog/commit/d16d3807e81cd199303df61a22409664831cdfb7))
+
+
+### BREAKING CHANGES
+
+* last change was breaking _on a patch version_ because of peer dependencies
+
+Summary:
+  Our current build process relies on peer dependencies being present, but
+  the peer dependency pipeline is causing far more issues than it's worth.
+  Why not just make them regular dependencies? This is what this PR does :)
+
 ## [2.3.3](https://github.com/AlaskaAirlines/auro-dialog/compare/v2.3.2...v2.3.3) (2025-02-08)
 
 

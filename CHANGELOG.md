@@ -1,5 +1,12 @@
 # Semantic Release Automated Changelog
 
+## [3.0.1](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.0.0...v3.0.1) (2025-03-11)
+
+
+### Bug Fixes
+
+* width of the dialog no longer causes content to overflow the screen [#46](https://github.com/AlaskaAirlines/auro-dialog/issues/46) ([82f7f62](https://github.com/AlaskaAirlines/auro-dialog/commit/82f7f62b79f996fc3a9a5b9653e0c794f6936db4))
+
 # [3.0.0](https://github.com/AlaskaAirlines/auro-dialog/compare/v2.3.3...v3.0.0) (2025-02-28)
 
 

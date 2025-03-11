@@ -69,7 +69,7 @@ $auro-spacing-options: none;
   visibility: hidden;
   overflow: visible;
 
-  width: 100%;
+  width: calc(100% - var(--insetPaddingXl) - var(--insetPaddingXl));
   max-height: 90%;
   padding: var(--insetPaddingXl);
 

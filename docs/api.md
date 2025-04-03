@@ -1,5 +1,7 @@
 # auro-dialog
 
+This will register this element with the browser.
+
 ## Attributes
 
 | Attribute | Type      | Description                                      |

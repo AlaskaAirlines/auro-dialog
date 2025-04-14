@@ -6,6 +6,10 @@
 import AuroLibraryRuntimeUtils from '@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs';
 import ComponentBase from './componentBase.js';
 
+/**
+ * The auro-dialog appears above the page and requires the user's attention.
+ */
+
 // build the component class
 export class AuroDialog extends ComponentBase {
   // constructor() {

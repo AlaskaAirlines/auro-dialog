@@ -2,8 +2,8 @@
 import { AuroDialog } from '../../src/auro-dialog.js';
 
 /**
-   * This will register this element with the browser.
-   * */
+ * The auro-dialog appears above the page and requires the user's attention.
+ */
 class AuroDialogWCA extends AuroDialog {}
 
 if (!customElements.get("auro-dialog")) {

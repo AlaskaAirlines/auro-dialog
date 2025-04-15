@@ -1,5 +1,12 @@
 # Semantic Release Automated Changelog
 
+## [3.0.2](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.0.1...v3.0.2) (2025-04-15)
+
+
+### Performance Improvements
+
+* add wca script for docs api ([f79ab38](https://github.com/AlaskaAirlines/auro-dialog/commit/f79ab38d7434f585b16eb53583757762e7313cc7))
+
 ## [3.0.1](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.0.0...v3.0.1) (2025-03-11)
 
 

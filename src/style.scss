@@ -8,7 +8,7 @@
    scss/selector-nest-combinators, rule-empty-line-before,  no-descending-specificity, no-duplicate-selectors */
 
 // Import Auro tokens
-@import "./../node_modules/@aurodesignsystem/design-tokens/dist/tokens/SCSSVariables";
+@import "./../node_modules/@aurodesignsystem/design-tokens/dist/auro-classic/SCSSVariables";
 
 @import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/breakpoints";
 @import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/core";
@@ -18,7 +18,8 @@
 
 $auro-spacing-types: stack;
 $auro-spacing-options: none;
-@import "./../node_modules/@aurodesignsystem/design-tokens/dist/tokens/SCSSVariableMap";
+
+@import "./../node_modules/@aurodesignsystem/design-tokens/dist/auro-classic/SCSSVariableMap";
 @import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/utilityMixins/spacingUtility";
 
 // container styles - defines the look of the outer custom component

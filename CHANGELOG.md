@@ -1,5 +1,12 @@
 # Semantic Release Automated Changelog
 
+# [3.1.0](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.0.2...v3.1.0) (2025-04-30)
+
+
+### Features
+
+* update to use new color theme tokens [#50](https://github.com/AlaskaAirlines/auro-dialog/issues/50) ([f9d6358](https://github.com/AlaskaAirlines/auro-dialog/commit/f9d63587c8f0887decd682fc59ab82d489e38e3a))
+
 ## [3.0.2](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.0.1...v3.0.2) (2025-04-15)
 
 

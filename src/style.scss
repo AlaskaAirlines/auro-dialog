@@ -24,13 +24,13 @@ $auro-spacing-options: none;
 
 // container styles - defines the look of the outer custom component
 :host {
-  --insetPaddingXl: 0 var(--ds-size-400, $ds-size-400) var(--ds-size-400, $ds-size-400) var(--ds-size-400, $ds-size-400);
-  --insetPaddingXxl: 0 var(--ds-size-600, $ds-size-600) var(--ds-size-600, $ds-size-600) var(--ds-size-600, $ds-size-600);
-  --insetPaddingXxxl: 0 var(--ds-size-800, $ds-size-800) var(--ds-size-800, $ds-size-800) var(--ds-size-800, $ds-size-800);
+  --insetPaddingXl: 0 var(--ds-size-400, #{$ds-size-400}) var(--ds-size-400, #{$ds-size-400}) var(--ds-size-400, #{$ds-size-400});
+  --insetPaddingXxl: 0 var(--ds-size-600, #{$ds-size-600}) var(--ds-size-600, #{$ds-size-600}) var(--ds-size-600, #{$ds-size-600});
+  --insetPaddingXxxl: 0 var(--ds-size-800, #{$ds-size-800}) var(--ds-size-800, #{$ds-size-800}) var(--ds-size-800, #{$ds-size-800});
 }
 
 [auro-icon] {
-  --ds-auro-icon-size: var(--ds-size-300, $ds-size-300);
+  --ds-auro-icon-size: var(--ds-size-300, #{$ds-size-300});
 }
 
 // container shape styles

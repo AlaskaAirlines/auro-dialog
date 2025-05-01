@@ -1,5 +1,12 @@
 # Semantic Release Automated Changelog
 
+## [3.1.1](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.1.0...v3.1.1) (2025-05-01)
+
+
+### Bug Fixes
+
+* update SCSS token formatting ([f17792d](https://github.com/AlaskaAirlines/auro-dialog/commit/f17792d40498ede25d94efba02cf1ad2ef3d8933))
+
 # [3.1.0](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.0.2...v3.1.0) (2025-04-30)
 
 

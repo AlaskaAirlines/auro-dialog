@@ -6,8 +6,12 @@ describe('auro-dialog', () => {
   it('auro-dialog is accessible', async () => {
     const el = await fixture(html`
       <auro-dialog open="true">
+        
         <span slot="header">Blocking dialog</span>
-        <span slot="content">Hello World!</span>
+        <span slot="content">
+          Hello World!
+          <button>Test Button</button>
+        </span>
         <span slot="footer"><button>Click</button></span>
       </auro-dialog>
     `);

@@ -65,6 +65,7 @@ $auro-spacing-options: none;
   right: 0;
   bottom: -100%;
   left: 0;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   visibility: hidden;
@@ -76,6 +77,14 @@ $auro-spacing-options: none;
 
   opacity: 0;
   border: 0;
+
+  // open modifier
+  &--open {
+    z-index: var(--ds-depth-modal, $ds-depth-modal);
+    visibility: visible;
+    bottom: 0;
+    opacity: 1;
+  }
 
   // baseline dialog UI / mobile-first
   @include auro_transition(all, 0.3s, ease-in-out);
@@ -107,14 +116,6 @@ $auro-spacing-options: none;
 
   @include auro_grid-breakpoint--lg {
     max-width: 986px;
-  }
-
-  // open modifier
-  &--open {
-    z-index: var(--ds-depth-modal, $ds-depth-modal);
-    visibility: visible;
-    bottom: 0;
-    opacity: 1;
   }
 
   // footer slot
@@ -161,10 +162,12 @@ $auro-spacing-options: none;
   .dialog-header--action {
     position: absolute;
     top: var(--ds-size-400, $ds-size-400);
+    bottom: unset;
     right: var(--ds-size-400, $ds-size-400);
 
     @include auro_grid-breakpoint--md {
       top: var(--ds-size-800, $ds-size-800);
+      bottom: unset;
       right: var(--ds-size-800, $ds-size-800);
     }
   }
@@ -178,7 +181,7 @@ $auro-spacing-options: none;
   @include auro_grid-breakpoint--md {
     .dialog {
       top: 10%;
-
+      bottom: unset;
       max-width: 40%;
       max-height: 80%;
       padding: var(--insetPaddingXxl);
@@ -199,6 +202,7 @@ $auro-spacing-options: none;
   @include auro_grid-breakpoint--md {
     .dialog {
       top: 10%;
+      bottom: unset;
 
       max-width: 70%;
       max-height: 80%;
@@ -207,6 +211,7 @@ $auro-spacing-options: none;
   @include auro_grid-breakpoint--lg {
     .dialog {
       top: 10%;
+      bottom: unset;
 
       max-width: 986px;
     }

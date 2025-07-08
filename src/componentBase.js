@@ -15,8 +15,9 @@ import colorCss from "./color-css.js";
 import tokensCss from "./tokens-css.js";
 
 import AuroLibraryRuntimeUtils from '@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs';
-
 import { AuroDependencyVersioning } from '@aurodesignsystem/auro-library/scripts/runtime/dependencyTagVersioning.mjs';
+
+import { FocusTrap } from "@aurodesignsystem/auro-library/scripts/runtime/FocusTrap/index.mjs";
 
 import { AuroButton } from '@aurodesignsystem/auro-button/src/auro-button.js';
 import buttonVersion from './buttonVersion.js';
@@ -24,8 +25,8 @@ import buttonVersion from './buttonVersion.js';
 import { AuroIcon } from '@aurodesignsystem/auro-icon/src/auro-icon.js';
 import iconVersion from './iconVersion.js';
 
-const ESCAPE_KEYCODE = 27,
-  FOCUS_TIMEOUT = 50;
+const ESCAPE_KEYCODE = 27;
+
 
 // See https://git.io/JJ6SJ for "How to document your components using JSDoc"
 /**
@@ -141,11 +142,17 @@ export default class ComponentBase extends LitElement {
   openDialog() {
     this.defaultTrigger = document.activeElement;
 
-    setTimeout(() => {
-      this.focus();
+    this.focusTrap = new FocusTrap(this.dialog);
+  }
 
-      this.handleFocusLoss();
-    }, FOCUS_TIMEOUT);
+  /**
+   * set the focus on the first element after opening transition effect is complete.
+   * @private
+   */
+  onDialogTransitionEnd() {
+    if (this.open && this.focusTrap) {
+      this.focusTrap.focusFirstElement();
+    }
   }
 
   /**
@@ -153,6 +160,17 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   closeDialog() {
+    if (this.focusTrap) {
+      // If the dropdown is not open, disconnect the focus trap if it exists
+      this.focusTrap.disconnect();
+      this.focusTrap = undefined;
+    }
+
+    if (this.defaultTrigger) {
+      this.defaultTrigger.focus();
+      this.defaultTrigger = undefined;
+    }
+
     this.dispatchToggleEvent();
   }
 
@@ -166,29 +184,6 @@ export default class ComponentBase extends LitElement {
 
     toggleEvent.initEvent("toggle", true, false);
     this.dispatchEvent(toggleEvent);
-  }
-
-  /**
-   * @private
-   * @returns {void} Determines if dropdown bib should be closed on focus change.
-   */
-  handleFocusLoss() {
-    const focusable = [...this.querySelectorAll('button, auro-button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')];
-
-    const firstFocusableElement = focusable[0];
-    const lastFocusableElement = focusable[focusable.length - 1];
-
-    const closeButton = this.shadowRoot.getElementById('dialog-close');
-
-    if (lastFocusableElement) {
-      lastFocusableElement.addEventListener('focusout', () => {
-        if (closeButton !== null) {
-          closeButton.focus();
-        } else {
-          firstFocusableElement.focus();
-        }
-      });
-    }
   }
 
   /**
@@ -257,9 +252,8 @@ export default class ComponentBase extends LitElement {
     return this.modal
       ? html``
       : html`
-        <${this.buttonTag} variant="flat" ?onDark=${this.hasAttribute('onDark')} class="dialog-header--action" id="dialog-close" @click="${this.handleCloseButtonClick}" part="close-button">
+        <${this.buttonTag} variant="ghost" shape="circle" size="sm" aria-label="Close" ?onDark=${this.hasAttribute('onDark')} class="dialog-header--action" id="dialog-close" @click="${this.handleCloseButtonClick}" part="close-button">
           <${this.iconTag} customColor category="interface" name="x-lg"></${this.iconTag}>
-          <span class="util_displayHiddenVisually">Close</span>
         </${this.buttonTag}>
       `;
   }
@@ -280,20 +274,27 @@ export default class ComponentBase extends LitElement {
     return html`
       <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay" @click=${this.handleOverlayClick}></div>
 
-      <div role="dialog" id="dialog" class="${classMap(contentClasses)}" part="dialog" aria-labelledby="dialog-header" tabindex="-1">
+      <div 
+        role="dialog" 
+        id="dialog" 
+        class="${classMap(contentClasses)}"
+        part="dialog"
+        aria-labelledby="dialog-header"
+        aria-describedby="dialog-content"
+        @transitionend="${this.onDialogTransitionEnd}">
         ${this.unformatted
         ? html`
           <slot name="content"></slot>
           ${this.getCloseButton()}
         `
         : html`
-          <div class="dialog-header" part="dialog-header">
+          <div id="dialog-header" class="dialog-header" part="dialog-header">
             <h1 class="heading heading--700 util_stackMarginNone--top" id="dialog-header">
               <slot name="header">Default header ...</slot>
             </h1>
             ${this.getCloseButton()}
           </div>
-          <div class="dialog-content" part="dialog-content">
+          <div id="dialog-content" class="dialog-content" part="dialog-content">
             <slot name="content"></slot>
           </div>
           <div class="dialog-footer" id="footerWrapper" part="dialog-footer">

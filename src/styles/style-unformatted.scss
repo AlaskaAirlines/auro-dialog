@@ -1,0 +1,13 @@
+@use "@aurodesignsystem/design-tokens/dist/legacy/auro-classic/SCSSVariables" as vac;
+@use "@aurodesignsystem/webcorestylesheets/src/breakpoints" as breakpoints;
+
+/* stylelint-disable scss/selector-nest-combinators */
+
+[unformatted] .unformattedWrapper {
+  padding: var(--ds-size-400, vac.$ds-size-400);
+
+  @include breakpoints.auro_grid-breakpoint--md {
+    padding: var(--ds-size-800, vac.$ds-size-800);
+    padding-top: var(--ds-size-400, vac.$ds-size-400);
+  }
+}

@@ -1,0 +1,10 @@
+@use "@aurodesignsystem/design-tokens/dist/legacy/auro-classic/SCSSVariables" as vac;
+@use "@aurodesignsystem/design-tokens/dist/themes/alaska/SCSSVariables--alaska" as v;
+
+:host {
+  --ds-auro-dialog-container-color: var(--ds-basic-color-surface-default, #{v.$ds-basic-color-surface-default});
+  --ds-auro-dialog-boxshadow-color: var(--ds-elevation-300, #{vac.$ds-elevation-300});
+  --ds-auro-dialog-overlay-modal-background-color: var(--ds-advanced-color-shared-scrim, #{v.$ds-advanced-color-shared-scrim});
+  --ds-auro-dialog-overlay-open-background-color: var(--ds-advanced-color-shared-scrim, #{v.$ds-advanced-color-shared-scrim});
+  --ds-auro-dialog-text-color: var(--ds-basic-color-texticon-default, #{v.$ds-basic-color-texticon-default});
+}

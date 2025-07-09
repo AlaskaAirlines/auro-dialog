@@ -9,10 +9,10 @@ import { LitElement } from "lit";
 import { html } from 'lit/static-html.js';
 import { classMap } from 'lit/directives/class-map.js';
 
-import styleCss from "./style-css.js";
-import styleUnformattedCss from './style-unformatted-css.js';
-import colorCss from "./color-css.js";
-import tokensCss from "./tokens-css.js";
+import styleCss from "./styles/style-css.js";
+import styleUnformattedCss from './styles/style-unformatted-css.js';
+import colorCss from "./styles/color-css.js";
+import tokensCss from "./styles/tokens-css.js";
 
 import AuroLibraryRuntimeUtils from '@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs';
 import { AuroDependencyVersioning } from '@aurodesignsystem/auro-library/scripts/runtime/dependencyTagVersioning.mjs';
@@ -288,13 +288,13 @@ export default class ComponentBase extends LitElement {
           ${this.getCloseButton()}
         `
         : html`
-          <div id="dialog-header" class="dialog-header" part="dialog-header">
-            <h1 class="heading heading--700 util_stackMarginNone--top" id="dialog-header">
-              <slot name="header">Default header ...</slot>
+          <div class="dialog-header" part="dialog-header">
+            <h1 class="heading heading-lg util_stackMarginNone--top" id="dialog-header">
+              <slot name="header">Default header...</slot>
             </h1>
             ${this.getCloseButton()}
           </div>
-          <div id="dialog-content" class="dialog-content" part="dialog-content">
+          <div class="dialog-content body-default" part="dialog-content">
             <slot name="content"></slot>
           </div>
           <div class="dialog-footer" id="footerWrapper" part="dialog-footer">

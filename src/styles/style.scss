@@ -8,29 +8,27 @@
    scss/selector-nest-combinators, rule-empty-line-before,  no-descending-specificity, no-duplicate-selectors */
 
 // Import Auro tokens
-@import "./../node_modules/@aurodesignsystem/design-tokens/dist/auro-classic/SCSSVariables";
+@use "@aurodesignsystem/design-tokens/dist/legacy/auro-classic/SCSSVariables" as vac;
+@use "@aurodesignsystem/design-tokens/dist/legacy/auro-classic/SCSSVariableMap";
 
-@import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/breakpoints";
-@import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/core";
-@import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/animation";
-@import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/headings";
-@import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/utilityClasses/displayProperties";
+@use '@aurodesignsystem/webcorestylesheets/dist/bundled/type/classes.alaska.min.css';
+
+@use "@aurodesignsystem/webcorestylesheets/src/breakpoints" as breakpoints;
+@use "@aurodesignsystem/webcorestylesheets/src/animation" as animation;
 
 $auro-spacing-types: stack;
 $auro-spacing-options: none;
 
-@import "./../node_modules/@aurodesignsystem/design-tokens/dist/auro-classic/SCSSVariableMap";
-@import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/utilityMixins/spacingUtility";
 
 // container styles - defines the look of the outer custom component
 :host {
-  --insetPaddingXl: 0 var(--ds-size-400, #{$ds-size-400}) var(--ds-size-400, #{$ds-size-400}) var(--ds-size-400, #{$ds-size-400});
-  --insetPaddingXxl: 0 var(--ds-size-600, #{$ds-size-600}) var(--ds-size-600, #{$ds-size-600}) var(--ds-size-600, #{$ds-size-600});
-  --insetPaddingXxxl: 0 var(--ds-size-800, #{$ds-size-800}) var(--ds-size-800, #{$ds-size-800}) var(--ds-size-800, #{$ds-size-800});
+  --insetPaddingXl: 0 var(--ds-size-400, #{vac.$ds-size-400}) var(--ds-size-400, #{vac.$ds-size-400}) var(--ds-size-400, #{vac.$ds-size-400});
+  --insetPaddingXxl: 0 var(--ds-size-600, #{vac.$ds-size-600}) var(--ds-size-600, #{vac.$ds-size-600}) var(--ds-size-600, #{vac.$ds-size-600});
+  --insetPaddingXxxl: 0 var(--ds-size-800, #{vac.$ds-size-800}) var(--ds-size-800, #{vac.$ds-size-800}) var(--ds-size-800, #{vac.$ds-size-800});
 }
 
 [auro-icon] {
-  --ds-auro-icon-size: var(--ds-size-300, #{$ds-size-300});
+  --ds-auro-icon-size: var(--ds-size-300, #{vac.$ds-size-300});
 }
 
 // container shape styles
@@ -78,19 +76,19 @@ $auro-spacing-options: none;
   opacity: 0;
   border: 0;
 
+  // baseline dialog UI / mobile-first
+  @include animation.auro_transition(all, 0.3s, ease-in-out);
+
   // open modifier
   &--open {
-    z-index: var(--ds-depth-modal, $ds-depth-modal);
+    z-index: var(--ds-depth-modal, vac.$ds-depth-modal);
     visibility: visible;
     bottom: 0;
     opacity: 1;
   }
 
-  // baseline dialog UI / mobile-first
-  @include auro_transition(all, 0.3s, ease-in-out);
-
   // 1024px breakpoint / large dialog size is default
-  @include auro_grid-breakpoint--md {
+  @include breakpoints.auro_grid-breakpoint--md {
     top: 10%;
     bottom: unset;
     left: 0;
@@ -114,15 +112,15 @@ $auro-spacing-options: none;
     }
   }
 
-  @include auro_grid-breakpoint--lg {
+  @include breakpoints.auro_grid-breakpoint--lg {
     max-width: 986px;
   }
 
   // footer slot
   &-footer {
-    padding-top: var(--ds-size-400, $ds-size-400);
+    padding-top: var(--ds-size-400, vac.$ds-size-400);
 
-    @include auro_grid-breakpoint--md {
+    @include breakpoints.auro_grid-breakpoint--md {
       ::slotted(*) {
         display: flex;
         justify-content: flex-end;
@@ -135,7 +133,7 @@ $auro-spacing-options: none;
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  padding-top: var(--ds-size-800, $ds-size-800);
+  padding-top: var(--ds-size-800, vac.$ds-size-800);
 
   &--action {
     margin: 0;
@@ -161,14 +159,14 @@ $auro-spacing-options: none;
 :host([unformatted]) {
   .dialog-header--action {
     position: absolute;
-    top: var(--ds-size-400, $ds-size-400);
+    top: var(--ds-size-400, vac.$ds-size-400);
     bottom: unset;
-    right: var(--ds-size-400, $ds-size-400);
+    right: var(--ds-size-400, vac.$ds-size-400);
 
-    @include auro_grid-breakpoint--md {
-      top: var(--ds-size-800, $ds-size-800);
+    @include breakpoints.auro_grid-breakpoint--md {
+      top: var(--ds-size-800, vac.$ds-size-800);
       bottom: unset;
-      right: var(--ds-size-800, $ds-size-800);
+      right: var(--ds-size-800, vac.$ds-size-800);
     }
   }
 }
@@ -178,7 +176,7 @@ $auro-spacing-options: none;
     max-height: 30%;
   }
 
-  @include auro_grid-breakpoint--md {
+  @include breakpoints.auro_grid-breakpoint--md {
     .dialog {
       top: 10%;
       bottom: unset;
@@ -187,7 +185,7 @@ $auro-spacing-options: none;
       padding: var(--insetPaddingXxl);
     }
   }
-  @include auro_grid-breakpoint--lg {
+  @include breakpoints.auro_grid-breakpoint--lg {
     .dialog {
       max-width: 740px;
     }
@@ -199,7 +197,7 @@ $auro-spacing-options: none;
     max-height: 50%;
   }
 
-  @include auro_grid-breakpoint--md {
+  @include breakpoints.auro_grid-breakpoint--md {
     .dialog {
       top: 10%;
       bottom: unset;
@@ -208,7 +206,7 @@ $auro-spacing-options: none;
       max-height: 80%;
     }
   }
-  @include auro_grid-breakpoint--lg {
+  @include breakpoints.auro_grid-breakpoint--lg {
     .dialog {
       top: 10%;
       bottom: unset;
@@ -220,7 +218,7 @@ $auro-spacing-options: none;
 
 :host([sm][lg]),
 :host([md][lg]) {
-  @include auro_grid-breakpoint--md {
+  @include breakpoints.auro_grid-breakpoint--md {
     .dialog {
       max-height: 80%;
     }

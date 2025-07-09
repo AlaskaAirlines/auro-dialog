@@ -4,9 +4,9 @@
 // ---------------------------------------------------------------------
 
 // Import Auro tokens
-@import "./../node_modules/@aurodesignsystem/design-tokens/dist/auro-classic/SCSSVariables";
-@import "./../node_modules/@aurodesignsystem/design-tokens/dist/alaska/SCSSVariables--alaska";
-@import "./../node_modules/@aurodesignsystem/webcorestylesheets/src/breakpoints";
+@use "@aurodesignsystem/design-tokens/dist/legacy/auro-classic/SCSSVariables" as vac;
+@use "@aurodesignsystem/design-tokens/dist/themes/alaska/SCSSVariables--alaska" as v;
+@use "@aurodesignsystem/webcorestylesheets/src/breakpoints" as breakpoints;
 
 /* stylelint-disable selector-class-pattern */
 
@@ -25,13 +25,13 @@
   color: var(--ds-auro-dialog-text-color);
 
   // 1024px breakpoint / large dialog size is default
-  @include auro_grid-breakpoint--md {
+  @include breakpoints.auro_grid-breakpoint--md {
     box-shadow: var(--ds-auro-dialog-boxshadow-color);
   }
 }
 
 .dialog-header--action {
   border: 2px solid transparent;
-  border-radius: var(--ds-border-radius, $ds-border-radius);
+  border-radius: var(--ds-border-radius, vac.$ds-border-radius);
   background-color: transparent;
 }

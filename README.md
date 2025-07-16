@@ -80,10 +80,8 @@ import "@aurodesignsystem/auro-dialog";
 <!-- The below code snippet is automatically added from ./apiExamples/basic.html -->
 
 ```html
-<div>
-  <auro-button id="openBasic">Open default dialog</auro-button>
-</div>
 <auro-dialog id="defaultDialog">
+  <auro-button slot="trigger">Open default dialog</auro-button>
   <span slot="header">Default Dialog</span>
   <div slot="content">
     <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -97,7 +95,7 @@ import "@aurodesignsystem/auro-dialog";
     </ul>
   </div>
   <div slot="footer">
-    <auro-button secondary id="closeBasic">Close</auro-button>
+    <auro-button secondary id="closeBasic" onclick="document.querySelector('#defaultDialog').closeDialog()">Close</auro-button>
   </div>
 </auro-dialog>
 ```
@@ -142,10 +140,8 @@ The `<auro-dialog>` component should be used in situations where users may:
 <!-- The below code snippet is automatically added from ./apiExamples/basic.html -->
 
 ```html
-<div>
-  <auro-button id="openBasic">Open default dialog</auro-button>
-</div>
 <auro-dialog id="defaultDialog">
+  <auro-button slot="trigger">Open default dialog</auro-button>
   <span slot="header">Default Dialog</span>
   <div slot="content">
     <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -159,7 +155,7 @@ The `<auro-dialog>` component should be used in situations where users may:
     </ul>
   </div>
   <div slot="footer">
-    <auro-button secondary id="closeBasic">Close</auro-button>
+    <auro-button secondary id="closeBasic" onclick="document.querySelector('#defaultDialog').closeDialog()">Close</auro-button>
   </div>
 </auro-dialog>
 ```

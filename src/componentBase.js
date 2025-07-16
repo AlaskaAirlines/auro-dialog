@@ -3,7 +3,7 @@
 
 // ---------------------------------------------------------------------
 
-/* eslint-disable jsdoc/no-undefined-types, lit-a11y/click-events-have-key-events, jsdoc/require-description-complete-sentence, lit/binding-positions, lit/no-invalid-html, prefer-destructuring, max-lines */
+/* eslint-disable no-return-assign, jsdoc/no-undefined-types, lit-a11y/click-events-have-key-events, jsdoc/require-description-complete-sentence, lit/binding-positions, lit/no-invalid-html, max-lines */
 
 import { LitElement } from "lit";
 import { html } from 'lit/static-html.js';
@@ -24,6 +24,7 @@ import buttonVersion from './buttonVersion.js';
 
 import { AuroIcon } from '@aurodesignsystem/auro-icon/src/auro-icon.js';
 import iconVersion from './iconVersion.js';
+import { PopoverPositioner } from "./PopoverPositioner.js";
 
 const ESCAPE_KEYCODE = 27;
 
@@ -95,44 +96,14 @@ export default class ComponentBase extends LitElement {
     };
   }
 
-  firstUpdated() {
-    // Add the tag name as an attribute if it is different than the component name
-    this.runtimeUtils.handleComponentTagRename(this, 'auro-dialog');
-
-    const slot = this.shadowRoot.querySelector("#footer"),
-      slotWrapper = this.shadowRoot.querySelector("#footerWrapper");
-
-    this.dialog = this.shadowRoot.getElementById('dialog');
-
-    if (!this.unformatted && slot.assignedNodes().length === 0) {
-      slotWrapper.classList.remove("dialog-footer");
-    }
-  }
-
   /**
-   * LitElement lifecycle method. Called after the DOM has been updated.
-   * @param {Map<string, any>} changedProperties - Keys are the names of changed properties, values are the corresponding previous values.
-   * @returns {void}
+   * set the focus on the first element after opening transition effect is complete.
+   * @private
    */
-  updated(changedProperties) {
-    if (changedProperties.has('open')) {
-      if (this.open) {
-        this.openDialog();
-      } else {
-        this.closeDialog();
-      }
+  onDialogTransitionEnd() {
+    if (this.open && this.focusTrap) {
+      this.focusTrap.focusFirstElement();
     }
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-    this.keydownEventHandler = this.handleKeydown.bind(this);
-    window.addEventListener('keydown', this.keydownEventHandler);
-  }
-
-  disconnectedCallback() {
-    super.disconnectedCallback();
-    window.removeEventListener('keydown', this.keydownEventHandler);
   }
 
   /**
@@ -143,16 +114,18 @@ export default class ComponentBase extends LitElement {
     this.defaultTrigger = document.activeElement;
 
     this.focusTrap = new FocusTrap(this.dialog);
-  }
-
-  /**
-   * set the focus on the first element after opening transition effect is complete.
-   * @private
-   */
-  onDialogTransitionEnd() {
-    if (this.open && this.focusTrap) {
-      this.focusTrap.focusFirstElement();
+    if (!this.dialog.matches(":popover-open")) {
+      this.dialog.showPopover();
     }
+
+    setTimeout(() => {
+
+      this.popoverPositioner = new PopoverPositioner(this.trigger, this.dialog, {
+        placement: 'bottom-start',
+        offsetDistance: 8,
+        autoStart: true
+      });
+    }, 150);
   }
 
   /**
@@ -171,7 +144,15 @@ export default class ComponentBase extends LitElement {
       this.defaultTrigger = undefined;
     }
 
+    if (this.dialog.matches(":popover-open")) {
+      this.dialog.hidePopover();
+    }
+
     this.dispatchToggleEvent();
+    if (this.popoverPositioner) {
+      this.popoverPositioner.disconnect();
+      this.popoverPositioner = undefined;
+    }
   }
 
   /**
@@ -258,23 +239,68 @@ export default class ComponentBase extends LitElement {
       `;
   }
 
+  firstUpdated() {
+    // Add the tag name as an attribute if it is different than the component name
+    this.runtimeUtils.handleComponentTagRename(this, 'auro-dialog');
+
+    const slot = this.shadowRoot.querySelector("#footer"),
+      slotWrapper = this.shadowRoot.querySelector("#footerWrapper");
+
+    this.dialog = this.shadowRoot.getElementById('dialog');
+    this.dialog.addEventListener('toggle', (e) => this.open = e.newState === 'open');
+    this.trigger = this.renderRoot.querySelector('button.trigger');
+
+    if (!this.unformatted && slot.assignedNodes().length === 0) {
+      slotWrapper.classList.remove("dialog-footer");
+    }
+  }
+
+  /**
+   * LitElement lifecycle method. Called after the DOM has been updated.
+   * @param {Map<string, any>} changedProperties - Keys are the names of changed properties, values are the corresponding previous values.
+   * @returns {void}
+   */
+  updated(changedProperties) {
+    if (changedProperties.has('open')) {
+      if (this.open) {
+        this.openDialog();
+      } else {
+        this.closeDialog();
+      }
+    }
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.keydownEventHandler = this.handleKeydown.bind(this);
+    window.addEventListener('keydown', this.keydownEventHandler);
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    window.removeEventListener('keydown', this.keydownEventHandler);
+  }
+
   render() {
     const classes = {
-        'dialogOverlay': true,
-        'dialogOverlay--modal': this.modal && this.open,
-        'dialogOverlay--open': this.open,
-        'util_displayHidden': !this.open
-      },
+      'dialogOverlay': true,
+      'dialogOverlay--modal': this.modal && this.open,
+      'dialogOverlay--open': this.open,
+      'util_displayHidden': !this.open
+    };
 
-      contentClasses = {
-        'dialog': true,
-        'dialog--open': this.open
-      };
+    const contentClasses = {
+      'dialog': true,
+      'dialog--open': this.open
+    };
 
     return html`
       <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay" @click=${this.handleOverlayClick}></div>
-
+      <button class="trigger" popovertarget="dialog" aria-haspopup="dialog" aria-expanded="${this.open}" aria-controls="dialog" part="trigger" ?aria-hidden="${!this.hasTriggerContent}">
+        <slot @slotchange="${this.handleTriggerSlotChange}" name="trigger"></slot>
+      </button>
       <div 
+        popover="auto"
         role="dialog" 
         id="dialog" 
         class="${classMap(contentClasses)}"

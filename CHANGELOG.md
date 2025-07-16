@@ -1,5 +1,12 @@
 # Semantic Release Automated Changelog
 
+## [3.1.3](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.1.2...v3.1.3) (2025-07-16)
+
+
+### Bug Fixes
+
+* remove bottom position on bigger screen ([e5d2161](https://github.com/AlaskaAirlines/auro-dialog/commit/e5d2161f11debab16094072855f887b307993640))
+
 ## [3.1.2](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.1.1...v3.1.2) (2025-06-04)
 
 

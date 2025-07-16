@@ -1,5 +1,13 @@
 # Semantic Release Automated Changelog
 
+## [3.1.4](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.1.3...v3.1.4) (2025-07-16)
+
+
+### Bug Fixes
+
+* add themeable type classes ([c1e5ed4](https://github.com/AlaskaAirlines/auro-dialog/commit/c1e5ed483f595510689048cc5a336a720a5ef56b))
+* update docs head content ([64183fc](https://github.com/AlaskaAirlines/auro-dialog/commit/64183fc5500253053d8d2082aac73422a093b116))
+
 ## [3.1.3](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.1.2...v3.1.3) (2025-07-16)
 
 

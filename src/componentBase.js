@@ -3,7 +3,7 @@
 
 // ---------------------------------------------------------------------
 
-/* eslint-disable no-return-assign, jsdoc/no-undefined-types, lit-a11y/click-events-have-key-events, jsdoc/require-description-complete-sentence, lit/binding-positions, lit/no-invalid-html, max-lines */
+/* eslint-disable curly, no-underscore-dangle, no-return-assign, jsdoc/no-undefined-types, lit-a11y/click-events-have-key-events, jsdoc/require-description-complete-sentence, lit/binding-positions, lit/no-invalid-html, max-lines */
 
 import { LitElement } from "lit";
 import { html } from 'lit/static-html.js';
@@ -53,12 +53,17 @@ const ESCAPE_KEYCODE = 27;
  * @csspart dialog-footer - apply CSS to the footer of the dialog
  */
 
+const _DEFAULTS = {
+  type: "dialog",
+  modal: false,
+  unformatted: false
+};
+
 export default class ComponentBase extends LitElement {
   constructor() {
     super();
 
-    this.modal = false;
-    this.unformatted = false;
+    this._setDefaults(_DEFAULTS);
 
     const versioning = new AuroDependencyVersioning();
 
@@ -79,6 +84,18 @@ export default class ComponentBase extends LitElement {
     this.runtimeUtils = new AuroLibraryRuntimeUtils();
   }
 
+  /**
+   * Set default values for component properties.
+   * @param {Object} defaults - The default values to set.
+   * @private
+   * @returns {void}
+   */
+  _setDefaults(defaults) {
+    Object.keys(defaults).forEach((key) => {
+      if (this[key] === undefined) this[key] = defaults[key];
+    });
+  }
+
   static get properties() {
     return {
       modal: { type: Boolean },
@@ -92,6 +109,19 @@ export default class ComponentBase extends LitElement {
       },
       triggerElement: {
         attribute: false
+      },
+      ready: {
+        type: Boolean,
+        reflect: false,
+        attribute: false,
+        state: true
+      },
+
+      // "dropdown" || "dialog"
+      type: {
+        type: String,
+        reflect: true,
+        state: true
       }
     };
   }
@@ -114,16 +144,19 @@ export default class ComponentBase extends LitElement {
     this.defaultTrigger = document.activeElement;
 
     this.focusTrap = new FocusTrap(this.dialog);
-    if (!this.dialog.matches(":popover-open")) {
-      this.dialog.showPopover();
-    }
 
     this.popoverPositioner = new PopoverPositioner(this.trigger, this.dialog, {
+      autoStart: this.type === 'dropdown',
       placement: 'bottom',
-      offsetDistance: '5px',
-      autoStart: true
+      offsetDistance: 10
     });
 
+    setTimeout(() => {
+      this.ready = true;
+      if (!this.dialog.matches(":popover-open")) {
+        this.dialog.showPopover();
+      }
+    }, 0);
   }
 
   /**
@@ -131,6 +164,7 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   closeDialog() {
+    this.ready = false;
     if (this.focusTrap) {
       // If the dropdown is not open, disconnect the focus trap if it exists
       this.focusTrap.disconnect();
@@ -142,9 +176,11 @@ export default class ComponentBase extends LitElement {
       this.defaultTrigger = undefined;
     }
 
-    if (this.dialog.matches(":popover-open")) {
-      this.dialog.hidePopover();
-    }
+    setTimeout(() => {
+      if (this.dialog.matches(":popover-open")) {
+        this.dialog.hidePopover();
+      }
+    }, 0);
 
     this.dispatchToggleEvent();
     if (this.popoverPositioner) {
@@ -245,7 +281,7 @@ export default class ComponentBase extends LitElement {
       slotWrapper = this.shadowRoot.querySelector("#footerWrapper");
 
     this.dialog = this.shadowRoot.getElementById('dialog');
-    this.dialog.addEventListener('toggle', (e) => this.open = e.newState === 'open');
+    this.dialog.addEventListener('beforetoggle', (e) => this.open = e.newState === 'open');
     this.trigger = this.renderRoot.querySelector('button.trigger');
 
     if (!this.unformatted && slot.assignedNodes().length === 0) {
@@ -279,33 +315,13 @@ export default class ComponentBase extends LitElement {
     window.removeEventListener('keydown', this.keydownEventHandler);
   }
 
-  render() {
-    const classes = {
-      'dialogOverlay': true,
-      'dialogOverlay--modal': this.modal && this.open,
-      'dialogOverlay--open': this.open,
-      'util_displayHidden': !this.open
-    };
-
-    const contentClasses = {
-      'dialog': true,
-      'dialog--open': this.open
-    };
-
+  renderDialog(contentClasses) {
     return html`
-      <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay" @click=${this.handleOverlayClick}></div>
-      <button class="trigger" popovertarget="dialog" aria-haspopup="dialog" aria-expanded="${this.open}" aria-controls="dialog" part="trigger" ?aria-hidden="${!this.hasTriggerContent}">
-        <slot @slotchange="${this.handleTriggerSlotChange}" name="trigger"></slot>
-      </button>
-      <div class="simple-popover"
-        popover="auto"
-        role="dialog" 
-        id="dialog" >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla quasi harum dolore blanditiis praesentium nesciunt magnam modi expedita sint. Debitis labore totam ipsa deleniti sit repudiandae porro distinctio minima recusandae!
-        </div>
       <div 
-        style="display:none;"
         class="${classMap(contentClasses)}"
+        popover="auto"
+        id="dialog"
+        role="dialog"
         part="dialog"
         aria-labelledby="dialog-header"
         aria-describedby="dialog-content"
@@ -331,6 +347,34 @@ export default class ComponentBase extends LitElement {
         `
       }
       </div>
+    `;
+  }
+
+  render() {
+    const classes = {
+      'dialogOverlay': true,
+      'dialogOverlay--modal': this.modal && this.open,
+      'dialogOverlay--open': this.open,
+      'util_displayHidden': !this.open
+    };
+
+    const contentClasses = {
+      'dialog': this.type === 'dialog',
+      'popover': this.type === 'dropdown',
+      'dialog--open': this.open,
+      'open': this.ready,
+      'container': true
+    };
+
+    return html`
+      <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay" @click=${this.handleOverlayClick}></div>
+      <button class="trigger" popovertarget="dialog" aria-haspopup="dialog" aria-expanded="${this.open}" aria-controls="dialog" part="trigger" ?aria-hidden="${!this.hasTriggerContent}">
+        <slot @slotchange="${this.handleTriggerSlotChange}" name="trigger"></slot>
+      </button>
+      ${this.type === "dialog"
+        ? this.renderDialog(contentClasses)
+        : this.renderPopover(contentClasses)
+      }
     `;
   }
 }

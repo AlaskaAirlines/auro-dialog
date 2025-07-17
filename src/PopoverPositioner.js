@@ -1,5 +1,4 @@
 /* eslint-disable curly, lines-around-comment, no-magic-numbers, id-length */
-
 import { autoUpdate, computePosition, offset, autoPlacement, flip } from '@floating-ui/dom';
 
 export class PopoverPositioner {
@@ -16,9 +15,18 @@ export class PopoverPositioner {
       offsetDistance: options.offsetDistance || 8,
       ...options
     };
-
-    if (options.autoStart) this.start();
+    // this.setFloaterStyles();
+    if (this.options.autoStart !== false) this.start();
     this.cleanup = null;
+  }
+
+  setFloaterStyles() {
+    if (!this.floatingEl) return;
+    const defaultStyles = {
+      position: 'absolute',
+      margin: '0'
+    };
+    Object.assign(this.floatingEl.style, defaultStyles);
   }
 
   /**
@@ -29,7 +37,6 @@ export class PopoverPositioner {
 
     const middleware = [
       offset(this.options.offsetDistance),
-      // autoPlacement(),
       flip()
     ];
 
@@ -37,9 +44,8 @@ export class PopoverPositioner {
       placement: this.options.placement,
       strategy: 'absolute',
       middleware
-    }).then(({x, y}) => {
+    }).then(({ x, y }) => {
       Object.assign(this.floatingEl.style, {
-        position: 'absolute',
         left: `${x}px`,
         top: `${y}px`
       });

@@ -33,35 +33,17 @@ $auro-spacing-options: none;
   --ds-auro-icon-size: var(--ds-size-300, #{$ds-size-300});
 }
 
-// container shape styles
-.dialogOverlay {
-  width: 100%;
-  height: 100%;
+[popover] {
 
-  // Open modifier for default dialog state
-  &--open {
-    transition: background 0.3s cubic-bezier(0.4, 0, 0.2, 0);
+  // Handle possible FOUC conditions by managing visibility until positioned correctly
+  opacity: 0;
+  &.open {
+    opacity: 1;
   }
-
-  // Modal modifier for modal/blocking state
-  &--modal {
-    transition: background 0.3s cubic-bezier(0.4, 0, 0.5, 0);
-  }
-}
-
-.simple-popover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: aliceblue;
-  width: 300px;
-  height: 300px;
-  margin: 0; // reset crazy margin
 }
 
 // Default selector setting mobile-first specs
-.dialog {
-  position: absolute;
+.container {
   overflow: auto;
   box-sizing: border-box;
   margin: 0;
@@ -74,8 +56,18 @@ $auro-spacing-options: none;
 
   border: 0;
 
-  &--open {
-    display: flex;
+  &.dialog {
+
+    width: calc(100% - var(--insetPaddingXl) - var(--insetPaddingXl));
+    max-height: 90%;
+    padding: var(--insetPaddingXl);
+    transform: translateY(100%);
+    @include auro_transition(all, 0.3s, ease-in-out);
+
+    &--open.open {
+      display: flex;
+      transform: translateY(0%);
+    }
   }
 
   // baseline dialog UI / mobile-first

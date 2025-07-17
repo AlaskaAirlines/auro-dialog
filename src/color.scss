@@ -10,17 +10,11 @@
 
 /* stylelint-disable selector-class-pattern */
 
-.dialogOverlay {
-  &--open {
-    background: var(--ds-auro-dialog-overlay-open-background-color);
-  }
-
-  &--modal {
-    background: var(--ds-auro-dialog-overlay-modal-background-color);
-  }
+[popover]:not(.popover)::backdrop {
+  background: var(--ds-auro-dialog-overlay-open-background-color);
 }
 
-.dialog {
+.container {
   background: var(--ds-auro-dialog-container-color);
   color: var(--ds-auro-dialog-text-color);
 

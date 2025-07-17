@@ -80,7 +80,7 @@ import "@aurodesignsystem/auro-dialog";
 <!-- The below code snippet is automatically added from ./apiExamples/basic.html -->
 
 ```html
-<auro-dialog id="defaultDialog">
+<auro-dialog id="defaultDialog" type="dialog">
   <auro-button slot="trigger">Open default dialog</auro-button>
   <span slot="header">Default Dialog</span>
   <div slot="content">
@@ -140,7 +140,7 @@ The `<auro-dialog>` component should be used in situations where users may:
 <!-- The below code snippet is automatically added from ./apiExamples/basic.html -->
 
 ```html
-<auro-dialog id="defaultDialog">
+<auro-dialog id="defaultDialog" type="dialog">
   <auro-button slot="trigger">Open default dialog</auro-button>
   <span slot="header">Default Dialog</span>
   <div slot="content">

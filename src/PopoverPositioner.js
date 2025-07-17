@@ -1,5 +1,5 @@
 /* eslint-disable curly, lines-around-comment, no-magic-numbers, id-length */
-import { autoUpdate, computePosition, offset, autoPlacement, flip } from '@floating-ui/dom';
+import { autoUpdate, computePosition, offset, autoPlacement, flip, hide } from '@floating-ui/dom';
 
 export class PopoverPositioner {
   /**
@@ -15,7 +15,7 @@ export class PopoverPositioner {
       offsetDistance: options.offsetDistance || 8,
       ...options
     };
-    // this.setFloaterStyles();
+    this.setFloaterStyles();
     if (this.options.autoStart !== false) this.start();
     this.cleanup = null;
   }
@@ -36,16 +36,20 @@ export class PopoverPositioner {
     if (!this.referenceEl || !this.floatingEl) return;
 
     const middleware = [
-      offset(this.options.offsetDistance),
-      flip()
+      offset(this.options.offset),
+      flip(),
+      hide()
     ];
 
     computePosition(this.referenceEl, this.floatingEl, {
-      placement: this.options.placement,
       strategy: 'absolute',
+      ...this.options,
       middleware
-    }).then(({ x, y }) => {
+    }).then(({ x, y, middlewareData }) => {
       Object.assign(this.floatingEl.style, {
+        visibility: middlewareData.hide.referenceHidden
+          ? 'hidden'
+          : 'visible',
         left: `${x}px`,
         top: `${y}px`
       });

@@ -62,10 +62,10 @@ const _DEFAULTS = {
 export default class ComponentBase extends LitElement {
   constructor() {
     super();
-
-    this._setDefaults(_DEFAULTS);
+    this.dropdownOptions = JSON.parse(this.getAttribute('dropdownOptions') || '{}');
 
     const versioning = new AuroDependencyVersioning();
+    this._setDefaults(_DEFAULTS);
 
     /**
      * @private
@@ -120,8 +120,7 @@ export default class ComponentBase extends LitElement {
       // "dropdown" || "dialog"
       type: {
         type: String,
-        reflect: true,
-        state: true
+        reflect: true
       }
     };
   }
@@ -131,9 +130,9 @@ export default class ComponentBase extends LitElement {
    * @private
    */
   onDialogTransitionEnd() {
-    if (this.open && this.focusTrap) {
-      this.focusTrap.focusFirstElement();
-    }
+    // if (this.open && this.focusTrap) {
+    //   this.focusTrap.focusFirstElement();
+    // }
   }
 
   /**
@@ -143,13 +142,15 @@ export default class ComponentBase extends LitElement {
   openDialog() {
     this.defaultTrigger = document.activeElement;
 
-    this.focusTrap = new FocusTrap(this.dialog);
+    // this.focusTrap = new FocusTrap(this.dialog);
 
-    this.popoverPositioner = new PopoverPositioner(this.trigger, this.dialog, {
-      autoStart: this.type === 'dropdown',
-      placement: 'bottom',
-      offsetDistance: 10
-    });
+    if (this.type === 'dropdown') {
+      this.popoverPositioner = new PopoverPositioner(this.trigger, this.dialog, {
+        placement: 'bottom-start',
+        offset: 10,
+        ...this.dropdownOptions || {}
+      });
+    }
 
     setTimeout(() => {
       this.ready = true;
@@ -277,16 +278,16 @@ export default class ComponentBase extends LitElement {
     // Add the tag name as an attribute if it is different than the component name
     this.runtimeUtils.handleComponentTagRename(this, 'auro-dialog');
 
-    const slot = this.shadowRoot.querySelector("#footer"),
-      slotWrapper = this.shadowRoot.querySelector("#footerWrapper");
+    // const slot = this.shadowRoot.querySelector("#footer"),
+    //   slotWrapper = this.shadowRoot.querySelector("#footerWrapper");
 
     this.dialog = this.shadowRoot.getElementById('dialog');
     this.dialog.addEventListener('beforetoggle', (e) => this.open = e.newState === 'open');
     this.trigger = this.renderRoot.querySelector('button.trigger');
 
-    if (!this.unformatted && slot.assignedNodes().length === 0) {
-      slotWrapper.classList.remove("dialog-footer");
-    }
+    // if (!this.unformatted && slot.assignedNodes().length === 0) {
+    //   slotWrapper.classList.remove("dialog-footer");
+    // }
   }
 
   /**
@@ -321,8 +322,8 @@ export default class ComponentBase extends LitElement {
         class="${classMap(contentClasses)}"
         popover="auto"
         id="dialog"
-        role="dialog"
         part="dialog"
+        role="dialog"
         aria-labelledby="dialog-header"
         aria-describedby="dialog-content"
         @transitionend="${this.onDialogTransitionEnd}">
@@ -350,26 +351,39 @@ export default class ComponentBase extends LitElement {
     `;
   }
 
-  render() {
-    const classes = {
-      'dialogOverlay': true,
-      'dialogOverlay--modal': this.modal && this.open,
-      'dialogOverlay--open': this.open,
-      'util_displayHidden': !this.open
-    };
+  renderPopover(contentClasses) {
+    return html`
+      <div
+        class="${classMap(contentClasses)}"
+        popover="auto"
+        id="dialog"
+        part="dialog"
+        role="dialog"
+        aria-labelledby="dialog-header"
+        aria-describedby="dialog-content"
+      >
+        <slot name="content"></slot>
+      </div>
+    `;
+  }
 
+  render() {
     const contentClasses = {
       'dialog': this.type === 'dialog',
-      'popover': this.type === 'dropdown',
-      'dialog--open': this.open,
+      'dialog--open': this.type === 'dialog' && this.open,
+      'dropdown': this.type === 'dropdown',
+      'dropdown--open': this.type === 'dropdown' && this.open,
       'open': this.ready,
       'container': true
     };
 
     return html`
-      <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay" @click=${this.handleOverlayClick}></div>
       <button class="trigger" popovertarget="dialog" aria-haspopup="dialog" aria-expanded="${this.open}" aria-controls="dialog" part="trigger" ?aria-hidden="${!this.hasTriggerContent}">
-        <slot @slotchange="${this.handleTriggerSlotChange}" name="trigger"></slot>
+        <slot @slotchange="${this.handleTriggerSlotChange}" name="trigger">
+          <${this.buttonTag} variant="primary" size="md" class="trigger-button">
+            Open dialog
+          </${this.buttonTag}>
+        </slot>
       </button>
       ${this.type === "dialog"
         ? this.renderDialog(contentClasses)

@@ -80,10 +80,22 @@ import "@aurodesignsystem/auro-dialog";
 <!-- The below code snippet is automatically added from ./apiExamples/basic.html -->
 
 ```html
+<auro-dialog type="dropdown" dropdownoptions='{"placement": "bottom-end", "offset": 0}'>
+  <auro-button slot="trigger">Open dropdown dialog</auro-button>
+  <div slot="content">
+    I am a dropdown dialog. I can be used to display additional information without navigating away from the current page.
+  </div>
+</auro-dialog>
 <auro-dialog id="defaultDialog" type="dialog">
   <auro-button slot="trigger">Open default dialog</auro-button>
   <span slot="header">Default Dialog</span>
   <div slot="content">
+    <auro-dialog type="dropdown" dropdownoptions='{"placement": "bottom-start", "offset": 10}'>
+      <auro-button slot="trigger">Open dropdown dialog</auro-button>
+      <div slot="content">
+        I am a dropdown dialog. I can be used to display additional information without navigating away from the current page.
+      </div>
+    </auro-dialog>
     <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
     <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
     <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
@@ -140,10 +152,22 @@ The `<auro-dialog>` component should be used in situations where users may:
 <!-- The below code snippet is automatically added from ./apiExamples/basic.html -->
 
 ```html
+<auro-dialog type="dropdown" dropdownoptions='{"placement": "bottom-end", "offset": 0}'>
+  <auro-button slot="trigger">Open dropdown dialog</auro-button>
+  <div slot="content">
+    I am a dropdown dialog. I can be used to display additional information without navigating away from the current page.
+  </div>
+</auro-dialog>
 <auro-dialog id="defaultDialog" type="dialog">
   <auro-button slot="trigger">Open default dialog</auro-button>
   <span slot="header">Default Dialog</span>
   <div slot="content">
+    <auro-dialog type="dropdown" dropdownoptions='{"placement": "bottom-start", "offset": 10}'>
+      <auro-button slot="trigger">Open dropdown dialog</auro-button>
+      <div slot="content">
+        I am a dropdown dialog. I can be used to display additional information without navigating away from the current page.
+      </div>
+    </auro-dialog>
     <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
     <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
     <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>

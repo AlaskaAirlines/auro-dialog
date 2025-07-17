@@ -37,7 +37,7 @@ export class AuroDialog extends ComponentBase {
    * AuroDialog.register("custom-dialog") // this will register this element to <custom-dialog/>
    *
    */
-  static register(name = "auro-dialog") {
+  static register(name = "auro-popover") {
     AuroLibraryRuntimeUtils.prototype.registerComponent(name, AuroDialog);
   }
 }

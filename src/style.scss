@@ -27,6 +27,11 @@ $auro-spacing-options: none;
   --insetPaddingXl: 0 var(--ds-size-400, #{$ds-size-400}) var(--ds-size-400, #{$ds-size-400}) var(--ds-size-400, #{$ds-size-400});
   --insetPaddingXxl: 0 var(--ds-size-600, #{$ds-size-600}) var(--ds-size-600, #{$ds-size-600}) var(--ds-size-600, #{$ds-size-600});
   --insetPaddingXxxl: 0 var(--ds-size-800, #{$ds-size-800}) var(--ds-size-800, #{$ds-size-800}) var(--ds-size-800, #{$ds-size-800});
+  container-type: inline-size;
+}
+
+[popover]:not(.dropdown)::backdrop {
+  pointer-events: none;
 }
 
 [auro-icon] {
@@ -42,6 +47,20 @@ $auro-spacing-options: none;
   }
 }
 
+[popovertarget] {
+  outline: inherit;
+  border: inherit;
+}
+
+.trigger {
+  border: none;
+  background-color: transparent;
+  padding: 0;
+  width: fit-content;
+  height: fit-content;
+  line-height: 0;
+}
+
 // Default selector setting mobile-first specs
 .container {
   overflow: auto;
@@ -52,9 +71,14 @@ $auro-spacing-options: none;
 
   width: calc(100% - var(--insetPaddingXl) - var(--insetPaddingXl));
   max-height: 90%;
-  padding: var(--insetPaddingXl);
 
   border: 0;
+
+  &.dropdown {
+    padding: 25px;
+    max-width: 25vw;
+    max-height: 25vh;
+  }
 
   &.dialog {
 

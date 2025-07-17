@@ -49,11 +49,22 @@ $auro-spacing-options: none;
   }
 }
 
+.simple-popover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background-color: aliceblue;
+  width: 300px;
+  height: 300px;
+  margin: 0; // reset crazy margin
+}
+
 // Default selector setting mobile-first specs
 .dialog {
   position: absolute;
   overflow: auto;
   box-sizing: border-box;
+  margin: 0;
   
   flex-direction: column;
 

@@ -118,14 +118,12 @@ export default class ComponentBase extends LitElement {
       this.dialog.showPopover();
     }
 
-    setTimeout(() => {
+    this.popoverPositioner = new PopoverPositioner(this.trigger, this.dialog, {
+      placement: 'bottom',
+      offsetDistance: '5px',
+      autoStart: true
+    });
 
-      this.popoverPositioner = new PopoverPositioner(this.trigger, this.dialog, {
-        placement: 'bottom-start',
-        offsetDistance: 8,
-        autoStart: true
-      });
-    }, 150);
   }
 
   /**
@@ -299,10 +297,14 @@ export default class ComponentBase extends LitElement {
       <button class="trigger" popovertarget="dialog" aria-haspopup="dialog" aria-expanded="${this.open}" aria-controls="dialog" part="trigger" ?aria-hidden="${!this.hasTriggerContent}">
         <slot @slotchange="${this.handleTriggerSlotChange}" name="trigger"></slot>
       </button>
-      <div 
+      <div class="simple-popover"
         popover="auto"
         role="dialog" 
-        id="dialog" 
+        id="dialog" >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla quasi harum dolore blanditiis praesentium nesciunt magnam modi expedita sint. Debitis labore totam ipsa deleniti sit repudiandae porro distinctio minima recusandae!
+        </div>
+      <div 
+        style="display:none;"
         class="${classMap(contentClasses)}"
         part="dialog"
         aria-labelledby="dialog-header"

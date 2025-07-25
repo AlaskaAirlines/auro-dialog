@@ -1,5 +1,12 @@
 # Semantic Release Automated Changelog
 
+## [3.1.5](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.1.4...v3.1.5) (2025-07-25)
+
+
+### Bug Fixes
+
+* disable pointer-events on overlay when dialog is not open [#66](https://github.com/AlaskaAirlines/auro-dialog/issues/66) ([462bdf2](https://github.com/AlaskaAirlines/auro-dialog/commit/462bdf2474624c7e96e5ba2cb77f82f55da07bb4))
+
 ## [3.1.4](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.1.3...v3.1.4) (2025-07-16)
 
 

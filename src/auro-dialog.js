@@ -12,9 +12,6 @@ import ComponentBase from './componentBase.js';
 
 // build the component class
 export class AuroDialog extends ComponentBase {
-  // constructor() {
-  //   super();
-  // }
 
   // function to define props used within the scope of this component
   static get properties() {

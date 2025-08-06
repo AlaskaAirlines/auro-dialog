@@ -1,8 +1,5 @@
-<div>
-  <auro-button id="openPopAndDrop">Open dialog with popover</auro-button>
-</div>
-
 <auro-dialog id="popover-dialog" sm lg>
+  <auro-button slot="trigger">Open dialog with popover</auro-button>
   <span slot="header">Small Modal Dialog</span>
   <div slot="content">
     <p>
@@ -38,7 +35,7 @@
     </auro-combobox>
   </div>
   <div slot="footer">
-    <auro-button id="closePopAndDrop">
+    <auro-button onclick="document.querySelector('#popover-dialog').closeDialog()">
       I understand
       <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
     </auro-button>

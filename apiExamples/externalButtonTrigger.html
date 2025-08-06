@@ -1,5 +1,8 @@
-<auro-dialog id="defaultDialog">
-  <auro-button slot="trigger" id="openBasic">Open default dialog</auro-button>
+<div>
+  <auro-button onclick="document.querySelector('#externalButtonDialog').openDialog()">External dialog trigger</auro-button>
+</div>
+
+<auro-dialog id="externalButtonDialog">
   <span slot="header">Default Dialog</span>
   <div slot="content">
     <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -13,6 +16,6 @@
     </ul>
   </div>
   <div slot="footer">
-    <auro-button secondary onclick="document.querySelector('#defaultDialog').closeDialog()">Close</auro-button>
+    <auro-button secondary onclick="document.querySelector('#externalButtonDialog').closeDialog()">Close</auro-button>
   </div>
 </auro-dialog>

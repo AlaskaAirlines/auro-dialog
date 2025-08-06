@@ -3,11 +3,12 @@
 
 // ---------------------------------------------------------------------
 
-/* eslint-disable jsdoc/no-undefined-types, lit-a11y/click-events-have-key-events, jsdoc/require-description-complete-sentence, lit/binding-positions, lit/no-invalid-html, prefer-destructuring, max-lines */
+/* eslint-disable curly, no-underscore-dangle, jsdoc/no-undefined-types, jsdoc/require-description-complete-sentence, lit/binding-positions, lit/no-invalid-html, max-lines */
 
 import { LitElement } from "lit";
 import { html } from 'lit/static-html.js';
 import { classMap } from 'lit/directives/class-map.js';
+import { createRef, ref } from "lit/directives/ref.js";
 
 import styleCss from "./styles/style-css.js";
 import styleUnformattedCss from './styles/style-unformatted-css.js';
@@ -17,13 +18,16 @@ import tokensCss from "./styles/tokens-css.js";
 import AuroLibraryRuntimeUtils from '@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs';
 import { AuroDependencyVersioning } from '@aurodesignsystem/auro-library/scripts/runtime/dependencyTagVersioning.mjs';
 
-import { FocusTrap } from "@aurodesignsystem/auro-library/scripts/runtime/FocusTrap/index.mjs";
+// import { FocusTrap } from "@aurodesignsystem/auro-library/scripts/runtime/FocusTrap/index.mjs";
 
 import { AuroButton } from '@aurodesignsystem/auro-button/src/auro-button.js';
 import buttonVersion from './buttonVersion.js';
 
 import { AuroIcon } from '@aurodesignsystem/auro-icon/src/auro-icon.js';
 import iconVersion from './iconVersion.js';
+
+import { AuroLayover } from '@aurodesignsystem/auro-layover/class';
+import layoverVersion from './layoverVersion.js';
 
 const ESCAPE_KEYCODE = 27;
 
@@ -60,6 +64,7 @@ export default class ComponentBase extends LitElement {
     this.unformatted = false;
 
     const versioning = new AuroDependencyVersioning();
+    this._createElementRefs();
 
     /**
      * @private
@@ -71,6 +76,10 @@ export default class ComponentBase extends LitElement {
      */
     this.iconTag = versioning.generateTag('auro-icon', iconVersion, AuroIcon);
 
+    /**
+     * @private
+     */
+    this.layoverTag = versioning.generateTag('auro-layover', layoverVersion, AuroLayover);
 
     /**
      * @private
@@ -136,37 +145,42 @@ export default class ComponentBase extends LitElement {
   }
 
   /**
-   * @private
+   * Open the dialog.
    * @returns {void}
    */
   openDialog() {
-    this.defaultTrigger = document.activeElement;
+    this.layover.show();
+    this.open = true;
 
-    this.focusTrap = new FocusTrap(this.dialog);
+    if (this.layover.type === 'manual') this.defaultTrigger = document.activeElement;
   }
 
   /**
    * set the focus on the first element after opening transition effect is complete.
    * @private
    */
-  onDialogTransitionEnd() {
-    if (this.open && this.focusTrap) {
-      this.focusTrap.focusFirstElement();
-    }
-  }
+  // onDialogTransitionEnd() {
+  //   if (this.open && this.focusTrap) {
+  //     this.focusTrap.focusFirstElement();
+  //   }
+  // }
 
   /**
-   * @private
+   * Close the dialog
    * @returns {void}
    */
   closeDialog() {
-    if (this.focusTrap) {
-      // If the dropdown is not open, disconnect the focus trap if it exists
-      this.focusTrap.disconnect();
-      this.focusTrap = undefined;
-    }
 
-    if (this.defaultTrigger) {
+    this.layover.hide();
+    this.open = false;
+
+    // if (this.focusTrap) {
+    //   // If the dropdown is not open, disconnect the focus trap if it exists
+    //   this.focusTrap.disconnect();
+    //   this.focusTrap = undefined;
+    // }
+
+    if (this.defaultTrigger && this.layover.type === 'manual') {
       this.defaultTrigger.focus();
       this.defaultTrigger = undefined;
     }
@@ -210,7 +224,8 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   handleCloseButtonClick() {
-    this.open = false;
+    console.debug('click to close from dialog');
+    this.closeDialog();
   }
 
   /**
@@ -233,6 +248,20 @@ export default class ComponentBase extends LitElement {
     if (this.open) {
       this.dialog.focus();
     }
+  }
+
+  /** Creates refs for elements in the template @returns {void} @private */
+  _createElementRefs() {
+    // A reference to the layover element itself
+    this._layoverRef = createRef();
+  }
+
+  /**
+   * A reference to the layover element that wraps the dialog.
+   * @returns {HTMLElement} The layover element that wraps the dialog
+   */
+  get layover() {
+    return this._layoverRef.value;
   }
 
   static get styles() {
@@ -259,29 +288,23 @@ export default class ComponentBase extends LitElement {
   }
 
   render() {
-    const classes = {
-        'dialogOverlay': true,
-        'dialogOverlay--modal': this.modal && this.open,
-        'dialogOverlay--open': this.open,
-        'util_displayHidden': !this.open
-      },
-
-      contentClasses = {
-        'dialog': true,
-        'dialog--open': this.open
-      };
+    const contentClasses = {
+      'dialog': true,
+      'dialog--open': this.open
+    };
 
     return html`
-      <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay" @click=${this.handleOverlayClick}></div>
-
-      <div 
+      <${this.layoverTag}
+        ${ref(this._layoverRef)}
+        behavior="dialog"
         role="dialog" 
         id="dialog" 
-        class="${classMap(contentClasses)}"
         part="dialog"
         aria-labelledby="dialog-header"
         aria-describedby="dialog-content"
-        @transitionend="${this.onDialogTransitionEnd}">
+        >
+        <slot name="trigger" slot="trigger"></slot>
+        <div class="${classMap(contentClasses)}">
         ${this.unformatted
         ? html`
           <slot name="content"></slot>
@@ -301,8 +324,9 @@ export default class ComponentBase extends LitElement {
             <slot name="footer" id="footer"></slot>
           </div>
         `
-      }
-      </div>
+        }
+        </div>
+      </${this.layoverTag}>
     `;
   }
 }

@@ -21,43 +21,29 @@ This file is generated based on a template fetched from `./docs/partials/index.m
 
 ## Set Up
 
-Triggering the dialog relies on functions being installed. See the following example code that is installed into this demo.
-
-```javascript
-function toggleDialog(dialogID) {
-  const dialog = document.querySelector(dialogID);
-
-  if (dialog.hasAttribute('open')) {
-    dialog.removeAttribute('open');
-  } else {
-    dialog.setAttribute('open', true);
-  }
-}
-```
-
-Once the JavaScript is added to the scope of the experience, the next part is adding a trigger. In this example, the button component will toggle a dialog with the ID of `#demo1`.
-
-```javascript
-<auro-button onClick="toggleDialog('#demo1')">Open Default Dialog</auro-button>
-```
+The auro-dialog component now includes a built-in `trigger` slot, eliminating the need for external JavaScript functions. Simply add an `auro-button` with `slot="trigger"` inside the dialog component to create a trigger button.
 
 ## The Structure
 
-The structure of the dialog itself consists of three slots. The `header`, `content` and `footer` slots. See the scaffolding example below for adding content to the component.
+The structure of the dialog consists of four slots: `trigger`, `header`, `content`, and `footer`. See the scaffolding example below for adding content to the component.
 
-```javascript
-  <auro-dialog id="[unique ID]">
-    <span slot="header">[header content]</span>
-    <span slot="content">
-      [body content]
-    </span>
-    <span slot="footer">
-      [footer content]
-    </span>
-  </auro-dialog>
+```html
+<auro-dialog id="[unique ID]">
+  <auro-button slot="trigger">[trigger button text]</auro-button>
+  <span slot="header">[header content]</span>
+  <span slot="content">
+    [body content]
+  </span>
+  <span slot="footer">
+    [footer content]
+  </span>
+</auro-dialog>
 ```
 
-It should be noted that the `footer` slot is reserved for the placement of action buttons.
+It should be noted that:
+
+- The `trigger` slot is used for the button that opens the dialog
+- The `footer` slot is reserved for the placement of action buttons (such as close, cancel, or submit buttons)
 
 ## Example(s)
 
@@ -74,7 +60,31 @@ It should be noted that the `footer` slot is reserved for the placement of actio
 
 </auro-accordion>
 
-Having a closing statement about your example helps to really complete the thought with your reader.
+## Deprecated: External Trigger Pattern
+
+**Note:** The external trigger button pattern shown below is deprecated and should no longer be used. This approach required manual JavaScript event handling and external button placement, which made the component less self-contained and harder to maintain.
+
+The modern approach using the `trigger` slot (shown in the example above) provides several advantages:
+
+- **No JavaScript required** - The dialog handles all trigger functionality internally
+- **Better encapsulation** - The trigger button is part of the dialog component itself
+- **Improved accessibility** - Built-in ARIA relationships between trigger and dialog
+- **Simpler implementation** - Just add the button with `slot="trigger"` and you're done
+
+Please use the `trigger` slot method instead of the deprecated pattern shown below.
+
+<div class="exampleWrapper">
+  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/externalButtonTrigger.html) -->
+  <!-- AURO-GENERATED-CONTENT:END -->
+</div>
+
+<auro-accordion alignRight>
+  <span slot="trigger">See code</span>
+
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/externalButtonTrigger.html) -->
+<!-- AURO-GENERATED-CONTENT:END -->
+
+</auro-accordion>
 
 ## Recommended Use and Version Control
 

@@ -1,10 +1,5 @@
-<div>
-  <auro-button id="openDefaultModal">Open default modal</auro-button>
-  <auro-button id="openMediumModal">Open medium modal</auro-button>
-  <auro-button id="openSmallModal">Open small modal</auro-button>
-</div>
-
 <auro-dialog id="defaultModalDialog" modal>
+  <auro-button slot="trigger">Open default modal</auro-button>
   <span slot="header">Default Modal Dialog</span>
   <div slot="content">
     <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -18,13 +13,14 @@
     </ul>
   </div>
   <div slot="footer">
-    <auro-button id="closeDefaultModal">I understand
+    <auro-button onclick="document.querySelector('#defaultModalDialog').closeDialog()">I understand
       <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
     </auro-button>
   </div>
 </auro-dialog>
 
 <auro-dialog id="mediumModalDialog" md modal>
+  <auro-button slot="trigger">Open medium modal</auro-button>
   <span slot="header">Medium Dialog</span>
   <div slot="content">
     <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -38,13 +34,14 @@
     </ul>
   </div>
   <div slot="footer">
-    <auro-button id="closeMediumModal">I understand
+    <auro-button onclick="document.querySelector('#mediumModalDialog').closeDialog()">I understand
       <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
     </auro-button>
   </div>
 </auro-dialog>
 
 <auro-dialog id="smallModalDialog" sm modal>
+  <auro-button slot="trigger">Open small modal</auro-button>
   <span slot="header">Small Dialog</span>
   <div slot="content">
     <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
@@ -58,7 +55,7 @@
     </ul>
   </div>
   <div slot="footer">
-    <auro-button id="closeSmallModal">I understand
+    <auro-button onclick="document.querySelector('#smallModalDialog').closeDialog()">I understand
       <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
     </auro-button>
   </div>

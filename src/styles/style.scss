@@ -31,6 +31,10 @@ $auro-spacing-options: none;
   --ds-auro-icon-size: var(--ds-size-300, #{vac.$ds-size-300});
 }
 
+[auro-layover] {
+  --auro-layover-backdrop-transition:  background 0.3s cubic-bezier(0.4, 0, 0.2, 0);
+}
+
 // container shape styles
 .dialogOverlay {
   position: fixed;
@@ -62,34 +66,31 @@ $auro-spacing-options: none;
 
 // Default selector setting mobile-first specs
 .dialog {
-  position: fixed;
-  z-index: -1;
+  // position: fixed;
+  // z-index: -1;
   right: 0;
   bottom: -100%;
   left: 0;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  visibility: hidden;
-  overflow: visible;
 
   width: calc(100% - var(--insetPaddingXl) - var(--insetPaddingXl));
   max-height: 90%;
   padding: var(--insetPaddingXl);
 
-  opacity: 0;
   border: 0;
 
   // baseline dialog UI / mobile-first
   @include animation.auro_transition(all, 0.3s, ease-in-out);
 
   // open modifier
-  &--open {
-    z-index: var(--ds-depth-modal, vac.$ds-depth-modal);
-    visibility: visible;
-    bottom: 0;
-    opacity: 1;
-  }
+  // &--open {
+  //   z-index: var(--ds-depth-modal, vac.$ds-depth-modal);
+  //   visibility: visible;
+  //   bottom: 0;
+  //   opacity: 1;
+  // }
 
   // 1024px breakpoint / large dialog size is default
   @include breakpoints.auro_grid-breakpoint--md {
@@ -103,17 +104,9 @@ $auro-spacing-options: none;
     margin: auto;
     padding: var(--insetPaddingXxxl);
     
-    opacity: 0;
-    width: 0;
-    height: 0;
-    overflow: hidden;
+    width: calc(100% - var(--insetPaddingXxxl) - var(--insetPaddingXxxl));
+    height: auto;
 
-    &--open {
-      opacity: 1;
-      width: calc(100% - var(--insetPaddingXxxl) - var(--insetPaddingXxxl));
-      height: auto;
-      overflow: visible;
-    }
   }
 
   @include breakpoints.auro_grid-breakpoint--lg {

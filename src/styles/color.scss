@@ -10,15 +10,19 @@
 
 /* stylelint-disable selector-class-pattern */
 
-.dialogOverlay {
-  &--open {
-    background: var(--ds-auro-dialog-overlay-open-background-color);
-  }
-
-  &--modal {
-    background: var(--ds-auro-dialog-overlay-modal-background-color);
-  }
+[auro-layover] {
+  --auro-layover-backdrop-background: var(--ds-auro-dialog-overlay-open-background-color);
 }
+
+// .dialogOverlay {
+//   &--open {
+//     background: var(--ds-auro-dialog-overlay-open-background-color);
+//   }
+
+//   &--modal {
+//     background: var(--ds-auro-dialog-overlay-modal-background-color);
+//   }
+// }
 
 .dialog {
   background: var(--ds-auro-dialog-container-color);

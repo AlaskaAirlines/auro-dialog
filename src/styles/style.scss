@@ -5,7 +5,7 @@
 
 /* stylelint-disable at-rule-empty-line-before, custom-property-pattern, declaration-empty-line-before, order/properties-order, color-function-notation, max-nesting-depth,
    selector-class-pattern, scss/selector-no-redundant-nesting-selector, declaration-block-no-duplicate-properties, scss/double-slash-comment-empty-line-before,
-   scss/selector-nest-combinators, rule-empty-line-before,  no-descending-specificity, no-duplicate-selectors */
+   scss/selector-nest-combinators, rule-empty-line-before,  no-descending-specificity, no-duplicate-selectors, selector-max-class */
 
 // Import Auro tokens
 @use "@aurodesignsystem/design-tokens/dist/legacy/auro-classic/SCSSVariables" as vac;
@@ -138,6 +138,7 @@ $auro-spacing-options: none;
   align-items: flex-start;
   justify-content: space-between;
   padding-top: var(--ds-size-800, vac.$ds-size-800);
+  margin-bottom: var(--ds-size-300, vac.$ds-size-300);
 
   &--action {
     margin: 0;
@@ -147,12 +148,19 @@ $auro-spacing-options: none;
       cursor: pointer;
     }
   }
+
+  .heading {
+    flex: 1;
+    margin-block: 0;
+  }
 }
 
 .dialog-content {
   flex: 1;
   overflow: auto;
   overscroll-behavior: contain;
+  margin: calc(-1 * var(--ds-size-100));
+  padding: var(--ds-size-100);
 }
 
 ::slotted([slot="content"]) {

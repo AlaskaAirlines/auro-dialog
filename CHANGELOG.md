@@ -1,5 +1,12 @@
 # Semantic Release Automated Changelog
 
+## [3.1.8](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.1.7...v3.1.8) (2025-09-29)
+
+
+### Bug Fixes
+
+* add room on content area for focus-indicator [#76](https://github.com/AlaskaAirlines/auro-dialog/issues/76) [#75](https://github.com/AlaskaAirlines/auro-dialog/issues/75) ([e85d4c9](https://github.com/AlaskaAirlines/auro-dialog/commit/e85d4c9662acb6043ba6e4d13169115bdc32a870))
+
 ## [3.1.7](https://github.com/AlaskaAirlines/auro-dialog/compare/v3.1.6...v3.1.7) (2025-09-04)
 
 

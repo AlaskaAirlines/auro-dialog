@@ -1,15 +1,15 @@
-import { initBasicExample } from "../apiExamples/basic";
 import { initAccessibilityExample } from "../apiExamples/accessibility";
+import { initBasicExample } from "../apiExamples/basic";
 import { initDecoupledExample } from "../apiExamples/decoupled";
 import { initEditCloseButtonExample } from "../apiExamples/editCloseButton";
 import { initModalExample } from "../apiExamples/modal";
 import { initPopoverAndDropdownExample } from "../apiExamples/popoverAndDropdown";
 import { initSizeOptionsExample } from "../apiExamples/sizeOptions";
-import { AuroDialog } from '../src/auro-dialog.js';
 
-AuroDialog.register();
+import "../src/registered"
 
 export function initExamples(initCount) {
+  // biome-ignore lint/style/noParameterAssign: legacy error handling
   initCount = initCount || 0;
 
   try {
@@ -20,7 +20,7 @@ export function initExamples(initCount) {
     initModalExample();
     initPopoverAndDropdownExample();
     initSizeOptionsExample();
-  } catch (err) {
+  } catch (_err) {
     if (initCount <= 20) {
       // setTimeout handles issue where content is sometimes loaded after the functions get called
       setTimeout(() => {

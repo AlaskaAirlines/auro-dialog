@@ -6,27 +6,24 @@
 /* eslint-disable jsdoc/no-undefined-types, lit-a11y/click-events-have-key-events, jsdoc/require-description-complete-sentence, lit/binding-positions, lit/no-invalid-html, prefer-destructuring, max-lines */
 
 import { LitElement } from "lit";
-import { html } from 'lit/static-html.js';
-import { classMap } from 'lit/directives/class-map.js';
+import { classMap } from "lit/directives/class-map.js";
+import { html } from "lit/static-html.js";
 
-import styleCss from "./styles/style-css.js";
-import styleUnformattedCss from './styles/style-unformatted-css.js';
-import colorCss from "./styles/color-css.js";
-import tokensCss from "./styles/tokens-css.js";
-
-import AuroLibraryRuntimeUtils from '@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs';
-import { AuroDependencyVersioning } from '@aurodesignsystem/auro-library/scripts/runtime/dependencyTagVersioning.mjs';
-
+import { AuroDependencyVersioning } from "@aurodesignsystem/auro-library/scripts/runtime/dependencyTagVersioning.mjs";
 import { FocusTrap } from "@aurodesignsystem/auro-library/scripts/runtime/FocusTrap/index.mjs";
+import AuroLibraryRuntimeUtils from "@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs";
+import { AuroButton } from "@aurodesignsystem/auro-button/class";
+import { AuroIcon } from "@aurodesignsystem/auro-icon/class";
 
-import { AuroButton } from '@aurodesignsystem/auro-button/src/auro-button.js';
-import buttonVersion from './buttonVersion.js';
+import buttonVersion from "./buttonVersion.js";
+import iconVersion from "./iconVersion.js";
 
-import { AuroIcon } from '@aurodesignsystem/auro-icon/src/auro-icon.js';
-import iconVersion from './iconVersion.js';
+import colorCss from "./styles/color.scss";
+import styleCss from "./styles/style.scss";
+import styleUnformattedCss from "./styles/style-unformatted.scss";
+import tokensCss from "./styles/tokens.scss";
 
 const ESCAPE_KEYCODE = 27;
-
 
 // See https://git.io/JJ6SJ for "How to document your components using JSDoc"
 /**
@@ -64,13 +61,16 @@ export default class ComponentBase extends LitElement {
     /**
      * @private
      */
-    this.buttonTag = versioning.generateTag('auro-button', buttonVersion, AuroButton);
+    this.buttonTag = versioning.generateTag(
+      "auro-button",
+      buttonVersion,
+      AuroButton,
+    );
 
     /**
      * @private
      */
-    this.iconTag = versioning.generateTag('auro-icon', iconVersion, AuroIcon);
-
+    this.iconTag = versioning.generateTag("auro-icon", iconVersion, AuroIcon);
 
     /**
      * @private
@@ -83,26 +83,26 @@ export default class ComponentBase extends LitElement {
       modal: { type: Boolean },
       unformatted: {
         type: Boolean,
-        reflect: true
+        reflect: true,
       },
       open: {
         type: Boolean,
-        reflect: true
+        reflect: true,
       },
       triggerElement: {
-        attribute: false
-      }
+        attribute: false,
+      },
     };
   }
 
   firstUpdated() {
     // Add the tag name as an attribute if it is different than the component name
-    this.runtimeUtils.handleComponentTagRename(this, 'auro-dialog');
+    this.runtimeUtils.handleComponentTagRename(this, "auro-dialog");
 
-    const slot = this.shadowRoot.querySelector("#footer"),
-      slotWrapper = this.shadowRoot.querySelector("#footerWrapper");
+    const slot = this.shadowRoot.querySelector("#footer");
+    const slotWrapper = this.shadowRoot.querySelector("#footerWrapper");
 
-    this.dialog = this.shadowRoot.getElementById('dialog');
+    this.dialog = this.shadowRoot.getElementById("dialog");
 
     if (!this.unformatted && slot.assignedNodes().length === 0) {
       slotWrapper.classList.remove("dialog-footer");
@@ -115,7 +115,7 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   updated(changedProperties) {
-    if (changedProperties.has('open')) {
+    if (changedProperties.has("open")) {
       if (this.open) {
         this.openDialog();
       } else {
@@ -127,12 +127,12 @@ export default class ComponentBase extends LitElement {
   connectedCallback() {
     super.connectedCallback();
     this.keydownEventHandler = this.handleKeydown.bind(this);
-    window.addEventListener('keydown', this.keydownEventHandler);
+    window.addEventListener("keydown", this.keydownEventHandler);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    window.removeEventListener('keydown', this.keydownEventHandler);
+    window.removeEventListener("keydown", this.keydownEventHandler);
   }
 
   /**
@@ -192,13 +192,19 @@ export default class ComponentBase extends LitElement {
    */
   handleOverlayClick() {
     if (this.open && !this.modal) {
-      const dropdownComponents = [...this.querySelectorAll('auro-combobox, [auro-combobox], auro-select, [auro-select], auro-datepicker, [auro-datepicker]')];
+      const dropdownComponents = [
+        ...this.querySelectorAll(
+          "auro-combobox, [auro-combobox], auro-select, [auro-select], auro-datepicker, [auro-datepicker]",
+        ),
+      ];
       const dropdowns = [
-        ...this.querySelectorAll('auro-dropdown, [auro-dropdown]'),
+        ...this.querySelectorAll("auro-dropdown, [auro-dropdown]"),
         ...dropdownComponents.map((comp) => comp.dropdown),
       ];
 
-      const isAnyDropdownOpen = dropdowns.some((dropdown) => dropdown.isPopoverVisible);
+      const isAnyDropdownOpen = dropdowns.some(
+        (dropdown) => dropdown.isPopoverVisible,
+      );
       if (!isAnyDropdownOpen) {
         this.handleCloseButtonClick();
       }
@@ -219,7 +225,11 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   handleKeydown({ key, keyCode }) {
-    if (this.open && !this.modal && (key === 'Escape' || keyCode === ESCAPE_KEYCODE)) {
+    if (
+      this.open &&
+      !this.modal &&
+      (key === "Escape" || keyCode === ESCAPE_KEYCODE)
+    ) {
       this.open = false;
     }
   }
@@ -236,12 +246,7 @@ export default class ComponentBase extends LitElement {
   }
 
   static get styles() {
-    return [
-      styleCss,
-      styleUnformattedCss,
-      colorCss,
-      tokensCss
-    ];
+    return [styleCss, styleUnformattedCss, colorCss, tokensCss];
   }
 
   /**
@@ -252,7 +257,7 @@ export default class ComponentBase extends LitElement {
     return this.modal
       ? html``
       : html`
-        <${this.buttonTag} variant="ghost" shape="circle" size="sm" aria-label="Close" ?onDark=${this.hasAttribute('onDark')} class="dialog-header--action" id="dialog-close" @click="${this.handleCloseButtonClick}" part="close-button">
+        <${this.buttonTag} variant="ghost" shape="circle" size="sm" aria-label="Close" ?onDark=${this.hasAttribute("onDark")} class="dialog-header--action" id="dialog-close" @click="${this.handleCloseButtonClick}" part="close-button">
           <${this.iconTag} customColor category="interface" name="x-lg"></${this.iconTag}>
         </${this.buttonTag}>
       `;
@@ -260,16 +265,15 @@ export default class ComponentBase extends LitElement {
 
   render() {
     const classes = {
-        'dialogOverlay': true,
-        'dialogOverlay--modal': this.modal && this.open,
-        'dialogOverlay--open': this.open,
-        'util_displayHidden': !this.open
-      },
-
-      contentClasses = {
-        'dialog': true,
-        'dialog--open': this.open
-      };
+      dialogOverlay: true,
+      "dialogOverlay--modal": this.modal && this.open,
+      "dialogOverlay--open": this.open,
+      util_displayHidden: !this.open,
+    };
+    const contentClasses = {
+      dialog: true,
+      "dialog--open": this.open,
+    };
 
     return html`
       <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay" @click=${this.handleOverlayClick}></div>
@@ -282,12 +286,13 @@ export default class ComponentBase extends LitElement {
         aria-labelledby="dialog-header"
         aria-describedby="dialog-content"
         @transitionend="${this.onDialogTransitionEnd}">
-        ${this.unformatted
-        ? html`
+        ${
+          this.unformatted
+            ? html`
           <slot name="content"></slot>
           ${this.getCloseButton()}
         `
-        : html`
+            : html`
           <div class="dialog-header" part="dialog-header">
             <h1 class="heading heading-lg util_stackMarginNone--top" id="dialog-header">
               <slot name="header">Default header...</slot>
@@ -301,7 +306,7 @@ export default class ComponentBase extends LitElement {
             <slot name="footer" id="footer"></slot>
           </div>
         `
-      }
+        }
       </div>
     `;
   }

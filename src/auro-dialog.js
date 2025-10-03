@@ -3,8 +3,8 @@
 
 // ---------------------------------------------------------------------
 
-import AuroLibraryRuntimeUtils from '@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs';
-import ComponentBase from './componentBase.js';
+import AuroLibraryRuntimeUtils from "@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs";
+import ComponentBase from "./componentBase.js";
 
 /**
  * The auro-dialog appears above the page and requires the user's attention.
@@ -19,17 +19,17 @@ export class AuroDialog extends ComponentBase {
   // function to define props used within the scope of this component
   static get properties() {
     return {
-      ...super.properties,
+      ...ComponentBase.properties,
       // use custom accessors on base class
       open: {
-        ...super.properties.open,
-        noAccessor: true
-      }
+        ...ComponentBase.properties.open,
+        noAccessor: true,
+      },
     };
   }
 
   static get styles() {
-    return [super.styles];
+    return [ComponentBase.styles];
   }
 
   /**

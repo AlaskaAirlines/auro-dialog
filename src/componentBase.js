@@ -33,7 +33,7 @@ const ESCAPE_KEYCODE = 27;
  * @attr {Boolean} unformatted - Unformatted dialog window, edge-to-edge fill for content
  * @attr {Boolean} sm - Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile.
  * @attr {Boolean} md - Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile.
- * @attr {Boolean} onDark - Sets close icon to white for dark backgrounds
+ * @attr {Boolean} onDark - DEPRECATED - use `close-button-appearance="inverse" instead.
  * @attr {Boolean} open - Sets state of dialog to open
  * @prop {HTMLElement} triggerElement - The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened.
  * @slot header - Text to display as the header of the modal
@@ -56,6 +56,7 @@ export default class ComponentBase extends LitElement {
 
     this.modal = false;
     this.unformatted = false;
+    this.closeButtonAppearance = 'default';
 
     const versioning = new AuroDependencyVersioning();
 
@@ -81,6 +82,18 @@ export default class ComponentBase extends LitElement {
 
   static get properties() {
     return {
+
+      /**
+       * Defines whether the close button should be light colored for use on dark backgrounds.
+       * @property {'default', 'inverse'}
+       * @default 'default'
+       */
+      closeButtonAppearance: {
+        type: String,
+        attribute: 'close-button-appearance',
+        reflect: true
+      },
+
       modal: { type: Boolean },
       unformatted: {
         type: Boolean,
@@ -263,7 +276,7 @@ getCloseButton() {
         variant="ghost"
         shape="circle"
         size="sm"
-        ?onDark=${this.hasAttribute("onDark")}
+        appearance=${this.hasAttribute("ondark") ? 'inverse' : this.closeButtonAppearance}
         class="dialog-header--action"
         id="dialog-close"
         @click="${this.handleCloseButtonClick}"

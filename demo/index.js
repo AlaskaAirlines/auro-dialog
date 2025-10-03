@@ -1,7 +1,7 @@
 import { initBasicExample } from "../apiExamples/basic";
 import { initCustomExample } from "../apiExamples/custom";
 
-import { AuroDialog } from "../src/auro-dialog.js";
+import { AuroDialog } from "../src/index";
 
 AuroDialog.register();
 AuroDialog.register("custom-dialog");

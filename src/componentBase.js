@@ -19,10 +19,10 @@ import { AuroDependencyVersioning } from '@aurodesignsystem/auro-library/scripts
 
 import { FocusTrap } from "@aurodesignsystem/auro-library/scripts/runtime/FocusTrap/index.mjs";
 
-import { AuroButton } from '@aurodesignsystem/auro-button/src/auro-button.js';
+import { AuroButton } from '@aurodesignsystem-dev/auro-button/class';
 import buttonVersion from './buttonVersion.js';
 
-import { AuroIcon } from '@aurodesignsystem/auro-icon/src/auro-icon.js';
+import { AuroIcon } from '@aurodesignsystem-dev/auro-icon/class';
 import iconVersion from './iconVersion.js';
 
 const ESCAPE_KEYCODE = 27;
@@ -36,7 +36,7 @@ const ESCAPE_KEYCODE = 27;
  * @attr {Boolean} unformatted - Unformatted dialog window, edge-to-edge fill for content
  * @attr {Boolean} sm - Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile.
  * @attr {Boolean} md - Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile.
- * @attr {Boolean} onDark - Sets close icon to white for dark backgrounds
+ * @attr {Boolean} onDark - DEPRECATED - use `appearance="inverse" instead.
  * @attr {Boolean} open - Sets state of dialog to open
  * @prop {HTMLElement} triggerElement - The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened.
  * @slot header - Text to display as the header of the modal
@@ -58,6 +58,7 @@ export default class ComponentBase extends LitElement {
 
     this.modal = false;
     this.unformatted = false;
+    this.appearance = 'default';
 
     const versioning = new AuroDependencyVersioning();
 
@@ -80,6 +81,17 @@ export default class ComponentBase extends LitElement {
 
   static get properties() {
     return {
+
+      /**
+       * Defines whether the button should be light colored for use on dark backgrounds.
+       * @property {'default', 'inverse'}
+       * @default 'default'
+       */
+      appearance: {
+        type: String,
+        reflect: true
+      },
+
       modal: { type: Boolean },
       unformatted: {
         type: Boolean,
@@ -252,7 +264,16 @@ export default class ComponentBase extends LitElement {
     return this.modal
       ? html``
       : html`
-        <${this.buttonTag} variant="ghost" shape="circle" size="sm" aria-label="Close" ?onDark=${this.hasAttribute('onDark')} class="dialog-header--action" id="dialog-close" @click="${this.handleCloseButtonClick}" part="close-button">
+        <${this.buttonTag} 
+        appearance=${this.appearance}
+        variant="ghost" 
+        shape="circle" 
+        size="sm" 
+        aria-label="Close" 
+        ?onDark=${this.hasAttribute('onDark')} 
+        class="dialog-header--action" 
+        id="dialog-close" 
+        @click="${this.handleCloseButtonClick}" part="close-button">
           <${this.iconTag} customColor category="interface" name="x-lg"></${this.iconTag}>
         </${this.buttonTag}>
       `;

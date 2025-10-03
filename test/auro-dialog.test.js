@@ -1,6 +1,6 @@
 import { expect, fixture, html, oneEvent } from "@open-wc/testing";
-import "../index.js";
-// import './nested-shadow.js';
+
+import "../src/registered.js";
 
 describe("auro-dialog", () => {
   it("auro-dialog is accessible", async () => {

@@ -5,9 +5,8 @@ import { initEditCloseButtonExample } from "../apiExamples/editCloseButton";
 import { initModalExample } from "../apiExamples/modal";
 import { initPopoverAndDropdownExample } from "../apiExamples/popoverAndDropdown";
 import { initSizeOptionsExample } from "../apiExamples/sizeOptions";
-import { AuroDialog } from "../src/auro-dialog.js";
 
-AuroDialog.register();
+import "../src/registered"
 
 export function initExamples(initCount) {
   // biome-ignore lint/style/noParameterAssign: legacy error handling

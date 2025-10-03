@@ -5,20 +5,23 @@
 
 /* eslint-disable jsdoc/no-undefined-types, lit-a11y/click-events-have-key-events, jsdoc/require-description-complete-sentence, lit/binding-positions, lit/no-invalid-html, prefer-destructuring, max-lines */
 
-import { AuroButton } from "@aurodesignsystem/auro-button/src/auro-button.js";
-import { AuroIcon } from "@aurodesignsystem/auro-icon/src/auro-icon.js";
-import { AuroDependencyVersioning } from "@aurodesignsystem/auro-library/scripts/runtime/dependencyTagVersioning.mjs";
-import { FocusTrap } from "@aurodesignsystem/auro-library/scripts/runtime/FocusTrap/index.mjs";
-import AuroLibraryRuntimeUtils from "@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs";
 import { LitElement } from "lit";
 import { classMap } from "lit/directives/class-map.js";
 import { html } from "lit/static-html.js";
+
+import { AuroDependencyVersioning } from "@aurodesignsystem/auro-library/scripts/runtime/dependencyTagVersioning.mjs";
+import { FocusTrap } from "@aurodesignsystem/auro-library/scripts/runtime/FocusTrap/index.mjs";
+import AuroLibraryRuntimeUtils from "@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs";
+import { AuroButton } from "@aurodesignsystem/auro-button/class";
+import { AuroIcon } from "@aurodesignsystem/auro-icon/class";
+
 import buttonVersion from "./buttonVersion.js";
 import iconVersion from "./iconVersion.js";
-import colorCss from "./styles/color-css.js";
-import styleCss from "./styles/style-css.js";
-import styleUnformattedCss from "./styles/style-unformatted-css.js";
-import tokensCss from "./styles/tokens-css.js";
+
+import colorCss from "./styles/color.scss";
+import styleCss from "./styles/style.scss";
+import styleUnformattedCss from "./styles/style-unformatted.scss";
+import tokensCss from "./styles/tokens.scss";
 
 const ESCAPE_KEYCODE = 27;
 

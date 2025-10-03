@@ -83,7 +83,7 @@ There are two important parts of every Auro component. The <a href="https://deve
 To protect from versioning conflicts with other instances of the component being loaded, it is recommended to use our `AuroDialog.register(name)` method and pass in a unique name.
 
 ```js
-import { AuroDialog } from './src/auro-dialog.js';
+import { AuroDialog } from '@aurodesignsystem/auro-dialog/class';
 
 AuroDialog.register('custom-dialog');
 ```

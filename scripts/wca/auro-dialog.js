@@ -1,5 +1,4 @@
-
-import { AuroDialog } from '../../src/auro-dialog.js';
+import { AuroDialog } from "../../src/auro-dialog.js";
 
 /**
  * The auro-dialog appears above the page and requires the user's attention.

@@ -27,11 +27,12 @@ The auro-dialog appears above the page and requires the user's attention.
 
 ## Slots
 
-| Name      | Description                                |
-|-----------|--------------------------------------------|
-| `content` | Injects content into the body of the modal |
-| `footer`  | Used for action options, e.g. buttons      |
-| `header`  | Text to display as the header of the modal |
+| Name                     | Description                                      |
+|--------------------------|--------------------------------------------------|
+| `ariaLabel.dialog.close` | Text to describe the "x" icon close button for screen readers. Default: "Close". |
+| `content`                | Injects content into the body of the modal       |
+| `footer`                 | Used for action options, e.g. buttons            |
+| `header`                 | Text to display as the header of the modal       |
 
 ## CSS Shadow Parts
 

@@ -144,6 +144,23 @@ When using the dialog with the `unformatted` attribute, some may want to adjust 
 
 </auro-accordion>
 
+### Close button aria-label slot
+
+To customize the aria-label text for the close button, use the `ariaLabel.dialog.close` slot to provide custom text. If no text is provided, the default text `"Close"` will be used.
+
+<div class="exampleWrapper">
+  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/ariaLabelSlot.html) -->
+  <!-- AURO-GENERATED-CONTENT:END -->
+</div>
+
+<auro-accordion alignRight>
+  <span slot="trigger">See code</span>
+
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/ariaLabelSlot.html) -->
+<!-- AURO-GENERATED-CONTENT:END -->
+
+</auro-accordion>
+
 ### Theme Support
 
 The component may be restyled using the following code sample and changing the values of the following token(s).

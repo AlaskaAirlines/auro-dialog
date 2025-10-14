@@ -30,11 +30,12 @@ The auro-dialog appears above the page and requires the user's attention.
 
 ## Slots
 
-| Name      | Description                                |
-|-----------|--------------------------------------------|
-| [content](#content) | Injects content into the body of the modal |
-| [footer](#footer)  | Used for action options, e.g. buttons      |
-| [header](#header)  | Text to display as the header of the modal |
+| Name                     | Description                                      |
+|--------------------------|--------------------------------------------------|
+| `ariaLabel.dialog.close` | Text to describe the "x" icon close button for screen readers. Default: "Close". |
+| [content](#content)                | Injects content into the body of the modal       |
+| [footer](#footer)                 | Used for action options, e.g. buttons            |
+| [header](#header)                 | Text to display as the header of the modal       |
 
 ## CSS Shadow Parts
 
@@ -714,6 +715,51 @@ When using the dialog with the `unformatted` attribute, some may want to adjust 
     <div class="unformattedWrapper">
       <h1 id="dialog-header" class="heading-lg">Unformatted w/custom close button</h1>
       Notice the custom location of the close button as well as the custom color.
+    </div>
+  </span>
+</auro-dialog>
+```
+<!-- AURO-GENERATED-CONTENT:END -->
+</auro-accordion>
+
+### Close button aria-label slot
+
+To customize the aria-label text for the close button, use the `ariaLabel.dialog.close` slot to provide custom text. If no text is provided, the default text `"Close"` will be used.
+
+<div class="exampleWrapper">
+  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/ariaLabelSlot.html) -->
+  <!-- The below content is automatically added from ./../apiExamples/ariaLabelSlot.html -->
+  <div>
+    <auro-button id="openAriaLabelSlot">Unformatted Dialog w/ custom close button aria-label</auro-button>
+  </div>
+  <auro-dialog id="ariaLabelMdDialog" unformatted md lg ondark>
+    <span slot="ariaLabel.dialog.close">This will be the new aria label for the close button</span>
+    <span slot="content">
+      <img style="display: block; width: 100%" src="https://blog.alaskaair.com/wp-content/uploads/2020/11/111-psp-blog-img-guide.jpg" alt="alaska airlines pride lights" />
+      <div class="unformattedWrapper">
+        <h1 id="dialog-header" class="heading-lg">This is a header</h1>
+        These are words that are slotted into the scope of the custom element.
+      </div>
+    </span>
+  </auro-dialog>
+  <!-- AURO-GENERATED-CONTENT:END -->
+</div>
+<auro-accordion alignRight>
+  <span slot="trigger">See code</span>
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/ariaLabelSlot.html) -->
+<!-- The below code snippet is automatically added from ./../apiExamples/ariaLabelSlot.html -->
+
+```html
+<div>
+  <auro-button id="openAriaLabelSlot">Unformatted Dialog w/ custom close button aria-label</auro-button>
+</div>
+<auro-dialog id="ariaLabelMdDialog" unformatted md lg ondark>
+  <span slot="ariaLabel.dialog.close">This will be the new aria label for the close button</span>
+  <span slot="content">
+    <img style="display: block; width: 100%" src="https://blog.alaskaair.com/wp-content/uploads/2020/11/111-psp-blog-img-guide.jpg" alt="alaska airlines pride lights" />
+    <div class="unformattedWrapper">
+      <h1 id="dialog-header" class="heading-lg">This is a header</h1>
+      These are words that are slotted into the scope of the custom element.
     </div>
   </span>
 </auro-dialog>

@@ -10,17 +10,18 @@ The auro-dialog appears above the page and requires the user's attention.
 | Attribute | Type      | Description                                      |
 |-----------|-----------|--------------------------------------------------|
 | [md](#md)      | `Boolean` | Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile. |
-| [onDark](#onDark)  | `Boolean` | Sets close icon to white for dark backgrounds    |
+| [onDark](#onDark)  | `Boolean` | DEPRECATED - use `close-button-appearance="inverse" instead. |
 | [sm](#sm)      | `Boolean` | Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile. |
 
 ## Properties
 
-| Property         | Attribute     | Type          | Default | Description                                      |
-|------------------|---------------|---------------|---------|--------------------------------------------------|
-| [modal](#modal)          | `modal`       | `Boolean`     | false   | Modal dialog restricts the user to take an action (no default close actions) |
-| [open](#open)           | `open`        | `Boolean`     |         | Sets state of dialog to open                     |
-| [triggerElement](#triggerElement) |               | `HTMLElement` |         | The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened. |
-| [unformatted](#unformatted)    | `unformatted` | `Boolean`     | false   | Unformatted dialog window, edge-to-edge fill for content |
+| Property                | Attribute                 | Type          | Default     | Description                                      |
+|-------------------------|---------------------------|---------------|-------------|--------------------------------------------------|
+| [closeButtonAppearance](#closeButtonAppearance) | `close-button-appearance` | `string`      | "'default'" | Defines whether the close button should be light colored for use on dark backgrounds. |
+| [modal](#modal)                 | `modal`                   | `Boolean`     | false       | Modal dialog restricts the user to take an action (no default close actions) |
+| [open](#open)                  | `open`                    | `Boolean`     |             | Sets state of dialog to open                     |
+| [triggerElement](#triggerElement)        |                           | `HTMLElement` |             | The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened. |
+| [unformatted](#unformatted)           | `unformatted`             | `Boolean`     | false       | Unformatted dialog window, edge-to-edge fill for content |
 
 ## Events
 
@@ -270,7 +271,7 @@ When using this state, the modal dialog must include a button action to dismiss 
     </div>
     <div slot="footer">
       <auro-button id="closeDefaultModal">I understand
-        <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
+        <auro-icon category="interface" name="chevron-right" emphasis appearance="inverse"></auro-icon>
       </auro-button>
     </div>
   </auro-dialog>
@@ -289,7 +290,7 @@ When using this state, the modal dialog must include a button action to dismiss 
     </div>
     <div slot="footer">
       <auro-button id="closeMediumModal">I understand
-        <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
+        <auro-icon category="interface" name="chevron-right" emphasis appearance="inverse"></auro-icon>
       </auro-button>
     </div>
   </auro-dialog>
@@ -308,7 +309,7 @@ When using this state, the modal dialog must include a button action to dismiss 
     </div>
     <div slot="footer">
       <auro-button id="closeSmallModal">I understand
-        <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
+        <auro-icon category="interface" name="chevron-right" emphasis appearance="inverse"></auro-icon>
       </auro-button>
     </div>
   </auro-dialog>
@@ -340,7 +341,7 @@ When using this state, the modal dialog must include a button action to dismiss 
   </div>
   <div slot="footer">
     <auro-button id="closeDefaultModal">I understand
-      <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
+      <auro-icon category="interface" name="chevron-right" emphasis appearance="inverse"></auro-icon>
     </auro-button>
   </div>
 </auro-dialog>
@@ -359,7 +360,7 @@ When using this state, the modal dialog must include a button action to dismiss 
   </div>
   <div slot="footer">
     <auro-button id="closeMediumModal">I understand
-      <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
+      <auro-icon category="interface" name="chevron-right" emphasis appearance="inverse"></auro-icon>
     </auro-button>
   </div>
 </auro-dialog>
@@ -378,7 +379,7 @@ When using this state, the modal dialog must include a button action to dismiss 
   </div>
   <div slot="footer">
     <auro-button id="closeSmallModal">I understand
-      <auro-icon category="interface" name="chevron-right" emphasis onDark></auro-icon>
+      <auro-icon category="interface" name="chevron-right" emphasis appearance="inverse"></auro-icon>
     </auro-button>
   </div>
 </auro-dialog>
@@ -415,7 +416,7 @@ The use of these combinations will set the first value to the dialog for a deskt
     <div slot="footer">
       <auro-button id="closeSmLg">
         I understand
-        <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
+        <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
       </auro-button>
     </div>
   </auro-dialog>
@@ -435,7 +436,7 @@ The use of these combinations will set the first value to the dialog for a deskt
     <div slot="footer">
       <auro-button id="closeMdLg">
         I understand
-        <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
+        <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
       </auro-button>
     </div>
   </auro-dialog>
@@ -467,7 +468,7 @@ The use of these combinations will set the first value to the dialog for a deskt
   <div slot="footer">
     <auro-button id="closeSmLg">
       I understand
-      <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
+      <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
     </auro-button>
   </div>
 </auro-dialog>
@@ -487,7 +488,7 @@ The use of these combinations will set the first value to the dialog for a deskt
   <div slot="footer">
     <auro-button id="closeMdLg">
       I understand
-      <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
+      <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
     </auro-button>
   </div>
 </auro-dialog>
@@ -543,7 +544,7 @@ This is a use case where there is a popover and combobox component inside the di
     <div slot="footer">
       <auro-button id="closePopAndDrop">
         I understand
-        <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
+        <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
       </auro-button>
     </div>
   </auro-dialog>
@@ -596,7 +597,7 @@ This is a use case where there is a popover and combobox component inside the di
   <div slot="footer">
     <auro-button id="closePopAndDrop">
       I understand
-      <auro-icon category="interface" name="check-lg" emphasis onDark></auro-icon>
+      <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
     </auro-button>
   </div>
 </auro-dialog>
@@ -632,7 +633,7 @@ Within the scope of the auro-dialog there is `aria-labelledby="dialog-header"`. 
   <div>
     <auro-button id="openAccessibility">Unformatted Medium Dialog</auro-button>
   </div>
-  <auro-dialog id="unformattedMdDialog" unformatted md lg ondark>
+  <auro-dialog id="unformattedMdDialog" unformatted md lg close-button-appearance="inverse">
     <span slot="content">
       <img style="display: block; width: 100%" src="https://blog.alaskaair.com/wp-content/uploads/2020/11/111-psp-blog-img-guide.jpg" alt="alaska airlines pride lights" />
       <div class="unformattedWrapper">
@@ -652,7 +653,7 @@ Within the scope of the auro-dialog there is `aria-labelledby="dialog-header"`. 
 <div>
   <auro-button id="openAccessibility">Unformatted Medium Dialog</auro-button>
 </div>
-<auro-dialog id="unformattedMdDialog" unformatted md lg ondark>
+<auro-dialog id="unformattedMdDialog" unformatted md lg close-button-appearance="inverse">
   <span slot="content">
     <img style="display: block; width: 100%" src="https://blog.alaskaair.com/wp-content/uploads/2020/11/111-psp-blog-img-guide.jpg" alt="alaska airlines pride lights" />
     <div class="unformattedWrapper">

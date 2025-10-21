@@ -33,12 +33,13 @@ const ESCAPE_KEYCODE = 27;
  * @attr {Boolean} unformatted - Unformatted dialog window, edge-to-edge fill for content
  * @attr {Boolean} sm - Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile.
  * @attr {Boolean} md - Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile.
- * @attr {Boolean} onDark - Sets close icon to white for dark backgrounds
+ * @attr {Boolean} onDark - DEPRECATED - use `close-button-appearance="inverse" instead.
  * @attr {Boolean} open - Sets state of dialog to open
  * @prop {HTMLElement} triggerElement - The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened.
  * @slot header - Text to display as the header of the modal
  * @slot content - Injects content into the body of the modal
  * @slot footer - Used for action options, e.g. buttons
+ * @slot ariaLabel.dialog.close - Text to describe the "x" icon close button for screen readers. Default: "Close".
  * @function toggleViewable - toggles the 'open' property on the element
  * @event toggle - Event fires when the element is closed
  * @csspart close-button - adjust position of the close X icon in the dialog window
@@ -55,6 +56,7 @@ export default class ComponentBase extends LitElement {
 
     this.modal = false;
     this.unformatted = false;
+    this.closeButtonAppearance = 'default';
 
     const versioning = new AuroDependencyVersioning();
 
@@ -80,6 +82,18 @@ export default class ComponentBase extends LitElement {
 
   static get properties() {
     return {
+
+      /**
+       * Defines whether the close button should be light colored for use on dark backgrounds.
+       * @property {'default', 'inverse'}
+       * @default 'default'
+       */
+      closeButtonAppearance: {
+        type: String,
+        attribute: 'close-button-appearance',
+        reflect: true
+      },
+
       modal: { type: Boolean },
       unformatted: {
         type: Boolean,
@@ -253,14 +267,24 @@ export default class ComponentBase extends LitElement {
    * @private
    * @returns {TemplateResult} - The close button template.
    */
-  getCloseButton() {
-    return this.modal
-      ? html``
-      : html`
-        <${this.buttonTag} variant="ghost" shape="circle" size="sm" aria-label="Close" ?onDark=${this.hasAttribute("onDark")} class="dialog-header--action" id="dialog-close" @click="${this.handleCloseButtonClick}" part="close-button">
-          <${this.iconTag} customColor category="interface" name="x-lg"></${this.iconTag}>
-        </${this.buttonTag}>
-      `;
+getCloseButton() {
+  return this.modal
+    ? html``
+    : html`
+      <${this.buttonTag}
+        aria-label="${this.runtimeUtils.getSlotText(this, 'ariaLabel.dialog.close') || 'Close'}"
+        variant="ghost"
+        shape="circle"
+        size="sm"
+        appearance=${this.hasAttribute("ondark") ? 'inverse' : this.closeButtonAppearance}
+        class="dialog-header--action"
+        id="dialog-close"
+        @click="${this.handleCloseButtonClick}"
+        part="close-button"
+      >
+        <${this.iconTag} customColor category="interface" name="x-lg"></${this.iconTag}>
+      </${this.buttonTag}>
+    `;
   }
 
   render() {
@@ -276,6 +300,9 @@ export default class ComponentBase extends LitElement {
     };
 
     return html`
+      <!-- Hidden slot for close button aria-label -->
+      <slot name="ariaLabel.dialog.close" hidden @slotchange=${this.requestUpdate}></slot>
+
       <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay" @click=${this.handleOverlayClick}></div>
 
       <div 

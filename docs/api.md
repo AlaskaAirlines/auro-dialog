@@ -7,17 +7,18 @@ The auro-dialog appears above the page and requires the user's attention.
 | Attribute | Type      | Description                                      |
 |-----------|-----------|--------------------------------------------------|
 | `md`      | `Boolean` | Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile. |
-| `onDark`  | `Boolean` | Sets close icon to white for dark backgrounds    |
+| `onDark`  | `Boolean` | DEPRECATED - use `close-button-appearance="inverse" instead. |
 | `sm`      | `Boolean` | Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile. |
 
 ## Properties
 
-| Property         | Attribute     | Type          | Default | Description                                      |
-|------------------|---------------|---------------|---------|--------------------------------------------------|
-| `modal`          | `modal`       | `Boolean`     | false   | Modal dialog restricts the user to take an action (no default close actions) |
-| `open`           | `open`        | `Boolean`     |         | Sets state of dialog to open                     |
-| `triggerElement` |               | `HTMLElement` |         | The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened. |
-| `unformatted`    | `unformatted` | `Boolean`     | false   | Unformatted dialog window, edge-to-edge fill for content |
+| Property                | Attribute                 | Type          | Default     | Description                                      |
+|-------------------------|---------------------------|---------------|-------------|--------------------------------------------------|
+| `closeButtonAppearance` | `close-button-appearance` | `string`      | "'default'" | Defines whether the close button should be light colored for use on dark backgrounds. |
+| `modal`                 | `modal`                   | `Boolean`     | false       | Modal dialog restricts the user to take an action (no default close actions) |
+| `open`                  | `open`                    | `Boolean`     |             | Sets state of dialog to open                     |
+| `triggerElement`        |                           | `HTMLElement` |             | The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened. |
+| `unformatted`           | `unformatted`             | `Boolean`     | false       | Unformatted dialog window, edge-to-edge fill for content |
 
 ## Events
 
@@ -27,11 +28,12 @@ The auro-dialog appears above the page and requires the user's attention.
 
 ## Slots
 
-| Name      | Description                                |
-|-----------|--------------------------------------------|
-| `content` | Injects content into the body of the modal |
-| `footer`  | Used for action options, e.g. buttons      |
-| `header`  | Text to display as the header of the modal |
+| Name                     | Description                                      |
+|--------------------------|--------------------------------------------------|
+| `ariaLabel.dialog.close` | Text to describe the "x" icon close button for screen readers. Default: "Close". |
+| `content`                | Injects content into the body of the modal       |
+| `footer`                 | Used for action options, e.g. buttons            |
+| `header`                 | Text to display as the header of the modal       |
 
 ## CSS Shadow Parts
 

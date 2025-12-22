@@ -25,22 +25,11 @@ import tokensCss from "./styles/tokens.scss";
 
 const ESCAPE_KEYCODE = 27;
 
-// See https://git.io/JJ6SJ for "How to document your components using JSDoc"
 /**
- * auro-dialog appear above the page and require the user's attention.
- *
- * @attr {Boolean} modal - Modal dialog restricts the user to take an action (no default close actions)
- * @attr {Boolean} unformatted - Unformatted dialog window, edge-to-edge fill for content
- * @attr {Boolean} sm - Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile.
- * @attr {Boolean} md - Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile.
- * @attr {Boolean} onDark - DEPRECATED - use `close-button-appearance="inverse" instead.
- * @attr {Boolean} open - Sets state of dialog to open
- * @prop {HTMLElement} triggerElement - The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened.
  * @slot header - Text to display as the header of the modal
  * @slot content - Injects content into the body of the modal
  * @slot footer - Used for action options, e.g. buttons
  * @slot ariaLabel.dialog.close - Text to describe the "x" icon close button for screen readers. Default: "Close".
- * @function toggleViewable - toggles the 'open' property on the element
  * @event toggle - Event fires when the element is closed
  * @csspart close-button - adjust position of the close X icon in the dialog window
  * @csspart dialog-overlay - apply CSS on the overlay of the dialog
@@ -49,11 +38,14 @@ const ESCAPE_KEYCODE = 27;
  * @csspart dialog-content - apply CSS to the content of the dialog
  * @csspart dialog-footer - apply CSS to the footer of the dialog
  */
-
 export default class ComponentBase extends LitElement {
   constructor() {
     super();
 
+    this._initializeDefaults();
+  }
+
+  _initializeDefaults() {
     this.modal = false;
     this.unformatted = false;
     this.closeButtonAppearance = 'default';
@@ -85,7 +77,7 @@ export default class ComponentBase extends LitElement {
 
       /**
        * Defines whether the close button should be light colored for use on dark backgrounds.
-       * @property {'default', 'inverse'}
+       * @type {'default'|'inverse'}
        * @default 'default'
        */
       closeButtonAppearance: {
@@ -94,18 +86,68 @@ export default class ComponentBase extends LitElement {
         reflect: true
       },
 
-      modal: { type: Boolean },
-      unformatted: {
+      /**
+       * Sets dialog box to large style. Adding both lg and sm/md will set the dialog to lg for mobile and sm/md for desktop.
+       * Must be used in conjunction with sm or md to have an effect.
+       */
+      lg: {
         type: Boolean,
-        reflect: true,
+        reflect: true
       },
+
+      /**
+       * Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile.
+       */
+      md: {
+        type: Boolean,
+        reflect: true
+      },
+
+      /**
+       * Modal dialog restricts the user to take an action (no default close actions).
+       */
+      modal: { type: Boolean },
+
+      /**
+       * DEPRECATED - use `close-button-appearance="inverse" instead.
+       */
+      onDark: {
+        type: Boolean,
+        reflect: true
+      },
+
+      /**
+       * Sets state of dialog to open.
+       */
       open: {
         type: Boolean,
-        reflect: true,
+        reflect: true
       },
+
+      /**
+       * Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile.
+       */
+      sm: {
+        type: Boolean,
+        reflect: true
+      },
+
+      /**
+       * The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened.
+       * @type {HTMLElement}
+      */
       triggerElement: {
-        attribute: false,
+        type: Object,
+        attribute: false
       },
+
+      /**
+       * Unformatted dialog window, edge-to-edge fill for content.
+       */
+      unformatted: {
+        type: Boolean,
+        reflect: true
+      }
     };
   }
 
@@ -193,10 +235,11 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   dispatchToggleEvent() {
-    // replace with Event constructor once IE support dropped
-    const toggleEvent = document.createEvent("HTMLEvents");
-
-    toggleEvent.initEvent("toggle", true, false);
+    const toggleEvent = new Event("toggle", { 
+      bubbles: true, 
+      cancelable: false 
+    });
+    
     this.dispatchEvent(toggleEvent);
   }
 

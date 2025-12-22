@@ -7,24 +7,16 @@ import AuroLibraryRuntimeUtils from "@aurodesignsystem/auro-library/scripts/util
 import ComponentBase from "./componentBase.js";
 
 /**
- * The auro-dialog appears above the page and requires the user's attention.
+ * The `auro-dialog` appears on top of the page and presents information that requires the users immediate attention.
+ * @customElement auro-dialog
  */
-
-// build the component class
 export class AuroDialog extends ComponentBase {
-  // constructor() {
-  //   super();
-  // }
 
-  // function to define props used within the scope of this component
   static get properties() {
     return {
       ...ComponentBase.properties,
       // use custom accessors on base class
-      open: {
-        ...ComponentBase.properties.open,
-        noAccessor: true,
-      },
+      open: Object.assign(ComponentBase.properties.open, { noAccessor: true }),
     };
   }
 
@@ -34,7 +26,7 @@ export class AuroDialog extends ComponentBase {
 
   /**
    * This will register this element with the browser.
-   * @param {string} [name="auro-dialog"] - The name of element that you want to register to.
+   * @param {string} [name="auro-dialog"] - The name of the element that you want to register.
    *
    * @example
    * AuroDialog.register("custom-dialog") // this will register this element to <custom-dialog/>

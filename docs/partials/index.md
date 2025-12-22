@@ -1,22 +1,17 @@
 <!--
-The index.md file is a compiled document. No edits should be made directly to this file.
-README.md is created by running `npm run build:docs`.
-This file is generated based on a template fetched from `./docs/partials/index.md`
+ THIS PAGE'S CONTENT SHOULD BE KEPT MINIMAL.
+ ONLY ADD EXAMPLES THAT ARE TRULY NECESSARY FOR THE INDEX PAGE — THE BASIC EXAMPLE IS USUALLY ENOUGH.
+ ALL OTHER EXAMPLES SHOULD GO IN THE API DOCUMENTATION.
 -->
 
 # Dialog
-
+ 
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/description.md) -->
 <!-- AURO-GENERATED-CONTENT:END -->
-
-## auro-dialog use cases
-
+ 
+## Use Cases
+ 
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/useCases.md) -->
-<!-- AURO-GENERATED-CONTENT:END -->
-
-## Additional Information
-
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/readmeAddlInfo.md) -->
 <!-- AURO-GENERATED-CONTENT:END -->
 
 ## Set Up
@@ -58,47 +53,27 @@ The structure of the dialog itself consists of three slots. The `header`, `conte
 ```
 
 It should be noted that the `footer` slot is reserved for the placement of action buttons.
-
+ 
 ## Example(s)
 
+### Basic
+
+The dialog open state is controlled via the `open` attribute, or by programmatically setting the `open` property to `true`.
+You can see in the example below under the "See Code" section that we are controlling our dialogs by adding and removing the `open` attribute.
+ 
 <div class="exampleWrapper">
   <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/basic.html) -->
   <!-- AURO-GENERATED-CONTENT:END -->
 </div>
-
+ 
 <auro-accordion alignRight>
   <span slot="trigger">See code</span>
-
+ 
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/basic.html) -->
 <!-- AURO-GENERATED-CONTENT:END -->
 
-</auro-accordion>
-
-Having a closing statement about your example helps to really complete the thought with your reader.
-
-## Recommended Use and Version Control
-
-There are two important parts of every Auro component. The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">class</a> and the custom element. The class is exported and then used as part of defining the Web Component. When importing this component as described in the <a href="#install">install</a> section, the class is imported and the `auro-dialog` custom element is defined automatically.
-
-To protect from versioning conflicts with other instances of the component being loaded, it is recommended to use our `AuroDialog.register(name)` method and pass in a unique name.
-
-```js
-import { AuroDialog } from '@aurodesignsystem/auro-dialog/class';
-
-AuroDialog.register('custom-dialog');
-```
-
-This will create a new custom element that you can use in your HTML that will function identically to the `auro-dialog` element.
-
-<div class="exampleWrapper">
-  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/custom.html) -->
-  <!-- AURO-GENERATED-CONTENT:END -->
-</div>
-
-<auro-accordion alignRight>
-  <span slot="trigger">See code</span>
-
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/custom.html) -->
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/basic.js) -->
 <!-- AURO-GENERATED-CONTENT:END -->
-
+ 
 </auro-accordion>
+

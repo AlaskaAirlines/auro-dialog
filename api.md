@@ -3,56 +3,56 @@
 
 # auro-dialog
 
-The auro-dialog appears above the page and requires the user's attention.
+The `auro-dialog` appears on top of the page and presents information that requires the users immediate attention.
 
-## Attributes
+### Properties & Attributes
 
-| Attribute | Type      | Description                                      |
-|-----------|-----------|--------------------------------------------------|
-| [md](#md)      | `Boolean` | Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile. |
-| [onDark](#onDark)  | `Boolean` | DEPRECATED - use `close-button-appearance="inverse" instead. |
-| [sm](#sm)      | `Boolean` | Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile. |
+| Properties            | Attributes              | Modifiers | Type                   | Default   | Description                                                                                                                                                                          |
+| --------------------- | ----------------------- | --------- | ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| closeButtonAppearance | close-button-appearance |           | `default` \| `inverse` | `default` | Defines whether the close button should be light colored for use on dark backgrounds.                                                                                                |
+| lg                    | lg                      |           | boolean                |           | Sets dialog box to large style. Adding both lg and sm/md will set the dialog to lg for mobile and sm/md for desktop.<br>Must be used in conjunction with sm or md to have an effect. |
+| md                    | md                      |           | boolean                |           | Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile.                                                                      |
+| modal                 | modal                   |           | boolean                |           | Modal dialog restricts the user to take an action (no default close actions).                                                                                                        |
+| onDark                | onDark                  |           | boolean                |           | DEPRECATED - use `close-button-appearance="inverse" instead.                                                                                                                         |
+| open                  | open                    |           | boolean                |           | Sets state of dialog to open.                                                                                                                                                        |
+| sm                    | sm                      |           | boolean                |           | Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile.                                                                       |
+| triggerElement        |                         |           | HTMLElement            |           | The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened.                                               |
+| unformatted           | unformatted             |           | boolean                |           | Unformatted dialog window, edge-to-edge fill for content.                                                                                                                            |
 
-## Properties
+### Methods
 
-| Property                | Attribute                 | Type          | Default     | Description                                      |
-|-------------------------|---------------------------|---------------|-------------|--------------------------------------------------|
-| [closeButtonAppearance](#closeButtonAppearance) | `close-button-appearance` | `string`      | "'default'" | Defines whether the close button should be light colored for use on dark backgrounds. |
-| [modal](#modal)                 | `modal`                   | `Boolean`     | false       | Modal dialog restricts the user to take an action (no default close actions) |
-| [open](#open)                  | `open`                    | `Boolean`     |             | Sets state of dialog to open                     |
-| [triggerElement](#triggerElement)        |                           | `HTMLElement` |             | The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened. |
-| [unformatted](#unformatted)           | `unformatted`             | `Boolean`     | false       | Unformatted dialog window, edge-to-edge fill for content |
+| Name     | Parameters                                                           | Return | Description                                       |
+| -------- | -------------------------------------------------------------------- | ------ | ------------------------------------------------- |
+| register | `name` (string) - The name of the element that you want to register. |        | This will register this element with the browser. |
 
-## Events
+### Events
 
-| Event    | Description                            |
-|----------|----------------------------------------|
-| [toggle](#toggle) | Event fires when the element is closed |
+| Name   | Description                            |
+| ------ | -------------------------------------- |
+| toggle | Event fires when the element is closed |
 
-## Slots
+### Slots
 
-| Name                     | Description                                      |
-|--------------------------|--------------------------------------------------|
-| `ariaLabel.dialog.close` | Text to describe the "x" icon close button for screen readers. Default: "Close". |
-| [content](#content)                | Injects content into the body of the modal       |
-| [footer](#footer)                 | Used for action options, e.g. buttons            |
-| [header](#header)                 | Text to display as the header of the modal       |
+| Name                   | Description                                                                      |
+| ---------------------- | -------------------------------------------------------------------------------- |
+| ariaLabel.dialog.close | Text to describe the "x" icon close button for screen readers. Default: "Close". |
+| content                | Injects content into the body of the modal                                       |
+| footer                 | Used for action options, e.g. buttons                                            |
+| header                 | Text to display as the header of the modal                                       |
 
-## CSS Shadow Parts
+### CSS Shadow Parts
 
-| Part             | Description                                      |
-|------------------|--------------------------------------------------|
-| `close-button`   | adjust position of the close X icon in the dialog window |
-| [dialog](#dialog)         | apply CSS to the entire dialog                   |
-| `dialog-content` | apply CSS to the content of the dialog           |
-| `dialog-footer`  | apply CSS to the footer of the dialog            |
-| `dialog-header`  | apply CSS to the header of the dialog            |
-| `dialog-overlay` | apply CSS on the overlay of the dialog           |
+| Name           | Description                                              |
+| -------------- | -------------------------------------------------------- |
+| close-button   | adjust position of the close X icon in the dialog window |
+| dialog         | apply CSS to the entire dialog                           |
+| dialog-content | apply CSS to the content of the dialog                   |
+| dialog-footer  | apply CSS to the footer of the dialog                    |
+| dialog-header  | apply CSS to the header of the dialog                    |
+| dialog-overlay | apply CSS on the overlay of the dialog                   |
 <!-- AURO-GENERATED-CONTENT:END -->
 
-## API Examples
-
-### Basic
+## Basic
 
 <div class="exampleWrapper">
   <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/basic.html) -->
@@ -109,15 +109,27 @@ The auro-dialog appears above the page and requires the user's attention.
 <!-- AURO-GENERATED-CONTENT:END -->
 </auro-accordion>
 
+## Property & Attribute Examples
+
 ### Size Options
 
-The auro-dialog supports three different sizes. A default dialog is equal to the large size dialog. Using the `sm` and `md` attributes, the component supports these sizes for both mobile and desktop.
+The auro-dialog supports three different sizes via attribute, `sm`, `md`, and `lg`. The default size is `lg`.
 
-The size attribute effects the `width` of the desktop dialog. Its `height` is dictated by the content with a max height of `80%`. On mobile, the `size` attribute effects the `maximum height` the dialog will use of the device screen. Its width will be 100%.
+#### Size Effects
+
+##### Desktop
+At desktop resolutions, size affects the width of the dialog, and its height is dictated by its contents with a max height of 80%.
+
+##### Mobile
+At mobile resolutions the size affects the maximum height the dialog will use of the browser viewport with a fixed width of 100%.
+
+> *Note: `lg` may be added in addition to `sm` or `md` to force the `lg` size on mobile while using the other size for desktop.*
+
+#### Single Size Examples:
 
 <div class="exampleWrapper">
-  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/sizeOptions.html) -->
-  <!-- The below content is automatically added from ./../apiExamples/sizeOptions.html -->
+  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/size-options.html) -->
+  <!-- The below content is automatically added from ./../apiExamples/size-options.html -->
   <div>
     <auro-button id="openDefaultSize">Open default dialog</auro-button>
     <auro-button id="openMediumSize">Open medium dialog</auro-button>
@@ -178,8 +190,8 @@ The size attribute effects the `width` of the desktop dialog. Its `height` is di
 </div>
 <auro-accordion alignRight>
   <span slot="trigger">See code</span>
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/sizeOptions.html) -->
-<!-- The below code snippet is automatically added from ./../apiExamples/sizeOptions.html -->
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/size-options.html) -->
+<!-- The below code snippet is automatically added from ./../apiExamples/size-options.html -->
 
 ```html
 <div>
@@ -242,9 +254,114 @@ The size attribute effects the `width` of the desktop dialog. Its `height` is di
 <!-- AURO-GENERATED-CONTENT:END -->
 </auro-accordion>
 
-### Modal and Size Options
+#### Mixed Size Examples:
 
-The auro-dialog supports a modal dialog state that will lock a user into interacting with the modal dialog. To activate, use the modal attribute.
+<div class="exampleWrapper">
+  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/decoupled.html) -->
+  <!-- The below content is automatically added from ./../apiExamples/decoupled.html -->
+  <div>
+    <auro-button id="openSmLg">Open [sm lg] dialog</auro-button>
+    <auro-button id="openMdLg">Open [md lg] dialog</auro-button>
+  </div>
+  <auro-dialog id="smLgDialog" sm lg>
+    <span slot="header">Small Modal Dialog</span>
+    <div slot="content">
+      <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
+      <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
+      <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
+      <ul>
+        <li>Caerphilly croque monsieur fondue</li>
+        <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
+        <li>Cheddar cheese and biscuits chalk and cheese</li>
+        <li>Camembert de normandie stinking bishop bavarian bergkase</li>
+      </ul>
+    </div>
+    <div slot="footer">
+      <auro-button id="closeSmLg">
+        I understand
+        <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
+      </auro-button>
+    </div>
+  </auro-dialog>
+  <auro-dialog id="mdLgDialog" md lg>
+    <span slot="header">Medium Modal Dialog</span>
+    <div slot="content">
+      <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
+      <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
+      <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
+      <ul>
+        <li>Caerphilly croque monsieur fondue</li>
+        <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
+        <li>Cheddar cheese and biscuits chalk and cheese</li>
+        <li>Camembert de normandie stinking bishop bavarian bergkase</li>
+      </ul>
+    </div>
+    <div slot="footer">
+      <auro-button id="closeMdLg">
+        I understand
+        <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
+      </auro-button>
+    </div>
+  </auro-dialog>
+  <!-- AURO-GENERATED-CONTENT:END -->
+</div>
+<auro-accordion alignRight>
+  <span slot="trigger">See code</span>
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/decoupled.html) -->
+<!-- The below code snippet is automatically added from ./../apiExamples/decoupled.html -->
+
+```html
+<div>
+  <auro-button id="openSmLg">Open [sm lg] dialog</auro-button>
+  <auro-button id="openMdLg">Open [md lg] dialog</auro-button>
+</div>
+<auro-dialog id="smLgDialog" sm lg>
+  <span slot="header">Small Modal Dialog</span>
+  <div slot="content">
+    <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
+    <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
+    <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
+    <ul>
+      <li>Caerphilly croque monsieur fondue</li>
+      <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
+      <li>Cheddar cheese and biscuits chalk and cheese</li>
+      <li>Camembert de normandie stinking bishop bavarian bergkase</li>
+    </ul>
+  </div>
+  <div slot="footer">
+    <auro-button id="closeSmLg">
+      I understand
+      <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
+    </auro-button>
+  </div>
+</auro-dialog>
+<auro-dialog id="mdLgDialog" md lg>
+  <span slot="header">Medium Modal Dialog</span>
+  <div slot="content">
+    <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
+    <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
+    <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
+    <ul>
+      <li>Caerphilly croque monsieur fondue</li>
+      <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
+      <li>Cheddar cheese and biscuits chalk and cheese</li>
+      <li>Camembert de normandie stinking bishop bavarian bergkase</li>
+    </ul>
+  </div>
+  <div slot="footer">
+    <auro-button id="closeMdLg">
+      I understand
+      <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
+    </auro-button>
+  </div>
+</auro-dialog>
+```
+<!-- AURO-GENERATED-CONTENT:END -->
+</auro-accordion>
+
+### Modal
+
+The auro-dialog supports a modal dialog state that will lock a user into interacting with the modal dialog via the `modal` attribute.
 
 When using this state, the modal dialog must include a button action to dismiss the modal dialog as the closing icon will not be available and the user will not be able to click outside the `modal` dialog to dismiss.
 
@@ -387,122 +504,125 @@ When using this state, the modal dialog must include a button action to dismiss 
 <!-- AURO-GENERATED-CONTENT:END -->
 </auro-accordion>
 
-## Dialogs with Decoupled Experience
+### Unformatted dialog
 
-For use case where the size of the dialog on desktop should not influence the size of the dialog on mobile, the combination API of `sm lg` and `md lg` can be used.
+For use case where the use of a dialog is to be more freeform, but the experience and base tooling for the dialog are still requested, there is the `unformatted` property.
 
-The use of these combinations will set the first value to the dialog for a desktop experience. The second value will set the mobile experience to be up to 90% of the screen depending on the length of the content.
+This property can be used in combination with any other use case of the dialog, but it will render an unformatted dialog window, allowing for full customization of content within the scope of the window.
+
+## Slot Examples
+
+### Close button aria-label slot
+
+To customize the aria-label text for the close button, use the `ariaLabel.dialog.close` slot to provide custom text. If no text is provided, the default text `"Close"` will be used.
 
 <div class="exampleWrapper">
-  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/decoupled.html) -->
-  <!-- The below content is automatically added from ./../apiExamples/decoupled.html -->
+  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/aria-label.html) -->
+  <!-- The below content is automatically added from ./../apiExamples/aria-label.html -->
   <div>
-    <auro-button id="openSmLg">Open [sm lg] dialog</auro-button>
-    <auro-button id="openMdLg">Open [md lg] dialog</auro-button>
+    <auro-button id="openAriaLabelSlot">Unformatted Dialog w/ custom close button aria-label</auro-button>
   </div>
-  <auro-dialog id="smLgDialog" sm lg>
-    <span slot="header">Small Modal Dialog</span>
-    <div slot="content">
-      <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
-      <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
-      <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
-      <ul>
-        <li>Caerphilly croque monsieur fondue</li>
-        <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
-        <li>Cheddar cheese and biscuits chalk and cheese</li>
-        <li>Camembert de normandie stinking bishop bavarian bergkase</li>
-      </ul>
-    </div>
-    <div slot="footer">
-      <auro-button id="closeSmLg">
-        I understand
-        <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
-      </auro-button>
-    </div>
-  </auro-dialog>
-  <auro-dialog id="mdLgDialog" md lg>
-    <span slot="header">Medium Modal Dialog</span>
-    <div slot="content">
-      <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
-      <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
-      <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
-      <ul>
-        <li>Caerphilly croque monsieur fondue</li>
-        <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
-        <li>Cheddar cheese and biscuits chalk and cheese</li>
-        <li>Camembert de normandie stinking bishop bavarian bergkase</li>
-      </ul>
-    </div>
-    <div slot="footer">
-      <auro-button id="closeMdLg">
-        I understand
-        <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
-      </auro-button>
-    </div>
+  <auro-dialog id="ariaLabelMdDialog" unformatted md lg ondark>
+    <span slot="ariaLabel.dialog.close">This will be the new aria label for the close button</span>
+    <span slot="content">
+      <img style="display: block; width: 100%" src="https://blog.alaskaair.com/wp-content/uploads/2020/11/111-psp-blog-img-guide.jpg" alt="alaska airlines pride lights" />
+      <div class="unformattedWrapper">
+        <h1 id="dialog-header" class="heading-lg">This is a header</h1>
+        These are words that are slotted into the scope of the custom element.
+      </div>
+    </span>
   </auro-dialog>
   <!-- AURO-GENERATED-CONTENT:END -->
 </div>
 <auro-accordion alignRight>
   <span slot="trigger">See code</span>
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/decoupled.html) -->
-<!-- The below code snippet is automatically added from ./../apiExamples/decoupled.html -->
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/aria-label.html) -->
+<!-- The below code snippet is automatically added from ./../apiExamples/aria-label.html -->
 
 ```html
 <div>
-  <auro-button id="openSmLg">Open [sm lg] dialog</auro-button>
-  <auro-button id="openMdLg">Open [md lg] dialog</auro-button>
+  <auro-button id="openAriaLabelSlot">Unformatted Dialog w/ custom close button aria-label</auro-button>
 </div>
-<auro-dialog id="smLgDialog" sm lg>
-  <span slot="header">Small Modal Dialog</span>
-  <div slot="content">
-    <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
-    <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
-    <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
-    <ul>
-      <li>Caerphilly croque monsieur fondue</li>
-      <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
-      <li>Cheddar cheese and biscuits chalk and cheese</li>
-      <li>Camembert de normandie stinking bishop bavarian bergkase</li>
-    </ul>
-  </div>
-  <div slot="footer">
-    <auro-button id="closeSmLg">
-      I understand
-      <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
-    </auro-button>
-  </div>
-</auro-dialog>
-<auro-dialog id="mdLgDialog" md lg>
-  <span slot="header">Medium Modal Dialog</span>
-  <div slot="content">
-    <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
-    <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
-    <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
-    <ul>
-      <li>Caerphilly croque monsieur fondue</li>
-      <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
-      <li>Cheddar cheese and biscuits chalk and cheese</li>
-      <li>Camembert de normandie stinking bishop bavarian bergkase</li>
-    </ul>
-  </div>
-  <div slot="footer">
-    <auro-button id="closeMdLg">
-      I understand
-      <auro-icon category="interface" name="check-lg" emphasis appearance="inverse"></auro-icon>
-    </auro-button>
-  </div>
+<auro-dialog id="ariaLabelMdDialog" unformatted md lg ondark>
+  <span slot="ariaLabel.dialog.close">This will be the new aria label for the close button</span>
+  <span slot="content">
+    <img style="display: block; width: 100%" src="https://blog.alaskaair.com/wp-content/uploads/2020/11/111-psp-blog-img-guide.jpg" alt="alaska airlines pride lights" />
+    <div class="unformattedWrapper">
+      <h1 id="dialog-header" class="heading-lg">This is a header</h1>
+      These are words that are slotted into the scope of the custom element.
+    </div>
+  </span>
 </auro-dialog>
 ```
 <!-- AURO-GENERATED-CONTENT:END -->
 </auro-accordion>
 
-## Dialog with Popover and Dropdown Components
+## CSS Shadow Part Examples
+
+### Close Button
+
+The close button can be targetted via the `close-button` CSS part, e.g. `auro-dialog::part(close-button)`.
+
+<div class="exampleWrapper">
+  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/close-button.html) -->
+  <!-- The below content is automatically added from ./../apiExamples/close-button.html -->
+  <div>
+    <auro-button id="openEditDialog">Unformatted w/custom close button</auro-button>
+  </div>
+  <style>
+    .example::part(close-button) {
+      top: var(--ds-size-400);
+      right: var(--ds-size-400);
+    }
+  </style>
+  <auro-dialog id="unformattedCustomMdDialog" unformatted md lg class="example">
+    <span slot="content">
+      <img style="display: block; width: 100%" src="https://worldairlinenews.files.wordpress.com/2022/05/alaska-737-800-sswl-n538as-22-star-warstko-sfo-mdblr-5.4.22.jpg" alt="alaska airlines pride lights" />
+      <div class="unformattedWrapper">
+        <h1 id="dialog-header" class="heading-lg">Unformatted w/custom close button</h1>
+        Notice the custom location of the close button as well as the custom color.
+      </div>
+    </span>
+  </auro-dialog>
+  <!-- AURO-GENERATED-CONTENT:END -->
+</div>
+<auro-accordion alignRight>
+  <span slot="trigger">See code</span>
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/close-button.html) -->
+<!-- The below code snippet is automatically added from ./../apiExamples/close-button.html -->
+
+```html
+<div>
+  <auro-button id="openEditDialog">Unformatted w/custom close button</auro-button>
+</div>
+<style>
+  .example::part(close-button) {
+    top: var(--ds-size-400);
+    right: var(--ds-size-400);
+  }
+</style>
+<auro-dialog id="unformattedCustomMdDialog" unformatted md lg class="example">
+  <span slot="content">
+    <img style="display: block; width: 100%" src="https://worldairlinenews.files.wordpress.com/2022/05/alaska-737-800-sswl-n538as-22-star-warstko-sfo-mdblr-5.4.22.jpg" alt="alaska airlines pride lights" />
+    <div class="unformattedWrapper">
+      <h1 id="dialog-header" class="heading-lg">Unformatted w/custom close button</h1>
+      Notice the custom location of the close button as well as the custom color.
+    </div>
+  </span>
+</auro-dialog>
+```
+<!-- AURO-GENERATED-CONTENT:END -->
+</auro-accordion>
+
+## Common Usage Patterns & Functional Examples
+
+### Dialog with Popover and Dropdown Components
 
 This is a use case where there is a popover and combobox component inside the dialog component, creating a stack of layered components.
 
 <div class="exampleWrapper">
-  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/popoverAndDropdown.html) -->
-  <!-- The below content is automatically added from ./../apiExamples/popoverAndDropdown.html -->
+  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/popover-and-dropdown.html) -->
+  <!-- The below content is automatically added from ./../apiExamples/popover-and-dropdown.html -->
   <div>
     <auro-button id="openPopAndDrop">Open dialog with popover</auro-button>
   </div>
@@ -552,8 +672,8 @@ This is a use case where there is a popover and combobox component inside the di
 </div>
 <auro-accordion alignRight>
   <span slot="trigger">See code</span>
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/popoverAndDropdown.html) -->
-<!-- The below code snippet is automatically added from ./../apiExamples/popoverAndDropdown.html -->
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/popover-and-dropdown.html) -->
+<!-- The below code snippet is automatically added from ./../apiExamples/popover-and-dropdown.html -->
 
 ```html
 <div>
@@ -605,24 +725,6 @@ This is a use case where there is a popover and combobox component inside the di
 <!-- AURO-GENERATED-CONTENT:END -->
 </auro-accordion>
 
-## Unformatted dialog
-
-For use case where the use of a dialog is to be more freeform, but the experience and base tooling for the dialog are still requested, there is the `unformatted` property.
-
-This property can be used in combination of any other use case of the dialog, but it will render a unformatted dialog window allowing for full customization of content within the scope of the window.
-
-### Responsive padding
-
-Part of the dialog design spec is its responsive padding. To take advantage of this for your content within the scope of the dialog, be sure to use the selector `unformattedWrapper` that can be imported from the package here:
-
-```css
-import '@aurodesignsystem/auro-dialog/dist/style-unformatted.scss'
-
-or
-
-import '@aurodesignsystem/auro-dialog@/dist/style-unformatted.css'
-```
-
 ### Accessibility
 
 Within the scope of the auro-dialog there is `aria-labelledby="dialog-header"`. To make proper use of this, in an unformatted dialog, the developer is required to add `id="dialog-header"` to the content header within the dialog content.
@@ -666,112 +768,23 @@ Within the scope of the auro-dialog there is `aria-labelledby="dialog-header"`. 
 <!-- AURO-GENERATED-CONTENT:END -->
 </auro-accordion>
 
-### Edit close button position
+### Responsive padding
 
-When using the dialog with the `unformatted` attribute, some may want to adjust the positioning of the X close button. This can be addressed using the CSS `::part` CSS pseudo-element API.
+Part of the dialog design spec is its responsive padding. To take advantage of this for your content within the scope of the dialog, be sure to use the selector `unformattedWrapper` that can be imported from the package here:
 
-<div class="exampleWrapper">
-  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/editCloseButton.html) -->
-  <!-- The below content is automatically added from ./../apiExamples/editCloseButton.html -->
-  <div>
-    <auro-button id="openEditDialog">Unformatted w/custom close button</auro-button>
-  </div>
-  <style>
-    .example::part(close-button) {
-      top: var(--ds-size-400);
-      right: var(--ds-size-400);
-      color: var(--ds-color-brand-flamingo-500);
-    }
-  </style>
-  <auro-dialog id="unformattedCustomMdDialog" unformatted md lg class="example">
-    <span slot="content">
-      <img style="display: block; width: 100%" src="https://worldairlinenews.files.wordpress.com/2022/05/alaska-737-800-sswl-n538as-22-star-warstko-sfo-mdblr-5.4.22.jpg" alt="alaska airlines pride lights" />
-      <div class="unformattedWrapper">
-        <h1 id="dialog-header" class="heading-lg">Unformatted w/custom close button</h1>
-        Notice the custom location of the close button as well as the custom color.
-      </div>
-    </span>
-  </auro-dialog>
-  <!-- AURO-GENERATED-CONTENT:END -->
-</div>
-<auro-accordion alignRight>
-  <span slot="trigger">See code</span>
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/editCloseButton.html) -->
-<!-- The below code snippet is automatically added from ./../apiExamples/editCloseButton.html -->
+```css
+import '@aurodesignsystem/auro-dialog/dist/style-unformatted.scss'
 
-```html
-<div>
-  <auro-button id="openEditDialog">Unformatted w/custom close button</auro-button>
-</div>
-<style>
-  .example::part(close-button) {
-    top: var(--ds-size-400);
-    right: var(--ds-size-400);
-    color: var(--ds-color-brand-flamingo-500);
-  }
-</style>
-<auro-dialog id="unformattedCustomMdDialog" unformatted md lg class="example">
-  <span slot="content">
-    <img style="display: block; width: 100%" src="https://worldairlinenews.files.wordpress.com/2022/05/alaska-737-800-sswl-n538as-22-star-warstko-sfo-mdblr-5.4.22.jpg" alt="alaska airlines pride lights" />
-    <div class="unformattedWrapper">
-      <h1 id="dialog-header" class="heading-lg">Unformatted w/custom close button</h1>
-      Notice the custom location of the close button as well as the custom color.
-    </div>
-  </span>
-</auro-dialog>
+or
+
+import '@aurodesignsystem/auro-dialog/dist/style-unformatted.css'
 ```
-<!-- AURO-GENERATED-CONTENT:END -->
-</auro-accordion>
 
-### Close button aria-label slot
+## Restyle Component with CSS Variables
 
-To customize the aria-label text for the close button, use the `ariaLabel.dialog.close` slot to provide custom text. If no text is provided, the default text `"Close"` will be used.
+The component may be restyled by changing the values of the following token(s).
 
-<div class="exampleWrapper">
-  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/ariaLabelSlot.html) -->
-  <!-- The below content is automatically added from ./../apiExamples/ariaLabelSlot.html -->
-  <div>
-    <auro-button id="openAriaLabelSlot">Unformatted Dialog w/ custom close button aria-label</auro-button>
-  </div>
-  <auro-dialog id="ariaLabelMdDialog" unformatted md lg ondark>
-    <span slot="ariaLabel.dialog.close">This will be the new aria label for the close button</span>
-    <span slot="content">
-      <img style="display: block; width: 100%" src="https://blog.alaskaair.com/wp-content/uploads/2020/11/111-psp-blog-img-guide.jpg" alt="alaska airlines pride lights" />
-      <div class="unformattedWrapper">
-        <h1 id="dialog-header" class="heading-lg">This is a header</h1>
-        These are words that are slotted into the scope of the custom element.
-      </div>
-    </span>
-  </auro-dialog>
-  <!-- AURO-GENERATED-CONTENT:END -->
-</div>
-<auro-accordion alignRight>
-  <span slot="trigger">See code</span>
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/ariaLabelSlot.html) -->
-<!-- The below code snippet is automatically added from ./../apiExamples/ariaLabelSlot.html -->
-
-```html
-<div>
-  <auro-button id="openAriaLabelSlot">Unformatted Dialog w/ custom close button aria-label</auro-button>
-</div>
-<auro-dialog id="ariaLabelMdDialog" unformatted md lg ondark>
-  <span slot="ariaLabel.dialog.close">This will be the new aria label for the close button</span>
-  <span slot="content">
-    <img style="display: block; width: 100%" src="https://blog.alaskaair.com/wp-content/uploads/2020/11/111-psp-blog-img-guide.jpg" alt="alaska airlines pride lights" />
-    <div class="unformattedWrapper">
-      <h1 id="dialog-header" class="heading-lg">This is a header</h1>
-      These are words that are slotted into the scope of the custom element.
-    </div>
-  </span>
-</auro-dialog>
-```
-<!-- AURO-GENERATED-CONTENT:END -->
-</auro-accordion>
-
-### Theme Support
-
-The component may be restyled using the following code sample and changing the values of the following token(s).
-
+<!-- Remove section if component does not have any component specific tokens -->
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./../src/styles/tokens.scss) -->
 <!-- The below code snippet is automatically added from ./../src/styles/tokens.scss -->
 

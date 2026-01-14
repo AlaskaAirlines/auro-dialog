@@ -1,7 +1,7 @@
 <!--
-The index.md file is a compiled document. No edits should be made directly to this file.
-README.md is created by running `npm run build:docs`.
-This file is generated based on a template fetched from `./docs/partials/index.md`
+ THIS PAGE'S CONTENT SHOULD BE KEPT MINIMAL.
+ ONLY ADD EXAMPLES THAT ARE TRULY NECESSARY FOR THE INDEX PAGE — THE BASIC EXAMPLE IS USUALLY ENOUGH.
+ ALL OTHER EXAMPLES SHOULD GO IN THE API DOCUMENTATION.
 -->
 
 # Dialog
@@ -15,7 +15,7 @@ The component also supports a modal (blocking) state where the user must interac
 Auro holds the opinions of the [Nielsen Norman Group](https://www.nngroup.com/articles/modal-nonmodal-dialog/) on dialog and modal use to be true.
 <!-- AURO-GENERATED-CONTENT:END -->
 
-## auro-dialog use cases
+## Use Cases
 
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/useCases.md) -->
 <!-- The below content is automatically added from ./../docs/partials/useCases.md -->
@@ -23,13 +23,6 @@ The `<auro-dialog>` component should be used in situations where users may:
 
 * Be prompted to take an action before doing anything else or going back
 * Be prompted to view content with the option of closing it
-<!-- AURO-GENERATED-CONTENT:END -->
-
-## Additional Information
-
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/readmeAddlInfo.md) -->
-<!-- The below content is automatically added from ./../docs/partials/readmeAddlInfo.md -->
-**Important Notice**: This component no longer lives within the `auro-interruption` repository, as that is now being deprecated. `<auro-dialog>` is now a standalone component and users will be required to install it seperately. See the [Install Page](https://auro.alaskaair.com/components/auro/dialog/install) for instructions on how to install the component.
 <!-- AURO-GENERATED-CONTENT:END -->
 
 ## Set Up
@@ -73,6 +66,11 @@ The structure of the dialog itself consists of three slots. The `header`, `conte
 It should be noted that the `footer` slot is reserved for the placement of action buttons.
 
 ## Example(s)
+
+### Basic
+
+The dialog open state is controlled via the `open` attribute, or by programmatically setting the `open` property to `true`.
+You can see in the example below under the "See Code" section that we are controlling our dialogs by adding and removing the `open` attribute.
 
 <div class="exampleWrapper">
   <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/basic.html) -->
@@ -127,74 +125,27 @@ It should be noted that the `footer` slot is reserved for the placement of actio
 </auro-dialog>
 ```
 <!-- AURO-GENERATED-CONTENT:END -->
-</auro-accordion>
-Having a closing statement about your example helps to really complete the thought with your reader.
-
-## Recommended Use and Version Control
-
-There are two important parts of every Auro component. The <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">class</a> and the custom element. The class is exported and then used as part of defining the Web Component. When importing this component as described in the <a href="#install">install</a> section, the class is imported and the `auro-dialog` custom element is defined automatically.
-
-To protect from versioning conflicts with other instances of the component being loaded, it is recommended to use our `AuroDialog.register(name)` method and pass in a unique name.
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/basic.js) -->
+<!-- The below code snippet is automatically added from ./../apiExamples/basic.js -->
 
 ```js
-import { AuroDialog } from '@aurodesignsystem/auro-dialog/class';
+export function initBasicExample() {
+  const buttons = [
+    document.querySelector("#openBasic"),
+    document.querySelector("#closeBasic"),
+  ];
+  const dialog = document.querySelector("#defaultDialog");
 
-AuroDialog.register('custom-dialog');
-```
-
-This will create a new custom element that you can use in your HTML that will function identically to the `auro-dialog` element.
-
-<div class="exampleWrapper">
-  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/custom.html) -->
-  <!-- The below content is automatically added from ./../apiExamples/custom.html -->
-  <div>
-    <auro-button id="openCustom">Open default dialog</auro-button>
-  </div>
-  <custom-dialog id="customDialog">
-    <span slot="header">Default Dialog</span>
-    <div slot="content">
-      <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
-      <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
-      <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
-      <ul>
-        <li>Caerphilly croque monsieur fondue</li>
-        <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
-        <li>Cheddar cheese and biscuits chalk and cheese</li>
-        <li>Camembert de normandie stinking bishop bavarian bergkase</li>
-      </ul>
-    </div>
-    <div slot="footer">
-      <auro-button secondary id="closeCustom">Close</auro-button>
-    </div>
-  </custom-dialog>
-  <!-- AURO-GENERATED-CONTENT:END -->
-</div>
-<auro-accordion alignRight>
-  <span slot="trigger">See code</span>
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/custom.html) -->
-<!-- The below code snippet is automatically added from ./../apiExamples/custom.html -->
-
-```html
-<div>
-  <auro-button id="openCustom">Open default dialog</auro-button>
-</div>
-<custom-dialog id="customDialog">
-  <span slot="header">Default Dialog</span>
-  <div slot="content">
-    <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
-    <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
-    <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
-    <ul>
-      <li>Caerphilly croque monsieur fondue</li>
-      <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
-      <li>Cheddar cheese and biscuits chalk and cheese</li>
-      <li>Camembert de normandie stinking bishop bavarian bergkase</li>
-    </ul>
-  </div>
-  <div slot="footer">
-    <auro-button secondary id="closeCustom">Close</auro-button>
-  </div>
-</custom-dialog>
+  buttons.forEach((button) => {
+    button.addEventListener("click", () => {
+      if (dialog.hasAttribute("open")) {
+        dialog.removeAttribute("open");
+      } else {
+        dialog.setAttribute("open", true);
+      }
+    });
+  });
+}
 ```
 <!-- AURO-GENERATED-CONTENT:END -->
 </auro-accordion>

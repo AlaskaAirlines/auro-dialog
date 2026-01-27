@@ -1,11 +1,11 @@
 import { initAccessibilityExample } from "../apiExamples/accessibility";
 import { initBasicExample } from "../apiExamples/basic";
 import { initDecoupledExample } from "../apiExamples/decoupled";
-import { initEditCloseButtonExample } from "../apiExamples/editCloseButton";
+import { initEditCloseButtonExample } from "../apiExamples/close-button";
 import { initModalExample } from "../apiExamples/modal";
-import { initPopoverAndDropdownExample } from "../apiExamples/popoverAndDropdown";
-import { initSizeOptionsExample } from "../apiExamples/sizeOptions";
-import { initAriaLabelSlotExample } from "../apiExamples/ariaLabelSlot";
+import { initPopoverAndDropdownExample } from "../apiExamples/popover-and-dropdown";
+import { initSizeOptionsExample } from "../apiExamples/size-options";
+import { initAriaLabelSlotExample } from "../apiExamples/aria-label";
 
 import "../src/registered"
 
@@ -15,13 +15,13 @@ export function initExamples(initCount) {
 
   try {
     initBasicExample();
-    initAccessibilityExample();
-    initDecoupledExample();
-    initEditCloseButtonExample();
-    initModalExample();
-    initPopoverAndDropdownExample();
     initSizeOptionsExample();
+    initModalExample();
+    initDecoupledExample();
+    initPopoverAndDropdownExample();
+    initEditCloseButtonExample();
     initAriaLabelSlotExample();
+    initAccessibilityExample();
   } catch (_err) {
     if (initCount <= 20) {
       // setTimeout handles issue where content is sometimes loaded after the functions get called

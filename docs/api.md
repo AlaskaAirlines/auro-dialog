@@ -1,47 +1,49 @@
 # auro-dialog
 
-The auro-dialog appears above the page and requires the user's attention.
+The `auro-dialog` appears on top of the page and presents information that requires the users immediate attention.
 
-## Attributes
+### Properties & Attributes
 
-| Attribute | Type      | Description                                      |
-|-----------|-----------|--------------------------------------------------|
-| `md`      | `Boolean` | Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile. |
-| `onDark`  | `Boolean` | DEPRECATED - use `close-button-appearance="inverse" instead. |
-| `sm`      | `Boolean` | Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile. |
+| Properties            | Attributes              | Modifiers | Type                   | Default   | Description                                                                                                                                                                          |
+| --------------------- | ----------------------- | --------- | ---------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| closeButtonAppearance | close-button-appearance |           | `default` \| `inverse` | `default` | Defines whether the close button should be light colored for use on dark backgrounds.                                                                                                |
+| lg                    | lg                      |           | boolean                |           | Sets dialog box to large style. Adding both lg and sm/md will set the dialog to lg for mobile and sm/md for desktop.<br>Must be used in conjunction with sm or md to have an effect. |
+| md                    | md                      |           | boolean                |           | Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile.                                                                      |
+| modal                 | modal                   |           | boolean                |           | Modal dialog restricts the user to take an action (no default close actions).                                                                                                        |
+| onDark                | onDark                  |           | boolean                |           | DEPRECATED - use `close-button-appearance="inverse" instead.                                                                                                                         |
+| open                  | open                    |           | boolean                |           | Sets state of dialog to open.                                                                                                                                                        |
+| sm                    | sm                      |           | boolean                |           | Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile.                                                                       |
+| triggerElement        |                         |           | HTMLElement            |           | The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened.                                               |
+| unformatted           | unformatted             |           | boolean                |           | Unformatted dialog window, edge-to-edge fill for content.                                                                                                                            |
 
-## Properties
+### Methods
 
-| Property                | Attribute                 | Type          | Default     | Description                                      |
-|-------------------------|---------------------------|---------------|-------------|--------------------------------------------------|
-| `closeButtonAppearance` | `close-button-appearance` | `string`      | "'default'" | Defines whether the close button should be light colored for use on dark backgrounds. |
-| `modal`                 | `modal`                   | `Boolean`     | false       | Modal dialog restricts the user to take an action (no default close actions) |
-| `open`                  | `open`                    | `Boolean`     |             | Sets state of dialog to open                     |
-| `triggerElement`        |                           | `HTMLElement` |             | The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened. |
-| `unformatted`           | `unformatted`             | `Boolean`     | false       | Unformatted dialog window, edge-to-edge fill for content |
+| Name     | Parameters                                                           | Return | Description                                       |
+| -------- | -------------------------------------------------------------------- | ------ | ------------------------------------------------- |
+| register | `name` (string) - The name of the element that you want to register. |        | This will register this element with the browser. |
 
-## Events
+### Events
 
-| Event    | Description                            |
-|----------|----------------------------------------|
-| `toggle` | Event fires when the element is closed |
+| Name   | Description                            |
+| ------ | -------------------------------------- |
+| toggle | Event fires when the element is closed |
 
-## Slots
+### Slots
 
-| Name                     | Description                                      |
-|--------------------------|--------------------------------------------------|
-| `ariaLabel.dialog.close` | Text to describe the "x" icon close button for screen readers. Default: "Close". |
-| `content`                | Injects content into the body of the modal       |
-| `footer`                 | Used for action options, e.g. buttons            |
-| `header`                 | Text to display as the header of the modal       |
+| Name                   | Description                                                                      |
+| ---------------------- | -------------------------------------------------------------------------------- |
+| ariaLabel.dialog.close | Text to describe the "x" icon close button for screen readers. Default: "Close". |
+| content                | Injects content into the body of the modal                                       |
+| footer                 | Used for action options, e.g. buttons                                            |
+| header                 | Text to display as the header of the modal                                       |
 
-## CSS Shadow Parts
+### CSS Shadow Parts
 
-| Part             | Description                                      |
-|------------------|--------------------------------------------------|
-| `close-button`   | adjust position of the close X icon in the dialog window |
-| `dialog`         | apply CSS to the entire dialog                   |
-| `dialog-content` | apply CSS to the content of the dialog           |
-| `dialog-footer`  | apply CSS to the footer of the dialog            |
-| `dialog-header`  | apply CSS to the header of the dialog            |
-| `dialog-overlay` | apply CSS on the overlay of the dialog           |
+| Name           | Description                                              |
+| -------------- | -------------------------------------------------------- |
+| close-button   | adjust position of the close X icon in the dialog window |
+| dialog         | apply CSS to the entire dialog                           |
+| dialog-content | apply CSS to the content of the dialog                   |
+| dialog-footer  | apply CSS to the footer of the dialog                    |
+| dialog-header  | apply CSS to the header of the dialog                    |
+| dialog-overlay | apply CSS on the overlay of the dialog                   |

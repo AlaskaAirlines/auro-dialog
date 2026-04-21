@@ -64,6 +64,7 @@ $auro-spacing-options: none;
 .dialog {
   position: fixed;
   z-index: -1;
+  top: unset; // Cancel UA popover `inset: 0` which sets top: 0 and breaks bottom-anchored mobile positioning
   right: 0;
   bottom: -100%;
   left: 0;
@@ -79,9 +80,21 @@ $auro-spacing-options: none;
 
   opacity: 0;
   border: 0;
+  margin: 0;
+  max-width: none;
 
-  // baseline dialog UI / mobile-first
-  @include animation.auro_transition(all, 0.3s, ease-in-out);
+  // Transparent backdrop so our overlay div provides the darkening scrim.
+  // showModal() renders ::backdrop in the top layer above our overlay div;
+  // keeping it transparent lets our overlay show through.
+  &::backdrop {
+    background: transparent;
+  }
+
+  // Animate only visual properties. Excluding width/height prevents the
+  // "shrinking white box" artifact when the dialog closes while still in
+  // the top layer. Mobile uses bottom for the slide-in/out; desktop uses
+  // opacity only.
+  transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out, bottom 0.3s ease-in-out;
 
   // open modifier
   &--open {
@@ -97,22 +110,22 @@ $auro-spacing-options: none;
     bottom: unset;
     left: 0;
     right: 0;
-    
+
     max-width: 80%;
     max-height: 80%;
     margin: auto;
     padding: var(--insetPaddingXxxl);
-    
+
+    // Keep the dialog at its full rendered size when closed so opacity-only
+    // animation works correctly. Previously width/height animated to 0 which
+    // caused the visible shrinking white-box effect.
     opacity: 0;
-    width: 0;
-    height: 0;
-    overflow: hidden;
+    width: calc(100% - var(--insetPaddingXxxl) - var(--insetPaddingXxxl));
+    height: auto;
+    overflow: visible;
 
     &--open {
       opacity: 1;
-      width: calc(100% - var(--insetPaddingXxxl) - var(--insetPaddingXxxl));
-      height: auto;
-      overflow: visible;
     }
   }
 

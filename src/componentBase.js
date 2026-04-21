@@ -7,10 +7,12 @@
 
 import { LitElement } from "lit";
 import { classMap } from "lit/directives/class-map.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 import { html } from "lit/static-html.js";
 
 import { AuroDependencyVersioning } from "@aurodesignsystem/auro-library/scripts/runtime/dependencyTagVersioning.mjs";
 import { FocusTrap } from "@aurodesignsystem/auro-library/scripts/runtime/FocusTrap/index.mjs";
+import AuroFloatingUI from "@aurodesignsystem/auro-library/scripts/runtime/floatingUI.mjs";
 import AuroLibraryRuntimeUtils from "@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs";
 import { AuroButton } from "@aurodesignsystem/auro-button/class";
 import { AuroIcon } from "@aurodesignsystem/auro-icon/class";
@@ -23,8 +25,6 @@ import styleCss from "./styles/style.scss";
 import styleUnformattedCss from "./styles/style-unformatted.scss";
 import tokensCss from "./styles/tokens.scss";
 
-const ESCAPE_KEYCODE = 27;
-
 /**
  * @slot header - Text to display as the header of the modal
  * @slot content - Injects content into the body of the modal
@@ -32,7 +32,7 @@ const ESCAPE_KEYCODE = 27;
  * @slot ariaLabel.dialog.close - Text to describe the "x" icon close button for screen readers. Default: "Close".
  * @event toggle - Event fires when the element is closed
  * @csspart close-button - adjust position of the close X icon in the dialog window
- * @csspart dialog-overlay - apply CSS on the overlay of the dialog
+ * @csspart dialog-overlay - DEPRECATED: apply CSS on the overlay of the dialog. Use ::backdrop instead.
  * @csspart dialog - apply CSS to the entire dialog
  * @csspart dialog-header - apply CSS to the header of the dialog
  * @csspart dialog-content - apply CSS to the content of the dialog
@@ -49,6 +49,10 @@ export default class ComponentBase extends LitElement {
     this.modal = false;
     this.unformatted = false;
     this.closeButtonAppearance = 'default';
+
+    this.isPopoverVisible = false;
+    this.isBibFullscreen = false;
+    this.floater = new AuroFloatingUI();
 
     const versioning = new AuroDependencyVersioning();
 
@@ -119,7 +123,17 @@ export default class ComponentBase extends LitElement {
       /**
        * Sets state of dialog to open.
        */
-      open: {
+      isPopoverVisible: {
+        type: Boolean,
+        reflect: true,
+        attribute: 'open'
+      },
+
+      /**
+       * If true, the dialog bib is in fullscreen mode.
+       * @private
+       */
+      isBibFullscreen: {
         type: Boolean,
         reflect: true
       },
@@ -151,6 +165,21 @@ export default class ComponentBase extends LitElement {
     };
   }
 
+  get open() {
+    return this.isPopoverVisible;
+  }
+
+  set open(value) {
+    this.isPopoverVisible = value;
+  }
+
+  /**
+   * @ignore
+   */
+  get floaterConfig() {
+    return {};
+  }
+
   firstUpdated() {
     // Add the tag name as an attribute if it is different than the component name
     this.runtimeUtils.handleComponentTagRename(this, "auro-dialog");
@@ -163,6 +192,37 @@ export default class ComponentBase extends LitElement {
     if (!this.unformatted && slot.assignedNodes().length === 0) {
       slotWrapper.classList.remove("dialog-footer");
     }
+
+    this.floater.configure(this, 'auroDialog');
+    // Dialog uses CSS positioning; override to prevent bib.shadowRoot crash in fullscreen strategy
+    this.floater.position = () => {};
+
+    // Forward FloatingUI toggle event to backward-compatible 'toggle' event
+    this.addEventListener('auroDialog-toggled', (event) => {
+      if (!event.detail.expanded) {
+        this.dispatchToggleEvent();
+      }
+    });
+
+    // Always intercept the native ESC/cancel event so we can decide
+    // whether to honour it based on `modal`. Re-dispatch via FloatingUI
+    // for non-modal so the hide lifecycle runs correctly.
+    this.dialog.addEventListener('cancel', (e) => {
+      e.preventDefault();
+      if (!this.modal) {
+        this.floater.hideBib();
+      }
+    });
+
+    // Clicks that land directly on the <dialog> element (not on a child) are
+    // backdrop clicks. With the dialog in the top layer the ::backdrop sits above
+    // the deprecated overlay div, so this listener replaces the overlay div's
+    // click handler for backdrop-area interactions.
+    this.dialog.addEventListener('click', (e) => {
+      if (e.target === this.dialog) {
+        this.handleOverlayClick();
+      }
+    });
   }
 
   /**
@@ -171,24 +231,35 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   updated(changedProperties) {
-    if (changedProperties.has("open")) {
-      if (this.open) {
+    this.floater.handleUpdate(changedProperties);
+
+    if (changedProperties.has('isPopoverVisible')) {
+      if (this.isPopoverVisible) {
+        if (!this.floater.showing) {
+          this.floater.showBib();
+        }
         this.openDialog();
       } else {
+        if (this.floater.showing) {
+          this.floater.hideBib();
+        }
         this.closeDialog();
       }
+    }
+
+    if (changedProperties.has('triggerElement')) {
+      this.floater.configure(this, 'auroDialog');
+      this.floater.position = () => {};
     }
   }
 
   connectedCallback() {
     super.connectedCallback();
-    this.keydownEventHandler = this.handleKeydown.bind(this);
-    window.addEventListener("keydown", this.keydownEventHandler);
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    window.removeEventListener("keydown", this.keydownEventHandler);
+    this.floater.disconnect();
   }
 
   /**
@@ -198,7 +269,27 @@ export default class ComponentBase extends LitElement {
   openDialog() {
     this.defaultTrigger = document.activeElement;
 
+    if (this.modal) {
+      // Dialog spec: showModal() for native top-layer + focus containment + ::backdrop.
+      // Lock page scroll for the entire duration the modal is open.
+      // position:fixed on <body> is the only reliable way to prevent all scroll
+      // vectors including VoiceOver three-finger swipe.
+      this._savedScrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${this._savedScrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      this._scrollLocked = true;
+      this.dialog.showModal();
+      this._lockTouchScroll();
+    } else {
+      // Popover spec: showPopover() for top-layer rendering without blocking background.
+      this.dialog.showPopover();
+    }
+
     this.focusTrap = new FocusTrap(this.dialog);
+    // Focus is moved after the CSS open animation completes (see onDialogTransitionEnd).
   }
 
   /**
@@ -206,7 +297,7 @@ export default class ComponentBase extends LitElement {
    * @private
    */
   onDialogTransitionEnd() {
-    if (this.open && this.focusTrap) {
+    if (this.isPopoverVisible && this.focusTrap) {
       this.focusTrap.focusFirstElement();
     }
   }
@@ -216,18 +307,82 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   closeDialog() {
+    this._restorePageScroll();
+    this._unlockTouchScroll();
+
     if (this.focusTrap) {
-      // If the dropdown is not open, disconnect the focus trap if it exists
       this.focusTrap.disconnect();
       this.focusTrap = undefined;
+    }
+
+    if (this.modal) {
+      // Dialog spec: close() immediately so the top-layer focus restriction is
+      // lifted before we attempt to restore focus to the trigger.
+      if (this.dialog?.open) {
+        this.dialog.close();
+      }
+    } else {
+      // Popover spec: delay hidePopover() so the dialog stays in the top layer
+      // during the CSS close animation before leaving it.
+      setTimeout(() => {
+        this.dialog?.hidePopover?.();
+      }, 300);
     }
 
     if (this.defaultTrigger) {
       this.defaultTrigger.focus();
       this.defaultTrigger = undefined;
     }
+  }
 
-    this.dispatchToggleEvent();
+  /**
+   * Restores page scroll locked during openDialog().
+   * Safe to call multiple times — only acts when a lock is active.
+   * @private
+   */
+  _restorePageScroll() {
+    if (this._scrollLocked) {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      document.body.style.overflow = '';
+      document.documentElement.style.overflow = '';
+      window.scrollTo(0, this._savedScrollY || 0);
+      this._savedScrollY = undefined;
+      this._scrollLocked = false;
+    }
+  }
+
+  /**
+   * Locks touch scroll while the modal is open.
+   * Walks composedPath() so scrollable children inside the dialog still scroll.
+   * @private
+   */
+  _lockTouchScroll() {
+    if (this._boundTouchMoveHandler) {
+      return;
+    }
+    this._boundTouchMoveHandler = (e) => {
+      const path = e.composedPath();
+      const insideScrollable = path.some(
+        (el) => el !== document && el.scrollHeight > el.clientHeight,
+      );
+      if (!insideScrollable) {
+        e.preventDefault();
+      }
+    };
+    document.addEventListener('touchmove', this._boundTouchMoveHandler, { passive: false });
+  }
+
+  /**
+   * Removes the touch scroll lock.
+   * @private
+   */
+  _unlockTouchScroll() {
+    if (this._boundTouchMoveHandler) {
+      document.removeEventListener('touchmove', this._boundTouchMoveHandler, { passive: false });
+      this._boundTouchMoveHandler = undefined;
+    }
   }
 
   /**
@@ -235,11 +390,11 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   dispatchToggleEvent() {
-    const toggleEvent = new Event("toggle", { 
-      bubbles: true, 
-      cancelable: false 
+    const toggleEvent = new Event("toggle", {
+      bubbles: true,
+      cancelable: false
     });
-    
+
     this.dispatchEvent(toggleEvent);
   }
 
@@ -248,7 +403,7 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   handleOverlayClick() {
-    if (this.open && !this.modal) {
+    if (this.isPopoverVisible && !this.modal) {
       const dropdownComponents = [
         ...this.querySelectorAll(
           "auro-combobox, [auro-combobox], auro-select, [auro-select], auro-datepicker, [auro-datepicker]",
@@ -263,7 +418,7 @@ export default class ComponentBase extends LitElement {
         (dropdown) => dropdown.isPopoverVisible,
       );
       if (!isAnyDropdownOpen) {
-        this.handleCloseButtonClick();
+        this.floater.hideBib();
       }
     }
   }
@@ -273,22 +428,7 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   handleCloseButtonClick() {
-    this.open = false;
-  }
-
-  /**
-   * @private
-   * @param {KeyboardEvent} event - The keyboard event containing the key and keyCode.
-   * @returns {void}
-   */
-  handleKeydown({ key, keyCode }) {
-    if (
-      this.open &&
-      !this.modal &&
-      (key === "Escape" || keyCode === ESCAPE_KEYCODE)
-    ) {
-      this.open = false;
-    }
+    this.floater.hideBib();
   }
 
   /**
@@ -297,9 +437,25 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   focus() {
-    if (this.open) {
+    if (this.isPopoverVisible) {
       this.dialog.focus();
     }
+  }
+
+  /**
+   * Opens the dialog.
+   * @returns {void}
+   */
+  show() {
+    this.floater.showBib();
+  }
+
+  /**
+   * Closes the dialog.
+   * @returns {void}
+   */
+  hide() {
+    this.floater.hideBib();
   }
 
   static get styles() {
@@ -333,24 +489,29 @@ getCloseButton() {
   render() {
     const classes = {
       dialogOverlay: true,
-      "dialogOverlay--modal": this.modal && this.open,
-      "dialogOverlay--open": this.open,
-      util_displayHidden: !this.open,
+      "dialogOverlay--modal": this.modal && this.isPopoverVisible,
+      "dialogOverlay--open": this.isPopoverVisible,
+      util_displayHidden: !this.isPopoverVisible,
     };
     const contentClasses = {
       dialog: true,
-      "dialog--open": this.open,
+      "dialog--open": this.isPopoverVisible,
     };
 
     return html`
       <!-- Hidden slot for close button aria-label -->
       <slot name="ariaLabel.dialog.close" hidden @slotchange=${this.requestUpdate}></slot>
 
+      <!-- FloatingUI bib anchor for lifecycle management (ESC, click-outside, state) -->
+      <div id="bib" aria-hidden="true"></div>
+
+      <!-- @deprecated dialog-overlay: backdrop styling is now provided by ::backdrop on the dialog element.
+           Retained for backward compatibility; part="dialog-overlay" remains available for custom CSS. -->
       <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay" @click=${this.handleOverlayClick}></div>
 
-      <div 
-        role="dialog" 
-        id="dialog" 
+      <dialog
+        id="dialog"
+        popover="${ifDefined(this.modal ? undefined : 'manual')}"
         class="${classMap(contentClasses)}"
         part="dialog"
         aria-labelledby="dialog-header"
@@ -377,7 +538,7 @@ getCloseButton() {
           </div>
         `
         }
-      </div>
+      </dialog>
     `;
   }
 }

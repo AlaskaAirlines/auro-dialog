@@ -96,6 +96,101 @@ describe("auro-dialog", () => {
     const title = root.querySelector("#dialog-close");
     await expect(title).to.equal(null);
   });
+
+  // --- FloatingUI + native dialog/popover spec ---
+
+  it("non-modal dialog element has popover='manual'", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    const dialogEl = el.shadowRoot.querySelector("#dialog");
+    expect(dialogEl.getAttribute("popover")).to.equal("manual");
+  });
+
+  it("modal dialog element does not have popover attribute", async () => {
+    const el = await fixture(html`<auro-dialog modal></auro-dialog>`);
+    const dialogEl = el.shadowRoot.querySelector("#dialog");
+    expect(dialogEl.hasAttribute("popover")).to.be.false;
+  });
+
+  it("show() opens the dialog and hide() closes it", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+
+    expect(el.open).to.be.false;
+
+    el.show();
+    await el.updateComplete;
+    expect(el.open).to.be.true;
+
+    el.hide();
+    await el.updateComplete;
+    expect(el.open).to.be.false;
+  });
+
+  it("dispatches toggle event when dialog is closed", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    el.show();
+    await el.updateComplete;
+
+    const listener = oneEvent(el, "toggle");
+    el.hide();
+    await listener;
+
+    expect(el.open).to.be.false;
+  });
+
+  it("dispatches auroDialog-toggled with expanded:true on open and expanded:false on close", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+
+    const openListener = oneEvent(el, "auroDialog-toggled");
+    el.show();
+    const openEvent = await openListener;
+    expect(openEvent.detail.expanded).to.be.true;
+
+    const closeListener = oneEvent(el, "auroDialog-toggled");
+    el.hide();
+    const closeEvent = await closeListener;
+    expect(closeEvent.detail.expanded).to.be.false;
+  });
+
+  it("modal dialog locks page scroll on open and restores it on close", async () => {
+    const el = await fixture(html`<auro-dialog modal></auro-dialog>`);
+
+    el.show();
+    await el.updateComplete;
+    expect(document.body.style.position).to.equal("fixed");
+
+    el.hide();
+    await el.updateComplete;
+    expect(document.body.style.position).to.equal("");
+  });
+
+  it("backdrop click closes non-modal dialog", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    el.show();
+    await el.updateComplete;
+
+    const dialogEl = el.shadowRoot.querySelector("#dialog");
+    // Simulate a click with target === dialogEl (backdrop click)
+    dialogEl.dispatchEvent(new MouseEvent("click", { bubbles: true, composed: true }));
+    await el.updateComplete;
+
+    expect(el.open).to.be.false;
+  });
+
+  it("backdrop click does not close modal dialog", async () => {
+    const el = await fixture(html`<auro-dialog modal></auro-dialog>`);
+    el.show();
+    await el.updateComplete;
+
+    const dialogEl = el.shadowRoot.querySelector("#dialog");
+    dialogEl.dispatchEvent(new MouseEvent("click", { bubbles: true, composed: true }));
+    await el.updateComplete;
+
+    expect(el.open).to.be.true;
+
+    // clean up
+    el.hide();
+    await el.updateComplete;
+  });
 });
 
 function _sleep(ms) {

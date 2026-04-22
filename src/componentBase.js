@@ -25,6 +25,7 @@ import styleCss from "./styles/style.scss";
 import styleUnformattedCss from "./styles/style-unformatted.scss";
 import tokensCss from "./styles/tokens.scss";
 
+const MOBILE_BREAKPOINT = '--ds-grid-breakpoint-md';
 /**
  * @slot header - Text to display as the header of the modal
  * @slot content - Injects content into the body of the modal
@@ -32,7 +33,7 @@ import tokensCss from "./styles/tokens.scss";
  * @slot ariaLabel.dialog.close - Text to describe the "x" icon close button for screen readers. Default: "Close".
  * @event toggle - Event fires when the element is closed
  * @csspart close-button - adjust position of the close X icon in the dialog window
- * @csspart dialog-overlay - DEPRECATED: apply CSS on the overlay of the dialog. Use ::backdrop instead.
+ * @csspart dialog-overlay - DEPRECATED. Use `--ds-auro-dialog-overlay-modal-background-color` or `--ds-auro-dialog-overlay-open-background-color` for backdrop styling instead.
  * @csspart dialog - apply CSS to the entire dialog
  * @csspart dialog-header - apply CSS to the header of the dialog
  * @csspart dialog-content - apply CSS to the content of the dialog
@@ -255,6 +256,11 @@ export default class ComponentBase extends LitElement {
 
   connectedCallback() {
     super.connectedCallback();
+
+    if (!ComponentBase._mobileBreakpointValue) {
+      const docStyle = getComputedStyle(document.documentElement);
+      ComponentBase._mobileBreakpointValue = docStyle.getPropertyValue(MOBILE_BREAKPOINT).replace('px', '') - 0;
+    }
   }
 
   disconnectedCallback() {
@@ -270,22 +276,33 @@ export default class ComponentBase extends LitElement {
     this.defaultTrigger = document.activeElement;
 
     if (this.modal) {
-      // Dialog spec: showModal() for native top-layer + focus containment + ::backdrop.
-      // Lock page scroll for the entire duration the modal is open.
-      // position:fixed on <body> is the only reliable way to prevent all scroll
-      // vectors including VoiceOver three-finger swipe.
-      this._savedScrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${this._savedScrollY}px`;
-      document.body.style.width = '100%';
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-      this._scrollLocked = true;
+      this._lockPageScroll();
       this.dialog.showModal();
       this._lockTouchScroll();
     } else {
-      // Popover spec: showPopover() for top-layer rendering without blocking background.
       this.dialog.showPopover();
+
+      // lock page when dialog is full-bleed on mobile to prevent background scroll,
+      // but allow scroll when dialog is a smaller popover that doesn't cover the entire viewport.
+      const bWidth = document.body.offsetWidth;
+      if (bWidth < ComponentBase._mobileBreakpointValue ) {
+        this._lockPageScroll();
+      }
+
+      this._boundResizeHandler = () => {
+        clearTimeout(this._resizeTimer);
+        this._resizeTimer = setTimeout(() => {
+          const bWidth = document.body.offsetWidth;
+          if (bWidth < ComponentBase._mobileBreakpointValue ) {
+            if (!this._scrollLocked) {
+              this._lockPageScroll();
+            }
+          } else {
+            this._restorePageScroll();
+          }
+        }, 50);
+      };
+      window.addEventListener('resize', this._boundResizeHandler);
     }
 
     this.focusTrap = new FocusTrap(this.dialog);
@@ -322,6 +339,11 @@ export default class ComponentBase extends LitElement {
         this.dialog.close();
       }
     } else {
+      if (this._boundResizeHandler) {
+        window.removeEventListener('resize', this._boundResizeHandler);
+        this._boundResizeHandler = undefined;
+      }
+      clearTimeout(this._resizeTimer);
       // Popover spec: delay hidePopover() so the dialog stays in the top layer
       // during the CSS close animation before leaving it.
       setTimeout(() => {
@@ -350,6 +372,28 @@ export default class ComponentBase extends LitElement {
       window.scrollTo(0, this._savedScrollY || 0);
       this._savedScrollY = undefined;
       this._scrollLocked = false;
+    }
+  }
+
+  /**
+   * Locks page scroll by applying styles to the body element.
+   * This is necessary for modal dialogs to prevent background scrolling, including on mobile devices and assistive technologies.
+   * The scroll position is saved and restored when the dialog is closed to prevent content jump.
+   * @private
+   */
+  _lockPageScroll() {
+    if (!this._scrollLocked) {
+      // Dialog spec: showModal() for native top-layer + focus containment + ::backdrop.
+      // Lock page scroll for the entire duration the modal is open.
+      // position:fixed on <body> is the only reliable way to prevent all scroll
+      // vectors including VoiceOver three-finger swipe.
+      this._savedScrollY = window.scrollY;
+      document.body.style.position = 'fixed';
+      document.body.style.top = `-${this._savedScrollY}px`;
+      document.body.style.width = '100%';
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.overflow = 'hidden';
+      this._scrollLocked = true;
     }
   }
 

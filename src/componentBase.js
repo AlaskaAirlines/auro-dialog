@@ -266,6 +266,9 @@ export default class ComponentBase extends LitElement {
   disconnectedCallback() {
     super.disconnectedCallback();
     this.floater.disconnect();
+    this._restorePageScroll();
+    this._unlockTouchScroll();
+    clearTimeout(this._resizeTimer);
   }
 
   /**

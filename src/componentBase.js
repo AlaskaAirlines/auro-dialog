@@ -259,7 +259,7 @@ export default class ComponentBase extends LitElement {
 
     if (!ComponentBase._mobileBreakpointValue) {
       const docStyle = getComputedStyle(document.documentElement);
-      ComponentBase._mobileBreakpointValue = docStyle.getPropertyValue(MOBILE_BREAKPOINT).replace('px', '') - 0;
+      ComponentBase._mobileBreakpointValue = Number(docStyle.getPropertyValue(MOBILE_BREAKPOINT).replace('px', ''));
     }
   }
 
@@ -285,7 +285,7 @@ export default class ComponentBase extends LitElement {
       // lock page when dialog is full-bleed on mobile to prevent background scroll,
       // but allow scroll when dialog is a smaller popover that doesn't cover the entire viewport.
       const bWidth = document.body.offsetWidth;
-      if (bWidth < ComponentBase._mobileBreakpointValue ) {
+      if (bWidth < ComponentBase._mobileBreakpointValue) {
         this._lockPageScroll();
       }
 
@@ -293,7 +293,7 @@ export default class ComponentBase extends LitElement {
         clearTimeout(this._resizeTimer);
         this._resizeTimer = setTimeout(() => {
           const bWidth = document.body.offsetWidth;
-          if (bWidth < ComponentBase._mobileBreakpointValue ) {
+          if (bWidth < ComponentBase._mobileBreakpointValue) {
             if (!this._scrollLocked) {
               this._lockPageScroll();
             }

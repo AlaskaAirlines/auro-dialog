@@ -42,11 +42,11 @@ The `auro-dialog` appears on top of the page and presents information that requi
 
 ### CSS Shadow Parts
 
-| Name           | Description                                                                 |
-| -------------- | --------------------------------------------------------------------------- |
-| close-button   | adjust position of the close X icon in the dialog window                    |
-| dialog         | apply CSS to the entire dialog                                              |
-| dialog-content | apply CSS to the content of the dialog                                      |
-| dialog-footer  | apply CSS to the footer of the dialog                                       |
-| dialog-header  | apply CSS to the header of the dialog                                       |
-| dialog-overlay | DEPRECATED: apply CSS on the overlay of the dialog. Use ::backdrop instead. |
+| Name           | Description                                                                                                                                         |
+| -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------- |
+| close-button   | adjust position of the close X icon in the dialog window                                                                                            |
+| dialog         | apply CSS to the entire dialog                                                                                                                      |
+| dialog-content | apply CSS to the content of the dialog                                                                                                              |
+| dialog-footer  | apply CSS to the footer of the dialog                                                                                                               |
+| dialog-header  | apply CSS to the header of the dialog                                                                                                               |
+| dialog-overlay | DEPRECATED. Use `--ds-auro-dialog-overlay-modal-background-color` or `--ds-auro-dialog-overlay-open-background-color` for backdrop styling instead. |

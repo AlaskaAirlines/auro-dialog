@@ -138,7 +138,7 @@ export function initBasicExample() {
     document.querySelector("#closeBasic"),
   ];
   const dialog = document.querySelector("#defaultDialog");
-  if (buttons.length === 0 || !dialog) {
+  if (!buttons[0] || !buttons[1] || !dialog) {
     return;
   }
   initBasicExample._initialized = true;

@@ -1,4 +1,4 @@
-import { expect, fixture, html, oneEvent } from "@open-wc/testing";
+import { expect, fixture, html, oneEvent, waitUntil } from "@open-wc/testing";
 
 import "../src/registered.js";
 
@@ -6,7 +6,7 @@ describe("auro-dialog", () => {
   it("auro-dialog is accessible", async () => {
     const el = await fixture(html`
       <auro-dialog open="true">
-        
+
         <span slot="header">Blocking dialog</span>
         <span slot="content">
           Hello World!
@@ -111,6 +111,32 @@ describe("auro-dialog", () => {
     expect(dialogEl.hasAttribute("popover")).to.be.false;
   });
 
+  it("non-modal dialog closes when native cancel event fires on the inner dialog", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    el.show();
+    await el.updateComplete;
+    expect(el.open).to.be.true;
+
+    const dialogEl = el.shadowRoot.querySelector("#dialog");
+    dialogEl.dispatchEvent(new Event("cancel", { bubbles: false, cancelable: true }));
+    await el.updateComplete;
+
+    expect(el.open).to.be.false;
+  });
+
+  it("modal dialog does not close when native cancel event fires", async () => {
+    const el = await fixture(html`<auro-dialog modal></auro-dialog>`);
+    el.show();
+    await el.updateComplete;
+    expect(el.open).to.be.true;
+
+    const dialogEl = el.shadowRoot.querySelector("#dialog");
+    dialogEl.dispatchEvent(new Event("cancel", { bubbles: false, cancelable: true }));
+    await el.updateComplete;
+
+    expect(el.open).to.be.true;
+  });
+
   it("show() opens the dialog and hide() closes it", async () => {
     const el = await fixture(html`<auro-dialog></auro-dialog>`);
 
@@ -123,6 +149,55 @@ describe("auro-dialog", () => {
     el.hide();
     await el.updateComplete;
     expect(el.open).to.be.false;
+  });
+
+  it("restores focus to the element that was active when the dialog opened", async () => {
+    const root = await fixture(html`
+      <div>
+        <button id="trigger">Open</button>
+        <auro-dialog></auro-dialog>
+      </div>
+    `);
+    const trigger = root.querySelector("button");
+    const el = root.querySelector("auro-dialog");
+
+    trigger.focus();
+    el.show();
+    await el.updateComplete;
+
+    el.hide();
+    await el.updateComplete;
+
+    expect(document.activeElement).to.equal(trigger);
+  });
+
+  it("focus() moves focus into the dialog when open when there is no focusable element in body", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    el.show();
+    await el.updateComplete;
+
+    el.focus();
+
+    await waitUntil(() => !!el.shadowRoot.activeElement, "Dialog did not receive focus");
+  });
+
+  it("focus() moves focus into the dialog when open", async () => {
+    const el = await fixture(html`<auro-dialog><button></button></auro-dialog>`);
+    el.show();
+    await el.updateComplete;
+
+    el.focus();
+
+    await waitUntil(() => !!el.shadowRoot.activeElement, "Dialog did not receive focus");
+  });
+
+  it("focus() is a no-op when the dialog is closed", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    const before = document.activeElement;
+
+    el.focus();
+
+    expect(document.activeElement).to.equal(before);
   });
 
   it("dispatches toggle event when dialog is closed", async () => {

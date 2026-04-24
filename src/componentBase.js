@@ -53,7 +53,7 @@ export default class ComponentBase extends LitElement {
 
     this.isPopoverVisible = false;
     this.isBibFullscreen = false;
-    this.floater = new AuroFloatingUI();
+    this.floater = new AuroFloatingUI(this, 'dialog');
 
     const versioning = new AuroDependencyVersioning();
 
@@ -171,14 +171,29 @@ export default class ComponentBase extends LitElement {
   }
 
   set open(value) {
-    this.isPopoverVisible = value;
+    if (value) {
+      this.show();
+    } else {
+      this.hide();
+    }
   }
 
   /**
    * @ignore
    */
   get floaterConfig() {
-    return {};
+    if (!ComponentBase._mobileBreakpointValue) {
+      const docStyle = getComputedStyle(document.documentElement);
+      ComponentBase._mobileBreakpointValue = docStyle.getPropertyValue(MOBILE_BREAKPOINT)
+    }
+    return {
+      prefix: 'auroDialog',
+      fullscreenBreakpoint: ComponentBase._mobileBreakpointValue,
+     };
+  }
+
+  get behavior() {
+    return 'dialog';
   }
 
   firstUpdated() {
@@ -189,17 +204,17 @@ export default class ComponentBase extends LitElement {
     const slotWrapper = this.shadowRoot.querySelector("#footerWrapper");
 
     this.dialog = this.shadowRoot.getElementById("dialog");
+    this.bib = this.dialog;
 
     if (!this.unformatted && slot.assignedNodes().length === 0) {
       slotWrapper.classList.remove("dialog-footer");
     }
 
-    this.floater.configure(this, 'auroDialog');
-    // Dialog uses CSS positioning; override to prevent bib.shadowRoot crash in fullscreen strategy
-    this.floater.position = () => {};
+    this.floater.configure(this, this.floaterConfig.prefix);
 
     // Forward FloatingUI toggle event to backward-compatible 'toggle' event
     this.addEventListener('auroDialog-toggled', (event) => {
+      console.log('auroDialog-toggled', event.detail.expanded);
       if (!event.detail.expanded) {
         this.dispatchToggleEvent();
       }
@@ -211,7 +226,7 @@ export default class ComponentBase extends LitElement {
     this.dialog.addEventListener('cancel', (e) => {
       e.preventDefault();
       if (!this.modal) {
-        this.floater.hideBib();
+        this.hide();
       }
     });
 
@@ -237,37 +252,24 @@ export default class ComponentBase extends LitElement {
     if (changedProperties.has('isPopoverVisible')) {
       if (this.isPopoverVisible) {
         if (!this.floater.showing) {
-          this.floater.showBib();
+          this.show();
         }
-        this.openDialog();
       } else {
         if (this.floater.showing) {
-          this.floater.hideBib();
+          this.hide();
         }
-        this.closeDialog();
       }
     }
 
     if (changedProperties.has('triggerElement')) {
-      this.floater.configure(this, 'auroDialog');
+      this.floater.configure(this, this.floaterConfig.prefix);
       this.floater.position = () => {};
-    }
-  }
-
-  connectedCallback() {
-    super.connectedCallback();
-
-    if (!ComponentBase._mobileBreakpointValue) {
-      const docStyle = getComputedStyle(document.documentElement);
-      ComponentBase._mobileBreakpointValue = Number(docStyle.getPropertyValue(MOBILE_BREAKPOINT).replace('px', ''));
     }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this.floater.disconnect();
-    this._restorePageScroll();
-    this._unlockTouchScroll();
     clearTimeout(this._resizeTimer);
   }
 
@@ -279,32 +281,10 @@ export default class ComponentBase extends LitElement {
     this.defaultTrigger = document.activeElement;
 
     if (this.modal) {
-      this._lockPageScroll();
+      this.floater.lockScroll();
       this.dialog.showModal();
-      this._lockTouchScroll();
     } else {
       this.dialog.showPopover();
-
-      // lock page when dialog is full-bleed on mobile to prevent background scroll,
-      // but allow scroll when dialog is a smaller popover that doesn't cover the entire viewport.
-      const bWidth = document.body.offsetWidth;
-      if (bWidth < ComponentBase._mobileBreakpointValue) {
-        this._lockPageScroll();
-      }
-
-      this._boundResizeHandler = () => {
-        clearTimeout(this._resizeTimer);
-        this._resizeTimer = setTimeout(() => {
-          const bWidth = document.body.offsetWidth;
-          if (bWidth < ComponentBase._mobileBreakpointValue) {
-            if (!this._scrollLocked) {
-              this._lockPageScroll();
-            }
-          } else {
-            this._restorePageScroll();
-          }
-        }, 50);
-      };
       window.addEventListener('resize', this._boundResizeHandler);
     }
 
@@ -327,9 +307,6 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   closeDialog() {
-    this._restorePageScroll();
-    this._unlockTouchScroll();
-
     if (this.focusTrap) {
       this.focusTrap.disconnect();
       this.focusTrap = undefined;
@@ -357,78 +334,6 @@ export default class ComponentBase extends LitElement {
     if (this.defaultTrigger) {
       this.defaultTrigger.focus();
       this.defaultTrigger = undefined;
-    }
-  }
-
-  /**
-   * Restores page scroll locked during openDialog().
-   * Safe to call multiple times — only acts when a lock is active.
-   * @private
-   */
-  _restorePageScroll() {
-    if (this._scrollLocked) {
-      document.body.style.position = '';
-      document.body.style.top = '';
-      document.body.style.width = '';
-      document.body.style.overflow = '';
-      document.documentElement.style.overflow = '';
-      window.scrollTo(0, this._savedScrollY || 0);
-      this._savedScrollY = undefined;
-      this._scrollLocked = false;
-    }
-  }
-
-  /**
-   * Locks page scroll by applying styles to the body element.
-   * This is necessary for modal dialogs to prevent background scrolling, including on mobile devices and assistive technologies.
-   * The scroll position is saved and restored when the dialog is closed to prevent content jump.
-   * @private
-   */
-  _lockPageScroll() {
-    if (!this._scrollLocked) {
-      // Dialog spec: showModal() for native top-layer + focus containment + ::backdrop.
-      // Lock page scroll for the entire duration the modal is open.
-      // position:fixed on <body> is the only reliable way to prevent all scroll
-      // vectors including VoiceOver three-finger swipe.
-      this._savedScrollY = window.scrollY;
-      document.body.style.position = 'fixed';
-      document.body.style.top = `-${this._savedScrollY}px`;
-      document.body.style.width = '100%';
-      document.body.style.overflow = 'hidden';
-      document.documentElement.style.overflow = 'hidden';
-      this._scrollLocked = true;
-    }
-  }
-
-  /**
-   * Locks touch scroll while the modal is open.
-   * Walks composedPath() so scrollable children inside the dialog still scroll.
-   * @private
-   */
-  _lockTouchScroll() {
-    if (this._boundTouchMoveHandler) {
-      return;
-    }
-    this._boundTouchMoveHandler = (e) => {
-      const path = e.composedPath();
-      const insideScrollable = path.some(
-        (el) => el !== document && el.scrollHeight > el.clientHeight,
-      );
-      if (!insideScrollable) {
-        e.preventDefault();
-      }
-    };
-    document.addEventListener('touchmove', this._boundTouchMoveHandler, { passive: false });
-  }
-
-  /**
-   * Removes the touch scroll lock.
-   * @private
-   */
-  _unlockTouchScroll() {
-    if (this._boundTouchMoveHandler) {
-      document.removeEventListener('touchmove', this._boundTouchMoveHandler, { passive: false });
-      this._boundTouchMoveHandler = undefined;
     }
   }
 
@@ -465,7 +370,7 @@ export default class ComponentBase extends LitElement {
         (dropdown) => dropdown.isPopoverVisible,
       );
       if (!isAnyDropdownOpen) {
-        this.floater.hideBib();
+        this.hide();
       }
     }
   }
@@ -475,7 +380,7 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   handleCloseButtonClick() {
-    this.floater.hideBib();
+    this.hide();
   }
 
   /**
@@ -495,6 +400,7 @@ export default class ComponentBase extends LitElement {
    */
   show() {
     this.floater.showBib();
+    this.openDialog();
   }
 
   /**
@@ -503,6 +409,7 @@ export default class ComponentBase extends LitElement {
    */
   hide() {
     this.floater.hideBib();
+    this.closeDialog();
   }
 
   static get styles() {

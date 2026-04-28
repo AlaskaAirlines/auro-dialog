@@ -204,7 +204,6 @@ export default class ComponentBase extends LitElement {
     const slotWrapper = this.shadowRoot.querySelector("#footerWrapper");
 
     this.dialog = this.shadowRoot.getElementById("dialog");
-    this.bib = this.dialog;
 
     if (!this.unformatted && slot.assignedNodes().length === 0) {
       slotWrapper.classList.remove("dialog-footer");
@@ -214,7 +213,6 @@ export default class ComponentBase extends LitElement {
 
     // Forward FloatingUI toggle event to backward-compatible 'toggle' event
     this.addEventListener('auroDialog-toggled', (event) => {
-      console.log('auroDialog-toggled', event.detail.expanded);
       if (!event.detail.expanded) {
         this.dispatchToggleEvent();
       }
@@ -447,8 +445,9 @@ getCloseButton() {
       "dialogOverlay--open": this.isPopoverVisible,
       util_displayHidden: !this.isPopoverVisible,
     };
-    const contentClasses = {
+    const wrapperClasses = {
       dialog: true,
+      wrapper: true,
       "dialog--open": this.isPopoverVisible,
     };
 
@@ -463,36 +462,40 @@ getCloseButton() {
            Retained for backward compatibility; part="dialog-overlay" remains available for custom CSS. -->
       <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay" @click=${this.handleOverlayClick}></div>
 
-      <dialog
-        id="dialog"
-        popover="${ifDefined(this.modal ? undefined : 'manual')}"
-        class="${classMap(contentClasses)}"
-        part="dialog"
-        aria-labelledby="dialog-header"
-        aria-describedby="dialog-content"
-        @transitionend="${this.onDialogTransitionEnd}">
-        ${
-          this.unformatted
-            ? html`
-          <slot name="content"></slot>
-          ${this.getCloseButton()}
-        `
-            : html`
-          <div class="dialog-header" part="dialog-header">
-            <h1 class="heading heading-lg util_stackMarginNone--top" id="dialog-header">
-              <slot name="header">Default header...</slot>
-            </h1>
-            ${this.getCloseButton()}
+      <div id="bib">
+        <dialog
+          id="dialog"
+          popover="${ifDefined(this.modal ? undefined : 'manual')}"
+          class="container"
+          aria-labelledby="dialog-header"
+          aria-describedby="dialog-content">
+          <div class="${classMap(wrapperClasses)}"
+          part="dialog"
+          @transitionend="${this.onDialogTransitionEnd}">
+            ${
+              this.unformatted
+                ? html`
+              <slot name="content"></slot>
+              ${this.getCloseButton()}
+            `
+                : html`
+              <div class="dialog-header" part="dialog-header">
+                <h1 class="heading heading-lg util_stackMarginNone--top" id="dialog-header">
+                  <slot name="header">Default header...</slot>
+                </h1>
+                ${this.getCloseButton()}
+              </div>
+              <div class="dialog-content body-default" part="dialog-content">
+                <slot name="content"></slot>
+              </div>
+              <div class="dialog-footer" id="footerWrapper" part="dialog-footer">
+                <slot name="footer" id="footer"></slot>
+              </div>
+            `
+            }
           </div>
-          <div class="dialog-content body-default" part="dialog-content">
-            <slot name="content"></slot>
-          </div>
-          <div class="dialog-footer" id="footerWrapper" part="dialog-footer">
-            <slot name="footer" id="footer"></slot>
-          </div>
-        `
-        }
-      </dialog>
+        </dialog>
+      </div>
     `;
   }
 }

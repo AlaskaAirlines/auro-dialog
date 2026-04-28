@@ -24,9 +24,11 @@
   }
 }
 
-.dialog {
-  background: var(--ds-auro-dialog-container-color);
-  color: var(--ds-auro-dialog-text-color);
+dialog.container {
+  .wrapper {
+    background: var(--ds-auro-dialog-container-color);
+    color: var(--ds-auro-dialog-text-color);
+  }
 
   // Non-modal (popover) backdrop scrim
   &::backdrop {

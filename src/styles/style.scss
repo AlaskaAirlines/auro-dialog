@@ -60,6 +60,35 @@ $auro-spacing-options: none;
   }
 }
 
+#bib {
+  position: fixed;
+  inset: 0;
+  visibility: hidden;
+  overflow: hidden;
+
+  dialog.container {
+    display: inline-block;
+    width: 100%;
+    max-width: none;
+    height: 100%;
+    max-height: none;
+    padding: 0px;
+    border-width: medium;
+    border-style: none;
+    border-color: currentcolor;
+    border-image: initial;
+    margin: 0px;
+    background-color: transparent;
+    outline: none;
+    transform: translateZ(0px);
+    overflow: hidden;
+  }
+}
+
+:host([open]) #bib {
+  visibility: visible;
+}
+
 // Default selector setting mobile-first specs
 .dialog {
   position: fixed;
@@ -71,7 +100,6 @@ $auro-spacing-options: none;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  visibility: hidden;
   overflow: visible;
 
   width: calc(100% - var(--insetPaddingXl) - var(--insetPaddingXl));
@@ -86,9 +114,6 @@ $auro-spacing-options: none;
   // Transparent backdrop so our overlay div provides the darkening scrim.
   // showModal() renders ::backdrop in the top layer above our overlay div;
   // keeping it transparent lets our overlay show through.
-  &::backdrop {
-    background: transparent;
-  }
 
   // Animate only visual properties. Excluding width/height prevents the
   // "shrinking white box" artifact when the dialog closes while still in

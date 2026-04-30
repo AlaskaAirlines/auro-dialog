@@ -266,6 +266,53 @@ describe("auro-dialog", () => {
     el.hide();
     await el.updateComplete;
   });
+
+  it("close button defaults to appearance='default'", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    const closeBtn = el.shadowRoot.querySelector("#dialog-close");
+    expect(closeBtn.getAttribute("appearance")).to.equal("default");
+  });
+
+  it("close-button-appearance='inverse' sets close button appearance to inverse", async () => {
+    const el = await fixture(html`<auro-dialog close-button-appearance="inverse"></auro-dialog>`);
+    const closeBtn = el.shadowRoot.querySelector("#dialog-close");
+    expect(closeBtn.getAttribute("appearance")).to.equal("inverse");
+  });
+
+  it("ondark attribute overrides closeButtonAppearance and renders close button as inverse", async () => {
+    const el = await fixture(html`<auro-dialog ondark></auro-dialog>`);
+    const closeBtn = el.shadowRoot.querySelector("#dialog-close");
+    expect(closeBtn.getAttribute("appearance")).to.equal("inverse");
+  });
+
+  it("ondark takes precedence over close-button-appearance='default'", async () => {
+    const el = await fixture(html`<auro-dialog ondark close-button-appearance="default"></auro-dialog>`);
+    const closeBtn = el.shadowRoot.querySelector("#dialog-close");
+    expect(closeBtn.getAttribute("appearance")).to.equal("inverse");
+  });
+
+  it("setting open = true opens the dialog", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    expect(el.open).to.be.false;
+    el.open = true;
+    await el.updateComplete;
+    expect(el.open).to.be.true;
+
+    // clean up
+    el.hide();
+    await el.updateComplete;
+  });
+
+  it("setting open = false closes the dialog", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    el.show();
+    await el.updateComplete;
+    expect(el.open).to.be.true;
+
+    el.open = false;
+    await el.updateComplete;
+    expect(el.open).to.be.false;
+  });
 });
 
 function _sleep(ms) {

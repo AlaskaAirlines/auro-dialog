@@ -233,9 +233,16 @@ export default class ComponentBase extends LitElement {
     // the deprecated overlay div, so this listener replaces the overlay div's
     // click handler for backdrop-area interactions.
     this.dialog.addEventListener('click', (e) => {
-      if (e.target === this.dialog) {
-        this.handleOverlayClick();
+      if (e.target !== this.dialog) {
+        return;
       }
+      if (this.modal) {
+        return; // Modal drawers require an explicit action to close.
+      }
+      if (AuroFloatingUI.topOpeningFloatingUI !== this.floater) {
+        return; // there is another floatingUI that is currently visible, so ignore backdrop clicks on this one
+      }
+      this.hide();
     });
   }
 
@@ -352,31 +359,6 @@ export default class ComponentBase extends LitElement {
    * @private
    * @returns {void}
    */
-  handleOverlayClick() {
-    if (this.isPopoverVisible && !this.modal) {
-      const dropdownComponents = [
-        ...this.querySelectorAll(
-          "auro-combobox, [auro-combobox], auro-select, [auro-select], auro-datepicker, [auro-datepicker]",
-        ),
-      ];
-      const dropdowns = [
-        ...this.querySelectorAll("auro-dropdown, [auro-dropdown]"),
-        ...dropdownComponents.map((comp) => comp.dropdown),
-      ];
-
-      const isAnyDropdownOpen = dropdowns.some(
-        (dropdown) => dropdown.isPopoverVisible,
-      );
-      if (!isAnyDropdownOpen) {
-        this.hide();
-      }
-    }
-  }
-
-  /**
-   * @private
-   * @returns {void}
-   */
   handleCloseButtonClick() {
     this.hide();
   }
@@ -455,14 +437,11 @@ getCloseButton() {
       <!-- Hidden slot for close button aria-label -->
       <slot name="ariaLabel.dialog.close" hidden @slotchange=${this.requestUpdate}></slot>
 
-      <!-- FloatingUI bib anchor for lifecycle management (ESC, click-outside, state) -->
-      <div id="bib" aria-hidden="true"></div>
-
       <!-- @deprecated dialog-overlay: backdrop styling is now provided by ::backdrop on the dialog element.
            Retained for backward compatibility; part="dialog-overlay" remains available for custom CSS. -->
-      <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay" @click=${this.handleOverlayClick}></div>
+      <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay"></div>
 
-      <div id="bib">
+      <div id="bib" class="bib">
         <dialog
           id="dialog"
           popover="${ifDefined(this.modal ? undefined : 'manual')}"

@@ -60,7 +60,7 @@ $auro-spacing-options: none;
   }
 }
 
-#bib {
+.bib {
   position: fixed;
   inset: 0;
   visibility: hidden;
@@ -85,7 +85,7 @@ $auro-spacing-options: none;
   }
 }
 
-:host([open]) #bib {
+:host([open]) .bib {
   visibility: visible;
 }
 

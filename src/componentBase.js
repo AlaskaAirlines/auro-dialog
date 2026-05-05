@@ -184,7 +184,7 @@ export default class ComponentBase extends LitElement {
   get floaterConfig() {
     if (!ComponentBase._mobileBreakpointValue) {
       const docStyle = getComputedStyle(document.documentElement);
-      ComponentBase._mobileBreakpointValue = docStyle.getPropertyValue(MOBILE_BREAKPOINT)
+      ComponentBase._mobileBreakpointValue = docStyle.getPropertyValue(MOBILE_BREAKPOINT).trim();
     }
     return {
       prefix: 'auroDialog',
@@ -268,14 +268,12 @@ export default class ComponentBase extends LitElement {
 
     if (changedProperties.has('triggerElement')) {
       this.floater.configure(this, this.floaterConfig.prefix);
-      this.floater.position = () => {};
     }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
     this.floater.disconnect();
-    clearTimeout(this._resizeTimer);
   }
 
   /**
@@ -283,14 +281,17 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   openDialog() {
-    this.defaultTrigger = document.activeElement;
+    this.defaultTrigger = document.activeElement || this.triggerElement;
+
+    if (this._hidePopoverTimerId) {
+      clearTimeout(this._hidePopoverTimerId);
+      this._hidePopoverTimerId = undefined;
+    }
 
     if (this.modal) {
-      this.floater.lockScroll();
       this.dialog.showModal();
     } else {
       this.dialog.showPopover();
-      window.addEventListener('resize', this._boundResizeHandler);
     }
 
     this.focusTrap = new FocusTrap(this.dialog);
@@ -324,16 +325,14 @@ export default class ComponentBase extends LitElement {
         this.dialog.close();
       }
     } else {
-      if (this._boundResizeHandler) {
-        window.removeEventListener('resize', this._boundResizeHandler);
-        this._boundResizeHandler = undefined;
-      }
-      clearTimeout(this._resizeTimer);
       // Popover spec: delay hidePopover() so the dialog stays in the top layer
       // during the CSS close animation before leaving it.
-      setTimeout(() => {
-        this.dialog?.hidePopover?.();
-      }, 300);
+      if (!this._hidePopoverTimerId) {
+        this._hidePopoverTimerId = setTimeout(() => {
+          this.dialog?.hidePopover?.();
+          this._hidePopoverTimerId = undefined;
+        }, 300);
+      }
     }
 
     if (this.defaultTrigger) {
@@ -464,7 +463,7 @@ getCloseButton() {
                 </h1>
                 ${this.getCloseButton()}
               </div>
-              <div class="dialog-content body-default" part="dialog-content">
+              <div id="dialog-content" class="dialog-content body-default" part="dialog-content">
                 <slot name="content"></slot>
               </div>
               <div class="dialog-footer" id="footerWrapper" part="dialog-footer">

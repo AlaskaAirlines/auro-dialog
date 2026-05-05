@@ -231,6 +231,7 @@ describe("auro-dialog", () => {
 
     el.show();
     await el.updateComplete;
+    expect(el.open).to.be.true;
     expect(document.body.style.position).to.equal("fixed");
 
     el.hide();
@@ -238,6 +239,9 @@ describe("auro-dialog", () => {
     expect(document.body.style.position).to.equal("");
   });
 
+  // Note: in WTR/JSDOM, showPopover() is a no-op and the element never enters
+  // the actual top layer, so these tests exercise the click-handler logic path
+  // but not the real ::backdrop interaction. For full coverage move to Playwright.
   it("backdrop click closes non-modal dialog", async () => {
     const el = await fixture(html`<auro-dialog></auro-dialog>`);
     el.show();
@@ -263,6 +267,33 @@ describe("auro-dialog", () => {
     expect(el.open).to.be.true;
 
     // clean up
+    el.hide();
+    await el.updateComplete;
+  });
+
+  it("backdrop click does not close parent dialog when a child floater is open (AB#1536579)", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+
+    el.show();
+    await el.updateComplete;
+    expect(el.open).to.be.true;
+
+    // Simulate a child floater (e.g. a dropdown inside the dialog) becoming
+    // topOpeningFloatingUI. Two auro-dialogs share the same eventPrefix and
+    // can't both be open simultaneously, so we inject a fake floater directly
+    // into the AuroFloatingUI tracking state — exactly the mechanism the fix guards against.
+    const savedExpandedAuroFloater = document.expandedAuroFloater;
+    document.expandedAuroFloater = { element: { isPopoverVisible: true } };
+
+    const dialogEl = el.shadowRoot.querySelector("#dialog");
+    dialogEl.dispatchEvent(new MouseEvent("click", { bubbles: true, composed: true }));
+    await el.updateComplete;
+
+    // Parent must remain open — child floater is topOpeningFloatingUI
+    expect(el.open).to.be.true;
+
+    // clean up
+    document.expandedAuroFloater = savedExpandedAuroFloater;
     el.hide();
     await el.updateComplete;
   });

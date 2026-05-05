@@ -111,9 +111,9 @@ $auro-spacing-options: none;
   margin: 0;
   max-width: none;
 
-  // Transparent backdrop so our overlay div provides the darkening scrim.
-  // showModal() renders ::backdrop in the top layer above our overlay div;
-  // keeping it transparent lets our overlay show through.
+  // Backdrop/scrim styling is handled via dialog::backdrop in color.scss.
+  // Keep backdrop-specific styling out of this block so it stays aligned
+  // with the current top-layer dialog implementation.
 
   // Animate only visual properties. Excluding width/height prevents the
   // "shrinking white box" artifact when the dialog closes while still in

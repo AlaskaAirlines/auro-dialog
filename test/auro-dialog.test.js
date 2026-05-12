@@ -322,6 +322,21 @@ describe("auro-dialog", () => {
     expect(closeBtn.getAttribute("appearance")).to.equal("inverse");
   });
 
+  it("setting open = true before firstUpdated does not throw", async () => {
+    const el = document.createElement("auro-dialog");
+    customElements.upgrade(el);
+    // Append to DOM — LitElement schedules its first update as a microtask,
+    // so firstUpdated() has not yet run and this.dialog is still undefined.
+    document.body.appendChild(el);
+    // Must not throw even though this.dialog is uninitialized.
+    expect(() => { el.open = true; }).to.not.throw();
+    await el.updateComplete;
+    expect(el.open).to.be.true;
+    el.hide();
+    await el.updateComplete;
+    document.body.removeChild(el);
+  });
+
   it("setting open = true opens the dialog", async () => {
     const el = await fixture(html`<auro-dialog></auro-dialog>`);
     expect(el.open).to.be.false;

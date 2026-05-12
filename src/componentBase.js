@@ -171,11 +171,7 @@ export default class ComponentBase extends LitElement {
   }
 
   set open(value) {
-    if (value) {
-      this.show();
-    } else {
-      this.hide();
-    }
+    this.isPopoverVisible = Boolean(value);
   }
 
   /**
@@ -273,6 +269,10 @@ export default class ComponentBase extends LitElement {
 
   disconnectedCallback() {
     super.disconnectedCallback();
+    if (this._hidePopoverTimerId) {
+      clearTimeout(this._hidePopoverTimerId);
+      this._hidePopoverTimerId = undefined;
+    }
     this.floater.disconnect();
   }
 

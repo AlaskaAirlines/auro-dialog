@@ -10,19 +10,35 @@
 
 /* stylelint-disable selector-class-pattern */
 
+// DEPRECATED: .dialogOverlay background styling is deprecated.
+// The overlay scrim is now rendered via ::backdrop on the <dialog> element.
+// The .dialogOverlay element is retained for backward compatibility only
+// (part="dialog-overlay" remains available for custom CSS overrides).
 .dialogOverlay {
   &--open {
-    background: var(--ds-auro-dialog-overlay-open-background-color);
+    // deprecated — background moved to dialog::backdrop
   }
 
   &--modal {
-    background: var(--ds-auro-dialog-overlay-modal-background-color);
+    // deprecated — background moved to dialog:not([popover])::backdrop
   }
 }
 
-.dialog {
-  background: var(--ds-auro-dialog-container-color);
-  color: var(--ds-auro-dialog-text-color);
+dialog.container {
+  .wrapper {
+    background: var(--ds-auro-dialog-container-color);
+    color: var(--ds-auro-dialog-text-color);
+  }
+
+  // Non-modal (popover) backdrop scrim
+  &::backdrop {
+    background: var(--ds-auro-dialog-overlay-open-background-color);
+  }
+
+  // Modal backdrop scrim — modal dialogs have no popover attribute
+  &:not([popover])::backdrop {
+    background: var(--ds-auro-dialog-overlay-modal-background-color);
+  }
 
   // 1024px breakpoint / large dialog size is default
   @include breakpoints.auro_grid-breakpoint--md {

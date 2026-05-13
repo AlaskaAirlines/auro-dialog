@@ -7,10 +7,12 @@
 
 import { LitElement } from "lit";
 import { classMap } from "lit/directives/class-map.js";
+import { ifDefined } from "lit/directives/if-defined.js";
 import { html } from "lit/static-html.js";
 
 import { AuroDependencyVersioning } from "@aurodesignsystem/auro-library/scripts/runtime/dependencyTagVersioning.mjs";
 import { FocusTrap } from "@aurodesignsystem/auro-library/scripts/runtime/FocusTrap/index.mjs";
+import AuroFloatingUI from "@aurodesignsystem/auro-library/scripts/runtime/floatingUI.mjs";
 import AuroLibraryRuntimeUtils from "@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs";
 import { AuroButton } from "@aurodesignsystem/auro-button/class";
 import { AuroIcon } from "@aurodesignsystem/auro-icon/class";
@@ -23,8 +25,7 @@ import styleCss from "./styles/style.scss";
 import styleUnformattedCss from "./styles/style-unformatted.scss";
 import tokensCss from "./styles/tokens.scss";
 
-const ESCAPE_KEYCODE = 27;
-
+const MOBILE_BREAKPOINT = '--ds-grid-breakpoint-md';
 /**
  * @slot header - Text to display as the header of the modal
  * @slot content - Injects content into the body of the modal
@@ -32,7 +33,7 @@ const ESCAPE_KEYCODE = 27;
  * @slot ariaLabel.dialog.close - Text to describe the "x" icon close button for screen readers. Default: "Close".
  * @event toggle - Event fires when the element is closed
  * @csspart close-button - adjust position of the close X icon in the dialog window
- * @csspart dialog-overlay - apply CSS on the overlay of the dialog
+ * @csspart dialog-overlay - DEPRECATED. Use `--ds-auro-dialog-overlay-modal-background-color` or `--ds-auro-dialog-overlay-open-background-color` for backdrop styling instead.
  * @csspart dialog - apply CSS to the entire dialog
  * @csspart dialog-header - apply CSS to the header of the dialog
  * @csspart dialog-content - apply CSS to the content of the dialog
@@ -49,6 +50,10 @@ export default class ComponentBase extends LitElement {
     this.modal = false;
     this.unformatted = false;
     this.closeButtonAppearance = 'default';
+
+    this.isPopoverVisible = false;
+    this.isBibFullscreen = false;
+    this.floater = new AuroFloatingUI(this, 'dialog');
 
     const versioning = new AuroDependencyVersioning();
 
@@ -119,7 +124,17 @@ export default class ComponentBase extends LitElement {
       /**
        * Sets state of dialog to open.
        */
-      open: {
+      isPopoverVisible: {
+        type: Boolean,
+        reflect: true,
+        attribute: 'open'
+      },
+
+      /**
+       * If true, the dialog bib is in fullscreen mode.
+       * @private
+       */
+      isBibFullscreen: {
         type: Boolean,
         reflect: true
       },
@@ -151,6 +166,32 @@ export default class ComponentBase extends LitElement {
     };
   }
 
+  get open() {
+    return this.isPopoverVisible;
+  }
+
+  set open(value) {
+    this.isPopoverVisible = Boolean(value);
+  }
+
+  /**
+   * @ignore
+   */
+  get floaterConfig() {
+    if (!ComponentBase._mobileBreakpointValue) {
+      const docStyle = getComputedStyle(document.documentElement);
+      ComponentBase._mobileBreakpointValue = docStyle.getPropertyValue(MOBILE_BREAKPOINT).trim();
+    }
+    return {
+      prefix: 'auroDialog',
+      fullscreenBreakpoint: ComponentBase._mobileBreakpointValue,
+     };
+  }
+
+  get behavior() {
+    return 'dialog';
+  }
+
   firstUpdated() {
     // Add the tag name as an attribute if it is different than the component name
     this.runtimeUtils.handleComponentTagRename(this, "auro-dialog");
@@ -163,6 +204,42 @@ export default class ComponentBase extends LitElement {
     if (!this.unformatted && slot.assignedNodes().length === 0) {
       slotWrapper.classList.remove("dialog-footer");
     }
+
+    this.floater.configure(this, this.floaterConfig.prefix);
+
+    // Forward FloatingUI toggle event to backward-compatible 'toggle' event
+    this.addEventListener('auroDialog-toggled', (event) => {
+      if (!event.detail.expanded) {
+        this.dispatchToggleEvent();
+      }
+    });
+
+    // Always intercept the native ESC/cancel event so we can decide
+    // whether to honour it based on `modal`. Re-dispatch via FloatingUI
+    // for non-modal so the hide lifecycle runs correctly.
+    this.dialog.addEventListener('cancel', (e) => {
+      e.preventDefault();
+      if (!this.modal) {
+        this.hide();
+      }
+    });
+
+    // Clicks that land directly on the <dialog> element (not on a child) are
+    // backdrop clicks. With the dialog in the top layer the ::backdrop sits above
+    // the deprecated overlay div, so this listener replaces the overlay div's
+    // click handler for backdrop-area interactions.
+    this.dialog.addEventListener('click', (e) => {
+      if (e.target !== this.dialog) {
+        return;
+      }
+      if (this.modal) {
+        return; // Modal drawers require an explicit action to close.
+      }
+      if (AuroFloatingUI.topOpeningFloatingUI !== this.floater) {
+        return; // there is another floatingUI that is currently visible, so ignore backdrop clicks on this one
+      }
+      this.hide();
+    });
   }
 
   /**
@@ -171,24 +248,32 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   updated(changedProperties) {
-    if (changedProperties.has("open")) {
-      if (this.open) {
-        this.openDialog();
+    this.floater.handleUpdate(changedProperties);
+
+    if (changedProperties.has('isPopoverVisible')) {
+      if (this.isPopoverVisible) {
+        if (!this.floater.showing) {
+          this.show();
+        }
       } else {
-        this.closeDialog();
+        if (this.floater.showing) {
+          this.hide();
+        }
       }
     }
-  }
 
-  connectedCallback() {
-    super.connectedCallback();
-    this.keydownEventHandler = this.handleKeydown.bind(this);
-    window.addEventListener("keydown", this.keydownEventHandler);
+    if (changedProperties.has('triggerElement')) {
+      this.floater.configure(this, this.floaterConfig.prefix);
+    }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
-    window.removeEventListener("keydown", this.keydownEventHandler);
+    if (this._hidePopoverTimerId) {
+      clearTimeout(this._hidePopoverTimerId);
+      this._hidePopoverTimerId = undefined;
+    }
+    this.floater.disconnect();
   }
 
   /**
@@ -196,9 +281,21 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   openDialog() {
-    this.defaultTrigger = document.activeElement;
+    this.defaultTrigger = document.activeElement || this.triggerElement;
+
+    if (this._hidePopoverTimerId) {
+      clearTimeout(this._hidePopoverTimerId);
+      this._hidePopoverTimerId = undefined;
+    }
+
+    if (this.modal) {
+      this.dialog.showModal();
+    } else {
+      this.dialog.showPopover();
+    }
 
     this.focusTrap = new FocusTrap(this.dialog);
+    // Focus is moved after the CSS open animation completes (see onDialogTransitionEnd).
   }
 
   /**
@@ -206,7 +303,7 @@ export default class ComponentBase extends LitElement {
    * @private
    */
   onDialogTransitionEnd() {
-    if (this.open && this.focusTrap) {
+    if (this.isPopoverVisible && this.focusTrap) {
       this.focusTrap.focusFirstElement();
     }
   }
@@ -217,17 +314,31 @@ export default class ComponentBase extends LitElement {
    */
   closeDialog() {
     if (this.focusTrap) {
-      // If the dropdown is not open, disconnect the focus trap if it exists
       this.focusTrap.disconnect();
       this.focusTrap = undefined;
+    }
+
+    if (this.modal) {
+      // Dialog spec: close() immediately so the top-layer focus restriction is
+      // lifted before we attempt to restore focus to the trigger.
+      if (this.dialog?.open) {
+        this.dialog.close();
+      }
+    } else {
+      // Popover spec: delay hidePopover() so the dialog stays in the top layer
+      // during the CSS close animation before leaving it.
+      if (!this._hidePopoverTimerId) {
+        this._hidePopoverTimerId = setTimeout(() => {
+          this.dialog?.hidePopover?.();
+          this._hidePopoverTimerId = undefined;
+        }, 300);
+      }
     }
 
     if (this.defaultTrigger) {
       this.defaultTrigger.focus();
       this.defaultTrigger = undefined;
     }
-
-    this.dispatchToggleEvent();
   }
 
   /**
@@ -235,11 +346,11 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   dispatchToggleEvent() {
-    const toggleEvent = new Event("toggle", { 
-      bubbles: true, 
-      cancelable: false 
+    const toggleEvent = new Event("toggle", {
+      bubbles: true,
+      cancelable: false
     });
-    
+
     this.dispatchEvent(toggleEvent);
   }
 
@@ -247,48 +358,8 @@ export default class ComponentBase extends LitElement {
    * @private
    * @returns {void}
    */
-  handleOverlayClick() {
-    if (this.open && !this.modal) {
-      const dropdownComponents = [
-        ...this.querySelectorAll(
-          "auro-combobox, [auro-combobox], auro-select, [auro-select], auro-datepicker, [auro-datepicker]",
-        ),
-      ];
-      const dropdowns = [
-        ...this.querySelectorAll("auro-dropdown, [auro-dropdown]"),
-        ...dropdownComponents.map((comp) => comp.dropdown),
-      ];
-
-      const isAnyDropdownOpen = dropdowns.some(
-        (dropdown) => dropdown.isPopoverVisible,
-      );
-      if (!isAnyDropdownOpen) {
-        this.handleCloseButtonClick();
-      }
-    }
-  }
-
-  /**
-   * @private
-   * @returns {void}
-   */
   handleCloseButtonClick() {
-    this.open = false;
-  }
-
-  /**
-   * @private
-   * @param {KeyboardEvent} event - The keyboard event containing the key and keyCode.
-   * @returns {void}
-   */
-  handleKeydown({ key, keyCode }) {
-    if (
-      this.open &&
-      !this.modal &&
-      (key === "Escape" || keyCode === ESCAPE_KEYCODE)
-    ) {
-      this.open = false;
-    }
+    this.hide();
   }
 
   /**
@@ -297,9 +368,27 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   focus() {
-    if (this.open) {
+    if (this.isPopoverVisible) {
       this.dialog.focus();
     }
+  }
+
+  /**
+   * Opens the dialog.
+   * @returns {void}
+   */
+  show() {
+    this.floater.showBib();
+    this.openDialog();
+  }
+
+  /**
+   * Closes the dialog.
+   * @returns {void}
+   */
+  hide() {
+    this.floater.hideBib();
+    this.closeDialog();
   }
 
   static get styles() {
@@ -333,50 +422,57 @@ getCloseButton() {
   render() {
     const classes = {
       dialogOverlay: true,
-      "dialogOverlay--modal": this.modal && this.open,
-      "dialogOverlay--open": this.open,
-      util_displayHidden: !this.open,
+      "dialogOverlay--modal": this.modal && this.isPopoverVisible,
+      "dialogOverlay--open": this.isPopoverVisible,
+      util_displayHidden: !this.isPopoverVisible,
     };
-    const contentClasses = {
+    const wrapperClasses = {
       dialog: true,
-      "dialog--open": this.open,
+      wrapper: true,
+      "dialog--open": this.isPopoverVisible,
     };
 
     return html`
       <!-- Hidden slot for close button aria-label -->
       <slot name="ariaLabel.dialog.close" hidden @slotchange=${this.requestUpdate}></slot>
 
-      <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay" @click=${this.handleOverlayClick}></div>
+      <!-- @deprecated dialog-overlay: backdrop styling is now provided by ::backdrop on the dialog element.
+           Retained for backward compatibility; part="dialog-overlay" remains available for custom CSS. -->
+      <div class="${classMap(classes)}" id="dialog-overlay" part="dialog-overlay"></div>
 
-      <div 
-        role="dialog" 
-        id="dialog" 
-        class="${classMap(contentClasses)}"
-        part="dialog"
-        aria-labelledby="dialog-header"
-        aria-describedby="dialog-content"
-        @transitionend="${this.onDialogTransitionEnd}">
-        ${
-          this.unformatted
-            ? html`
-          <slot name="content"></slot>
-          ${this.getCloseButton()}
-        `
-            : html`
-          <div class="dialog-header" part="dialog-header">
-            <h1 class="heading heading-lg util_stackMarginNone--top" id="dialog-header">
-              <slot name="header">Default header...</slot>
-            </h1>
-            ${this.getCloseButton()}
+      <div id="bib" class="bib">
+        <dialog
+          id="dialog"
+          popover="${ifDefined(this.modal ? undefined : 'manual')}"
+          class="container"
+          aria-labelledby="dialog-header"
+          aria-describedby="dialog-content">
+          <div class="${classMap(wrapperClasses)}"
+          part="dialog"
+          @transitionend="${this.onDialogTransitionEnd}">
+            ${
+              this.unformatted
+                ? html`
+              <slot name="content"></slot>
+              ${this.getCloseButton()}
+            `
+                : html`
+              <div class="dialog-header" part="dialog-header">
+                <h1 class="heading heading-lg util_stackMarginNone--top" id="dialog-header">
+                  <slot name="header">Default header...</slot>
+                </h1>
+                ${this.getCloseButton()}
+              </div>
+              <div id="dialog-content" class="dialog-content body-default" part="dialog-content">
+                <slot name="content"></slot>
+              </div>
+              <div class="dialog-footer" id="footerWrapper" part="dialog-footer">
+                <slot name="footer" id="footer"></slot>
+              </div>
+            `
+            }
           </div>
-          <div class="dialog-content body-default" part="dialog-content">
-            <slot name="content"></slot>
-          </div>
-          <div class="dialog-footer" id="footerWrapper" part="dialog-footer">
-            <slot name="footer" id="footer"></slot>
-          </div>
-        `
-        }
+        </dialog>
       </div>
     `;
   }

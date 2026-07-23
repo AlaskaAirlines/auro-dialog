@@ -12,7 +12,7 @@ import { html } from "lit/static-html.js";
 
 import { AuroDependencyVersioning } from "@aurodesignsystem/auro-library/scripts/runtime/dependencyTagVersioning.mjs";
 import { FocusTrap } from "@aurodesignsystem/auro-library/scripts/runtime/FocusTrap/index.mjs";
-import AuroFloatingUI from "@aurodesignsystem/auro-library/scripts/runtime/floatingUI.mjs";
+import AuroFloatingUI from "@aurodesignsystem-dev/auro-library/scripts/runtime/floatingUI.mjs";
 import AuroLibraryRuntimeUtils from "@aurodesignsystem/auro-library/scripts/utils/runtimeUtils.mjs";
 import { AuroButton } from "@aurodesignsystem/auro-button/class";
 import { AuroIcon } from "@aurodesignsystem/auro-icon/class";

@@ -31,6 +31,7 @@
     "@aurodesignsystem/auro-library": "^5.12.3",
     "@aurodesignsystem/design-tokens": "^8.18.0",
     "@aurodesignsystem/webcorestylesheets": "^11.0.0",
+    "@aurodesignsystem-dev/auro-library": "^0.0.0-pr273.0",
     "husky": "^9.1.7"
   },
   "browserslist": [

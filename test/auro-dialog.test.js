@@ -1,8 +1,20 @@
 import { expect, fixture, html, oneEvent, waitUntil } from "@open-wc/testing";
+import { setViewport, sendKeys } from "@web/test-runner-commands";
 
 import "../src/registered.js";
 
-describe("auro-dialog", () => {
+/**
+ * Runs the full dialog test suite for a given viewport.
+ * @param {boolean} mobileView - Whether tests should run in a narrow mobile viewport.
+ * @returns {void}
+ */
+function runFullTest(mobileView) {
+  before(async () => {
+    await setViewport(
+      mobileView ? { width: 300, height: 800 } : { width: 900, height: 800 },
+    );
+  });
+
   it("auro-dialog is accessible", async () => {
     const el = await fixture(html`
       <auro-dialog open="true">
@@ -359,6 +371,213 @@ describe("auro-dialog", () => {
     await el.updateComplete;
     expect(el.open).to.be.false;
   });
+
+  // --- focus trap on open (AB#1543191) ---
+
+  it("moves focus into dialog after the open transition fires", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    el.show();
+    await el.updateComplete;
+
+    await waitUntil(
+      () => !!el.shadowRoot.activeElement,
+      "Focus did not move into dialog after transitionend",
+      { timeout: 1000 }
+    );
+  });
+
+  it("moves focus into dialog when mounted already-open (no transitionend fires)", async () => {
+    const el = await fixture(html`<auro-dialog open></auro-dialog>`);
+
+    await waitUntil(
+      () => !!el.shadowRoot.activeElement,
+      "Focus did not move into dialog via fallback timer",
+      { timeout: 600 }
+    );
+  });
+
+  it("moves focus into a dynamically-created dialog that is already open", async () => {
+    const el = document.createElement("auro-dialog");
+    el.setAttribute("open", "");
+    document.body.appendChild(el);
+    await el.updateComplete;
+
+    await waitUntil(
+      () => !!el.shadowRoot.activeElement,
+      "Focus did not move into dynamically-created already-open dialog",
+      { timeout: 600 }
+    );
+
+    el.hide();
+    await el.updateComplete;
+    document.body.removeChild(el);
+  });
+
+  it("does not double-focus when transitionend fires before the fallback timer", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    el.show();
+    await el.updateComplete;
+
+    const wrapper = el.shadowRoot.querySelector(".dialog");
+    wrapper.dispatchEvent(new Event("transitionend", { bubbles: false }));
+
+    expect(el._focusTrapActivated).to.be.true;
+
+    await new Promise((resolve) => setTimeout(resolve, 400));
+
+    expect(el.focusTrap).to.exist;
+
+    el.hide();
+    await el.updateComplete;
+  });
+
+  it("cancels the fallback timer when dialog is closed before 350ms elapses", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    el.show();
+    await el.updateComplete;
+
+    expect(el._focusFallbackTimerId).to.exist;
+    el.hide();
+    await el.updateComplete;
+
+    expect(el._focusFallbackTimerId).to.be.undefined;
+    expect(el._focusTrapActivated).to.be.false;
+
+    // Timer must not fire after close — focusTrap should be torn down
+    await new Promise((resolve) => setTimeout(resolve, 400));
+    expect(el.focusTrap).to.be.undefined;
+  });
+
+  it("rapid re-open disconnects the previous focusTrap before creating a new one", async () => {
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    el.show();
+    await el.updateComplete;
+
+    const firstTrap = el.focusTrap;
+    let firstTrapDisconnected = false;
+    const originalDisconnect = firstTrap.disconnect.bind(firstTrap);
+    firstTrap.disconnect = () => {
+      firstTrapDisconnected = true;
+      originalDisconnect();
+    };
+
+    // Re-open without closing — the previous focusTrap must be disconnected.
+    el.show();
+    await el.updateComplete;
+
+    expect(firstTrapDisconnected).to.be.true;
+    expect(el.focusTrap).to.exist;
+    expect(el.focusTrap).to.not.equal(firstTrap);
+
+    el.hide();
+    await el.updateComplete;
+  });
+
+  it("disconnectedCallback clears the fallback timer while dialog is open", async () => {
+    const el = document.createElement("auro-dialog");
+    document.body.appendChild(el);
+    await el.updateComplete;
+    el.show();
+    await el.updateComplete;
+
+    expect(el._focusFallbackTimerId).to.exist;
+
+    // Call the lifecycle hook directly to test cleanup without removing an
+    // active popover from the DOM (which crashes headless Chrome).
+    el.disconnectedCallback();
+
+    expect(el._focusFallbackTimerId).to.be.undefined;
+    expect(el.focusTrap).to.be.undefined;
+    expect(el._focusTrapActivated).to.be.false;
+
+    el.hide();
+    await el.updateComplete;
+    document.body.removeChild(el);
+  });
+
+  it("Tab key keeps focus within the open dialog", async () => {
+    const el = await fixture(html`
+      <auro-dialog open>
+        <button id="btn1" slot="content">One</button>
+        <button id="btn2" slot="footer">Two</button>
+      </auro-dialog>
+    `);
+
+    await waitUntil(
+      () => el._focusTrapActivated === true,
+      "Focus trap was not activated",
+      { timeout: 600 }
+    );
+
+    await sendKeys({ press: "Tab" });
+
+    expect(el.contains(document.activeElement)).to.be.true;
+  });
+
+  it("focus is trapped in a dynamically-created already-open dialog when Tab is pressed (AB#1543191)", async () => {
+    // Regression: consumers who destroy/recreate the dialog on the same event
+    // that opens it (e.g. flight-search refundable-upsell) mount it already in
+    // the open state, so no closed->open CSS transition fires and transitionend
+    // never runs. The fallback timer must engage the focus trap so Tab cannot
+    // reach page content behind the dialog.
+    const el = document.createElement("auro-dialog");
+    el.setAttribute("open", "");
+    const btn1 = document.createElement("button");
+    btn1.id = "btn1";
+    btn1.slot = "content";
+    btn1.textContent = "One";
+    const btn2 = document.createElement("button");
+    btn2.id = "btn2";
+    btn2.slot = "footer";
+    btn2.textContent = "Two";
+    el.appendChild(btn1);
+    el.appendChild(btn2);
+    document.body.appendChild(el);
+    await el.updateComplete;
+
+    await waitUntil(
+      () => el._focusTrapActivated === true,
+      "Focus trap was not activated for dynamically-created already-open dialog",
+      { timeout: 600 }
+    );
+
+    await sendKeys({ press: "Tab" });
+
+    expect(el.contains(document.activeElement)).to.be.true;
+
+    el.hide();
+    await el.updateComplete;
+    document.body.removeChild(el);
+  });
+
+  it("Shift+Tab keeps focus within the open dialog", async () => {
+    const el = await fixture(html`
+      <auro-dialog open>
+        <button id="btn1" slot="content">One</button>
+        <button id="btn2" slot="footer">Two</button>
+      </auro-dialog>
+    `);
+
+    await waitUntil(
+      () => el._focusTrapActivated === true,
+      "Focus trap was not activated",
+      { timeout: 600 }
+    );
+
+    await sendKeys({ down: "Shift" });
+    await sendKeys({ press: "Tab" });
+    await sendKeys({ up: "Shift" });
+
+    expect(el.contains(document.activeElement)).to.be.true;
+  });
+}
+
+describe("auro-dialog", () => {
+  runFullTest(false);
+});
+
+describe("auro-dialog in mobile viewport", () => {
+  runFullTest(true);
 });
 
 function _sleep(ms) {

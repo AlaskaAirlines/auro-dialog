@@ -161,7 +161,7 @@ function runFullTest(mobileView) {
     expect(el.open).to.be.true;
   });
 
-it("show() opens the dialog and hide() closes it", async () => {
+  it("show() opens the dialog and hide() closes it", async () => {
     const el = await fixture(html`<auro-dialog></auro-dialog>`);
 
     expect(el.open).to.be.false;

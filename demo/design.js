@@ -1,17 +1,17 @@
-import { initBasicExample } from "../apiExamples/basic";
-import { initModalExample } from "../apiExamples/modal";
+import { initSizeOptionsExample } from "../apiExamples/size-options";
+import { initDecoupledExample } from "../apiExamples/decoupled";
+import { initAccessibilityUnformattedHeaderExample } from "../apiExamples/accessibility-unformatted-header";
 
-import { AuroDialog } from "../src/index";
-
-AuroDialog.register();
+import "../src/registered";
 
 export function initExamples(initCount) {
   // biome-ignore lint/style/noParameterAssign: legacy error handling
   initCount = initCount || 0;
 
   try {
-    initBasicExample();
-    initModalExample();
+    initSizeOptionsExample();
+    initDecoupledExample();
+    initAccessibilityUnformattedHeaderExample();
   } catch (_err) {
     if (initCount <= 20) {
       // setTimeout handles issue where content is sometimes loaded after the functions get called

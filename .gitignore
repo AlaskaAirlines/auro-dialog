@@ -6,6 +6,8 @@ docTemplates/
 ## Demo support files
 demo/*.css
 demo/*.css.map
+## ...except the hand-authored demo nav/copy-button styles injected by demo-support.js
+!demo/demo-nav.css
 
 ## CSS built from Sass process
 src/**/*.css

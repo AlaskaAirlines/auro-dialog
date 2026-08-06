@@ -1,4 +1,4 @@
-export function initAccessibilityExample() {
+export function initAccessibilityUnformattedHeaderExample() {
   const button = document.querySelector("#openAccessibility");
   const dialog = document.querySelector("#unformattedMdDialog");
 

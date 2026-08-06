@@ -3,7 +3,7 @@ export function initCustomExample() {
     document.querySelector("#openCustom"),
     document.querySelector("#closeCustom"),
   ];
-  const dialog = document.querySelector("#defaultDialog");
+  const dialog = document.querySelector("#customDialog");
 
   buttons.forEach((button) => {
     button.addEventListener("click", () => {

@@ -266,8 +266,8 @@
 <pre class="language-css"><code class="language-css">@import '@aurodesignsystem/auro-dialog/dist/style-unformatted.css';</code></pre>
 
 <div class="exampleWrapper">
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/accessibility.html) -->
-<!-- The below content is automatically added from ./../apiExamples/accessibility.html -->
+<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/accessibility-unformatted-header.html) -->
+<!-- The below content is automatically added from ./../apiExamples/accessibility-unformatted-header.html -->
 <div>
 <auro-button id="openAccessibility">Unformatted Medium Dialog</auro-button>
 </div>
@@ -284,8 +284,8 @@
 </div>
 <auro-accordion alignRight>
 <span slot="trigger">See code</span>
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/accessibility.html) -->
-<!-- The below code snippet is automatically added from ./../apiExamples/accessibility.html -->
+<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/accessibility-unformatted-header.html) -->
+<!-- The below code snippet is automatically added from ./../apiExamples/accessibility-unformatted-header.html -->
 
 <pre class="language-html"><code class="language-html">&lt;div&gt;
   &lt;auro-button id="openAccessibility"&gt;Unformatted Medium Dialog&lt;/auro-button&gt;

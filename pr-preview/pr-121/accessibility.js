@@ -1,4 +1,4 @@
-import { initAccessibilityExample } from "../apiExamples/accessibility";
+import { initAccessibilityUnformattedHeaderExample } from "../apiExamples/accessibility-unformatted-header";
 import { initAriaLabelSlotExample } from "../apiExamples/aria-label";
 
 import "../src/registered";
@@ -8,7 +8,7 @@ export function initExamples(initCount) {
   initCount = initCount || 0;
 
   try {
-    initAccessibilityExample();
+    initAccessibilityUnformattedHeaderExample();
     initAriaLabelSlotExample();
   } catch (_err) {
     if (initCount <= 20) {

@@ -91,6 +91,10 @@ export async function renderPage(mdPath) {
     // the write explicit and lets custom elements upgrade on connection.
     const parsed = new DOMParser().parseFromString(String(result), 'text/html');
     const main = document.querySelector('main');
+    if (!main) {
+      console.error('renderPage: no <main> element found; cannot render page content.');
+      return;
+    }
     main.replaceChildren(...parsed.body.childNodes);
     addCopyButtons();
   } catch (err) {

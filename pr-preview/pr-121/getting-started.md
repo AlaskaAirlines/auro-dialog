@@ -259,7 +259,7 @@ Ensure your `tsconfig.json` uses `"moduleResolution": "bundler"` so TypeScript c
   }
 }</code></pre>
 
-<pre class="language-html"><code class="language-html">&lt;auro-button onClick="toggleDialog('#minimal')"&gt;Open dialog&lt;/auro-button&gt;</code></pre>
+<pre class="language-html"><code class="language-html">&lt;auro-button onclick="toggleDialog('#minimal')"&gt;Open dialog&lt;/auro-button&gt;</code></pre>
 
 <p>The component also exposes <code>show()</code> and <code>hide()</code> methods for imperative control, and dispatches a <code>toggle</code> event when it closes.</p>
 <!-- AURO-GENERATED-CONTENT:END -->

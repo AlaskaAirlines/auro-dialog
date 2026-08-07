@@ -149,7 +149,19 @@ function runFullTest(mobileView) {
     expect(el.open).to.be.true;
   });
 
-  it("show() opens the dialog and hide() closes it", async () => {
+  it("modal dialog does not close when Escape keydown is dispatched (AB#1613688)", async () => {
+    const el = await fixture(html`<auro-dialog modal></auro-dialog>`);
+    el.show();
+    await el.updateComplete;
+    expect(el.open).to.be.true;
+
+    document.dispatchEvent(new KeyboardEvent("keydown", { key: "Escape", bubbles: true, cancelable: true }));
+    await el.updateComplete;
+
+    expect(el.open).to.be.true;
+  });
+
+it("show() opens the dialog and hide() closes it", async () => {
     const el = await fixture(html`<auro-dialog></auro-dialog>`);
 
     expect(el.open).to.be.false;

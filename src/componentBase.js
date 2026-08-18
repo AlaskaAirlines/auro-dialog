@@ -273,6 +273,15 @@ export default class ComponentBase extends LitElement {
       clearTimeout(this._hidePopoverTimerId);
       this._hidePopoverTimerId = undefined;
     }
+    if (this._focusFallbackTimerId) {
+      clearTimeout(this._focusFallbackTimerId);
+      this._focusFallbackTimerId = undefined;
+    }
+    if (this.focusTrap) {
+      this.focusTrap.disconnect();
+      this.focusTrap = undefined;
+    }
+    this._focusTrapActivated = false;
     this.floater.disconnect();
   }
 
@@ -294,17 +303,44 @@ export default class ComponentBase extends LitElement {
       this.dialog.showPopover();
     }
 
+    if (this._focusFallbackTimerId) {
+      clearTimeout(this._focusFallbackTimerId);
+      this._focusFallbackTimerId = undefined;
+    }
+    if (this.focusTrap) {
+      this.focusTrap.disconnect();
+    }
+
     this.focusTrap = new FocusTrap(this.dialog);
-    // Focus is moved after the CSS open animation completes (see onDialogTransitionEnd).
+    this._focusTrapActivated = false;
+
+    // Fallback: if transitionend never fires (dialog mounted already-open,
+    // reduced motion, or interrupted transition), engage the focus trap after
+    // the transition duration elapses. 350ms = CSS open transition (300ms in
+    // style.scss) + 50ms buffer.
+    this._focusFallbackTimerId = setTimeout(() => {
+      this._focusFallbackTimerId = undefined;
+      if (this.isPopoverVisible && this.focusTrap && !this._focusTrapActivated) {
+        this.focusTrap.focusFirstElement();
+        this._focusTrapActivated = true;
+      }
+    }, 350);
   }
 
   /**
-   * set the focus on the first element after opening transition effect is complete.
+   * Cancels the focus-trap fallback timer (if pending) and moves focus into
+   * the dialog once the open CSS transition completes. No-ops when the
+   * fallback timer already activated the trap (_focusTrapActivated === true).
    * @private
    */
   onDialogTransitionEnd() {
-    if (this.isPopoverVisible && this.focusTrap) {
+    if (this._focusFallbackTimerId) {
+      clearTimeout(this._focusFallbackTimerId);
+      this._focusFallbackTimerId = undefined;
+    }
+    if (this.isPopoverVisible && this.focusTrap && !this._focusTrapActivated) {
       this.focusTrap.focusFirstElement();
+      this._focusTrapActivated = true;
     }
   }
 
@@ -313,6 +349,12 @@ export default class ComponentBase extends LitElement {
    * @returns {void}
    */
   closeDialog() {
+    if (this._focusFallbackTimerId) {
+      clearTimeout(this._focusFallbackTimerId);
+      this._focusFallbackTimerId = undefined;
+    }
+    this._focusTrapActivated = false;
+
     if (this.focusTrap) {
       this.focusTrap.disconnect();
       this.focusTrap = undefined;

@@ -2,16 +2,15 @@
   Copyright (c) Alaska Air. All right reserved. Licensed under the Apache-2.0 license
   See LICENSE in the project root for license information.
 
-  Demo shell. Page content is authored in ../docs/pages/index.md and generated
-  into ./index.md. Rendered by ./demo-support.js (remark/rehype), which also
-  injects the top page-nav from ./pages.json.
+  Demo shell. Renders the generated ./readme.md via ./demo-support.js
+  (remark/rehype) with the top page-nav from ./pages.json.
 -->
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Auro Web Component Demo | auro-dialog | Overview</title>
+    <title>Auro Web Component Demo | auro-dialog | README</title>
 
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.9.0/build/styles/github.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/@aurodesignsystem/design-tokens@latest/dist/legacy/auro-classic/CSSCustomProperties.css"/>
@@ -24,7 +23,6 @@
   <body class="auro-markdown">
     <main></main>
 
-    <!-- Custom elements used by the demo pages. -->
     <script src="https://cdn.jsdelivr.net/npm/@aurodesignsystem/auro-accordion@latest/+esm" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/@aurodesignsystem/auro-nav@latest/+esm" type="module"></script>
     <script src="https://cdn.jsdelivr.net/npm/@aurodesignsystem/auro-header@latest/+esm" type="module"></script>
@@ -34,10 +32,10 @@
 
     <script type="module">
       import { renderPage } from './support/demo-support.js';
-      await renderPage('./index.md');
+      await renderPage('./readme.md');
     </script>
     <script type="module" data-demo-script="true">
-      import { initExamples } from './index.min.js';
+      import { initExamples } from './readme.min.js';
       initExamples();
     </script>
   </body>

@@ -55,6 +55,14 @@ export default class ComponentBase extends LitElement {
     this.isBibFullscreen = false;
     this.floater = new AuroFloatingUI(this, 'dialog');
 
+    /**
+     * @private
+     * True once _teardown() has released the floater and nothing has rewired
+     * it. Read by connectedCallback() to rewire a remounted dialog, and by
+     * _teardown() to stay idempotent.
+     */
+    this._floaterTornDown = false;
+
     const versioning = new AuroDependencyVersioning();
 
     /**
@@ -115,10 +123,12 @@ export default class ComponentBase extends LitElement {
 
       /**
        * DEPRECATED - use `close-button-appearance="inverse" instead.
+       * @deprecated Use `close-button-appearance="inverse"` instead.
        */
       onDark: {
         type: Boolean,
-        reflect: true
+        reflect: true,
+        attribute: 'ondark'
       },
 
       /**
@@ -136,7 +146,8 @@ export default class ComponentBase extends LitElement {
        */
       isBibFullscreen: {
         type: Boolean,
-        reflect: true
+        reflect: true,
+        attribute: 'isbibfullscreen'
       },
 
       /**
@@ -205,7 +216,7 @@ export default class ComponentBase extends LitElement {
       slotWrapper.classList.remove("dialog-footer");
     }
 
-    this.floater.configure(this, this.floaterConfig.prefix);
+    this._configureFloater();
 
     // Forward FloatingUI toggle event to backward-compatible 'toggle' event
     this.addEventListener('auroDialog-toggled', (event) => {
@@ -214,9 +225,15 @@ export default class ComponentBase extends LitElement {
       }
     });
 
-    // Always intercept the native ESC/cancel event so we can decide
-    // whether to honour it based on `modal`. Re-dispatch via FloatingUI
-    // for non-modal so the hide lifecycle runs correctly.
+    // Defense-in-depth for the native ESC/cancel event. In practice neither
+    // branch fires today: auro-library's floatingUI binds its own document-level
+    // keydown handler, which closes a non-modal dialog via hideBib("keydown")
+    // and, for a modal, swallows the keystroke with preventDefault() +
+    // stopImmediatePropagation() before the platform CloseWatcher ever sees it
+    // (AB#1613688). This listener is kept rather than deleted because it is the
+    // component-side guarantee that a modal never self-closes on ESC: if the
+    // library stops swallowing, the platform `cancel` would otherwise close a
+    // modal dialog, which is exactly the behavior `modal` exists to prevent.
     this.dialog.addEventListener('cancel', (e) => {
       e.preventDefault();
       if (!this.modal) {
@@ -263,12 +280,78 @@ export default class ComponentBase extends LitElement {
     }
 
     if (changedProperties.has('triggerElement')) {
-      this.floater.configure(this, this.floaterConfig.prefix);
+      this._configureFloater();
+    }
+  }
+
+  /**
+   * @private
+   * Wires the floater to this element and records that it is live, so a later
+   * reconnect can tell a torn-down floater from one that never lost its wiring.
+   * @returns {void}
+   */
+  _configureFloater() {
+    this._floaterTornDown = false;
+    this.floater.configure(this, this.floaterConfig.prefix);
+  }
+
+  connectedCallback() {
+    super.connectedCallback();
+
+    // Lit does not re-run firstUpdated() on reconnect, so without this a host
+    // that removes and re-inserts the dialog across separate tasks — Vue
+    // <keep-alive>, caching tab/accordion hosts, virtualized lists, or anything
+    // that parks the node in a DocumentFragment in one task and inserts it in
+    // the next — gets back a dead element: _teardown() dropped the trigger
+    // listeners, ran element.cleanup(), tore down autoUpdate and released the
+    // page scroll lock, and nothing rewired any of it.
+    //
+    // Only re-configure when a teardown actually ran. On the normal first
+    // connect the flag is false and firstUpdated() owns the single configure
+    // call; on a same-task DOM move the deferred teardown never runs, so the
+    // flag stays false here too and the move is still a no-op.
+    if (this.hasUpdated && this._floaterTornDown) {
+      this._configureFloater();
     }
   }
 
   disconnectedCallback() {
     super.disconnectedCallback();
+
+    // A same-document DOM move (appendChild of an already-parented node) fires
+    // disconnectedCallback and reconnects within the same task. Defer the
+    // teardown one microtask and bail if the element came back, so a reparent
+    // does not dismantle a dialog that is still open: floater.disconnect()
+    // releases the page scroll lock and tears down autoUpdate, which would
+    // leave the dialog visible over a scrollable page with nothing left to
+    // re-lock it — the AB#1625424 symptom returning by a different route.
+    //
+    // A host that removes and re-inserts across tasks (not a move) is treated
+    // as a real unmount, which is the correct reading of that sequence.
+    queueMicrotask(() => {
+      if (this.isConnected) {
+        return;
+      }
+      this._teardown();
+    });
+  }
+
+  /**
+   * @private
+   * Releases everything the dialog owns outside its own shadow root.
+   * Split out of disconnectedCallback so a DOM move can skip it.
+   *
+   * Idempotent: a repeated disconnect in the same task must not invoke
+   * floater.disconnect() twice, and connectedCallback() reads the same flag to
+   * decide whether the floater needs rewiring.
+   * @returns {void}
+   */
+  _teardown() {
+    if (this._floaterTornDown) {
+      return;
+    }
+    this._floaterTornDown = true;
+
     if (this._hidePopoverTimerId) {
       clearTimeout(this._hidePopoverTimerId);
       this._hidePopoverTimerId = undefined;

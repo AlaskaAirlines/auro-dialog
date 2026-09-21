@@ -40,6 +40,7 @@
 
 <auro-header level="2" id="modalExample">Modal</auro-header>
 <p>The <code>modal</code> attribute locks the user into interacting with the dialog. The close icon is not rendered and clicking outside the dialog will not dismiss it, so a <code>modal</code> dialog must include an explicit action button in the footer to dismiss it.</p>
+<p>Freezing the page behind the dialog is not what <code>modal</code> controls — every dialog does that while it is open, and restores the scroll position on close. What <code>modal</code> changes is how the dialog can be dismissed. See the Accessibility page for details.</p>
 <div class="exampleWrapper">
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/modal.html) -->
 <!-- AURO-GENERATED-CONTENT:END -->

@@ -48,9 +48,7 @@ The following sections are editable by making changes to the following files:
 [![License](https://img.shields.io/npm/l/@aurodesignsystem/auro-dialog?color=blue&style=for-the-badge)](https://www.apache.org/licenses/LICENSE-2.0)
 ![ESM supported](https://img.shields.io/badge/ESM-compatible-FFE900?style=for-the-badge)
 
-```shell
-$ npm i @aurodesignsystem/auro-dialog
-```
+<pre class="language-shell"><code class="language-shell">$ npm i @aurodesignsystem/auro-dialog</code></pre>
 
 <!-- AURO-GENERATED-CONTENT:END -->
 
@@ -62,9 +60,7 @@ Defining the dependency within each project that is using the `<auro-dialog>` co
 <!-- AURO-GENERATED-CONTENT:END -->
 <!-- AURO-GENERATED-CONTENT:START (REMOTE:url=https://raw.githubusercontent.com/AlaskaAirlines/auro-templates/main/templates/default/partials/usage/componentImport.md) -->
 
-```js
-import "@aurodesignsystem/auro-dialog";
-```
+<pre class="language-js"><code class="language-js">import "@aurodesignsystem/auro-dialog";</code></pre>
 
 <!-- AURO-GENERATED-CONTENT:END -->
 
@@ -73,9 +69,7 @@ import "@aurodesignsystem/auro-dialog";
 <!-- AURO-GENERATED-CONTENT:START (REMOTE:url=https://raw.githubusercontent.com/AlaskaAirlines/auro-templates/main/templates/default/partials/usage/bundleInstallDescription.md) -->
 In cases where the project is not able to process JS assets, there are pre-processed assets available for use. Legacy browsers such as IE11 are no longer supported.
 
-```html
-<script type="module" src="https://cdn.jsdelivr.net/npm/@aurodesignsystem/auro-dialog@latest/+esm"></script>
-```
+<pre class="language-html"><code class="language-html">&lt;script type="module" src="https://cdn.jsdelivr.net/npm/@aurodesignsystem/auro-dialog@latest/+esm"&gt;&lt;/script&gt;</code></pre>
 
 <!-- AURO-GENERATED-CONTENT:END -->
 
@@ -84,28 +78,26 @@ In cases where the project is not able to process JS assets, there are pre-proce
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./apiExamples/basic.html) -->
 <!-- The below code snippet is automatically added from ./apiExamples/basic.html -->
 
-```html
-<div>
-  <auro-button id="openBasic">Open default dialog</auro-button>
-</div>
-<auro-dialog id="defaultDialog">
-  <span slot="header">Default Dialog</span>
-  <div slot="content">
-    <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
-    <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
-    <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
-    <ul>
-      <li>Caerphilly croque monsieur fondue</li>
-      <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
-      <li>Cheddar cheese and biscuits chalk and cheese</li>
-      <li>Camembert de normandie stinking bishop bavarian bergkase</li>
-    </ul>
-  </div>
-  <div slot="footer">
-    <auro-button secondary id="closeBasic">Close</auro-button>
-  </div>
-</auro-dialog>
-```
+<pre class="language-html"><code class="language-html">&lt;div&gt;
+  &lt;auro-button id="openBasic"&gt;Open default dialog&lt;/auro-button&gt;
+&lt;/div&gt;
+&lt;auro-dialog id="defaultDialog"&gt;
+  &lt;span slot="header"&gt;Default Dialog&lt;/span&gt;
+  &lt;div slot="content"&gt;
+    &lt;p&gt;When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See &lt;auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank"&gt;alaskaair.com/bagrules&lt;/auro-hyperlink&gt; for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.&lt;/p&gt;
+    &lt;p&gt;Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.&lt;/p&gt;
+    &lt;auro-header level="3" display="500"&gt;Before checking your bags, remember to:&lt;/auro-header&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Caerphilly croque monsieur fondue&lt;/li&gt;
+      &lt;li&gt;Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings&lt;/li&gt;
+      &lt;li&gt;Cheddar cheese and biscuits chalk and cheese&lt;/li&gt;
+      &lt;li&gt;Camembert de normandie stinking bishop bavarian bergkase&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;div slot="footer"&gt;
+    &lt;auro-button secondary id="closeBasic"&gt;Close&lt;/auro-button&gt;
+  &lt;/div&gt;
+&lt;/auro-dialog&gt;</code></pre>
 <!-- AURO-GENERATED-CONTENT:END -->
 
 ## Custom Component Registration for Version Management
@@ -122,67 +114,63 @@ You can do this by importing only the component class and using the `register(na
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./docs/partials/customRegistration.md) -->
 <!-- The below content is automatically added from ./docs/partials/customRegistration.md -->
 
-```js
-// Import the class only
+<pre class="language-js"><code class="language-js">// Import the class only
 import { AuroDialog } from '@aurodesignsystem/auro-dialog/class';
-
+​
 // Register with a custom name if desired
-AuroDialog.register('custom-dialog');
-```
+AuroDialog.register('custom-dialog');</code></pre>
 
 This will create a new custom element `<custom-dialog>` that behaves exactly like `<auro-dialog>`, allowing both to coexist on the same page without interfering with each other.
 <!-- AURO-GENERATED-CONTENT:END -->
 <div class="exampleWrapper exampleWrapper--flex">
-  <!-- AURO-GENERATED-CONTENT:START (FILE:src=./apiExamples/custom.html) -->
-  <!-- The below content is automatically added from ./apiExamples/custom.html -->
-  <div>
-    <auro-button id="openCustom">Open default dialog</auro-button>
-  </div>
-  <custom-dialog id="customDialog">
-    <span slot="header">Default Dialog</span>
-    <div slot="content">
-      <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
-      <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
-      <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
-      <ul>
-        <li>Caerphilly croque monsieur fondue</li>
-        <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
-        <li>Cheddar cheese and biscuits chalk and cheese</li>
-        <li>Camembert de normandie stinking bishop bavarian bergkase</li>
-      </ul>
-    </div>
-    <div slot="footer">
-      <auro-button secondary id="closeCustom">Close</auro-button>
-    </div>
-  </custom-dialog>
-  <!-- AURO-GENERATED-CONTENT:END -->
+<!-- AURO-GENERATED-CONTENT:START (FILE:src=./apiExamples/custom.html) -->
+<!-- The below content is automatically added from ./apiExamples/custom.html -->
+<div>
+<auro-button id="openCustom">Open default dialog</auro-button>
+</div>
+<custom-dialog id="customDialog">
+<span slot="header">Default Dialog</span>
+<div slot="content">
+<p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
+<p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
+<auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
+<ul>
+<li>Caerphilly croque monsieur fondue</li>
+<li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
+<li>Cheddar cheese and biscuits chalk and cheese</li>
+<li>Camembert de normandie stinking bishop bavarian bergkase</li>
+</ul>
+</div>
+<div slot="footer">
+<auro-button secondary id="closeCustom">Close</auro-button>
+</div>
+</custom-dialog>
+<!-- AURO-GENERATED-CONTENT:END -->
 </div>
 <auro-accordion alignRight>
-  <span slot="trigger">See code</span>
+<span slot="trigger">See code</span>
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./apiExamples/custom.html) -->
 <!-- The below code snippet is automatically added from ./apiExamples/custom.html -->
 
-```html
-<div>
-  <auro-button id="openCustom">Open default dialog</auro-button>
-</div>
-<custom-dialog id="customDialog">
-  <span slot="header">Default Dialog</span>
-  <div slot="content">
-    <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
-    <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
-    <auro-header level="3" display="500">Before checking your bags, remember to:</auro-header>
-    <ul>
-      <li>Caerphilly croque monsieur fondue</li>
-      <li>Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings</li>
-      <li>Cheddar cheese and biscuits chalk and cheese</li>
-      <li>Camembert de normandie stinking bishop bavarian bergkase</li>
-    </ul>
-  </div>
-  <div slot="footer">
-    <auro-button secondary id="closeCustom">Close</auro-button>
-  </div>
-</custom-dialog>
-```
+<pre class="language-html"><code class="language-html">&lt;div&gt;
+  &lt;auro-button id="openCustom"&gt;Open default dialog&lt;/auro-button&gt;
+&lt;/div&gt;
+&lt;custom-dialog id="customDialog"&gt;
+  &lt;span slot="header"&gt;Default Dialog&lt;/span&gt;
+  &lt;div slot="content"&gt;
+    &lt;p&gt;When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See &lt;auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank"&gt;alaskaair.com/bagrules&lt;/auro-hyperlink&gt; for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.&lt;/p&gt;
+    &lt;p&gt;Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.&lt;/p&gt;
+    &lt;auro-header level="3" display="500"&gt;Before checking your bags, remember to:&lt;/auro-header&gt;
+    &lt;ul&gt;
+      &lt;li&gt;Caerphilly croque monsieur fondue&lt;/li&gt;
+      &lt;li&gt;Taleggio goat mascarpone cow manchego cheese and wine emmental cheese strings&lt;/li&gt;
+      &lt;li&gt;Cheddar cheese and biscuits chalk and cheese&lt;/li&gt;
+      &lt;li&gt;Camembert de normandie stinking bishop bavarian bergkase&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/div&gt;
+  &lt;div slot="footer"&gt;
+    &lt;auro-button secondary id="closeCustom"&gt;Close&lt;/auro-button&gt;
+  &lt;/div&gt;
+&lt;/custom-dialog&gt;</code></pre>
 <!-- AURO-GENERATED-CONTENT:END -->
 </auro-accordion>

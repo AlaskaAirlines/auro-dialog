@@ -9,10 +9,53 @@ import "../src/registered.js";
  * @returns {void}
  */
 function runFullTest(mobileView) {
+  const passViewport = mobileView
+    ? { width: 300, height: 800 }
+    : { width: 900, height: 800 };
+
   before(async () => {
-    await setViewport(
-      mobileView ? { width: 300, height: 800 } : { width: 900, height: 800 },
-    );
+    await setViewport(passViewport);
+  });
+
+  /**
+   * Cleanups registered by the current test, run in reverse order after it.
+   */
+  let cleanups = [];
+
+  /**
+   * Registers work to undo after the current test, whether it passes or throws.
+   *
+   * The page scroll lock tests mutate global state — `body { position: fixed }`,
+   * `html { overflow: hidden }`, the window scroll offset, host nodes appended
+   * to `body`. A failed `expect()` is exactly what these tests exist to produce,
+   * and a trailing restore statement never runs when one fires: the page stays
+   * frozen and every later test in both viewport passes fails for a reason that
+   * has nothing to do with it. Registering the restore here keeps one real
+   * regression legible as one failure.
+   * @param {Function} fn - Restore work; may be async.
+   * @returns {void}
+   */
+  function onCleanup(fn) {
+    cleanups.push(fn);
+  }
+
+  afterEach(async () => {
+    const pending = cleanups.reverse();
+    cleanups = [];
+
+    // Run them all even if one throws, then surface the first failure: a
+    // cleanup that breaks must not strand the restores queued before it.
+    let firstError;
+    for (const fn of pending) {
+      try {
+        await fn();
+      } catch (error) {
+        firstError ??= error;
+      }
+    }
+    if (firstError) {
+      throw firstError;
+    }
   });
 
   it("auro-dialog is accessible", async () => {
@@ -250,17 +293,368 @@ function runFullTest(mobileView) {
     expect(closeEvent.detail.expanded).to.be.false;
   });
 
+  /**
+   * Clears the inline styles and scroll offset the page scroll lock mutates,
+   * and registers a cleanup that puts the previous values back.
+   *
+   * Clearing matters: several tests in this file leave a dialog open, which
+   * leaves the page locked. Without the clear, a test would snapshot that leaked
+   * lock and the restore would faithfully put it back, so the leak outlives
+   * every test that touches it and later assertions read it as a failure.
+   *
+   * What this does *not* do is isolate the page from a still-live floater. It
+   * only touches the page; a leaked instance keeps its own `_scrollLocked` and
+   * `_savedScrollStyles`, so if one is still holding the lock it can write its
+   * saved values back onto the page mid-test. Those are library internals with
+   * no public release path from here, and every test below closes or removes its
+   * dialog through `onCleanup`, which is what actually keeps them from leaking.
+   * @returns {void}
+   */
+  function snapshotPageScrollStyles() {
+    const root = document.documentElement.style;
+    const body = document.body.style;
+    const saved = [
+      [root, "scrollbarGutter", root.scrollbarGutter],
+      [root, "overflow", root.overflow],
+      [body, "overflow", body.overflow],
+      [body, "position", body.position],
+      [body, "top", body.top],
+      [body, "width", body.width],
+    ];
+    const savedScrollY = window.scrollY;
+
+    for (const [style, prop] of saved) {
+      style[prop] = "";
+    }
+    // The lock captures window.scrollY and negates it into body.top, so a
+    // leftover offset is part of the starting page too.
+    window.scrollTo(0, 0);
+
+    onCleanup(() => {
+      for (const [style, prop, value] of saved) {
+        style[prop] = value;
+      }
+      window.scrollTo(0, savedScrollY);
+    });
+  }
+
+  /**
+   * Asserts all six properties the page scroll lock sets, not just one of them.
+   *
+   * `body.top` is asserted as present rather than by value: the lock writes the
+   * negated scroll offset, and on an unscrolled page that is `-0px`, which the
+   * browser normalizes — so only the test that scrolls the page first can assert
+   * its value meaningfully.
+   * @param {String} because - Context included in assertion failures.
+   * @returns {void}
+   */
+  function expectPageScrollLocked(because) {
+    expect(document.documentElement.style.overflow, because).to.equal("hidden");
+    expect(document.documentElement.style.scrollbarGutter, because).to.equal(
+      "stable",
+    );
+    expect(document.body.style.overflow, because).to.equal("hidden");
+    // position:fixed is what blocks the VoiceOver three-finger swipe; overflow
+    // alone does not.
+    expect(document.body.style.position, because).to.equal("fixed");
+    expect(document.body.style.width, because).to.equal("100%");
+    expect(document.body.style.top, because).to.not.equal("");
+  }
+
   it("modal dialog locks page scroll on open and restores it on close", async () => {
+    snapshotPageScrollStyles();
     const el = await fixture(html`<auro-dialog modal></auro-dialog>`);
+    onCleanup(() => el.hide());
 
     el.show();
     await el.updateComplete;
     expect(el.open).to.be.true;
-    expect(document.body.style.position).to.equal("fixed");
+    expectPageScrollLocked("modal dialog must lock page scroll");
+
+    el.hide();
+    await el.updateComplete;
+    expect(document.documentElement.style.overflow).to.equal("");
+    expect(document.documentElement.style.scrollbarGutter).to.equal("");
+    expect(document.body.style.overflow).to.equal("");
+    expect(document.body.style.position).to.equal("");
+    expect(document.body.style.top).to.equal("");
+    expect(document.body.style.width).to.equal("");
+  });
+
+  it("non-modal dialog locks page scroll on open and restores it on close (AB#1625424)", async () => {
+    // The everyday, dismissible dialog. Above the fullscreen breakpoint this
+    // resolves to the "dialog" positioning strategy, which used to leave the
+    // page behind the dialog scrollable — the desktop pass of this suite is the
+    // one that reproduced AB#1625424.
+    snapshotPageScrollStyles();
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    onCleanup(() => el.hide());
+
+    el.show();
+    await el.updateComplete;
+    expect(el.open).to.be.true;
+    expect(el.modal).to.not.be.true;
+    expectPageScrollLocked(
+      "a dismissible dialog must freeze the page behind it",
+    );
 
     el.hide();
     await el.updateComplete;
     expect(document.body.style.position).to.equal("");
+    expect(document.body.style.overflow).to.equal("");
+    expect(document.documentElement.style.overflow).to.equal("");
+  });
+
+  it("holds the page still while the dialog repositions (AB#1647843)", async () => {
+    // The gate lived in configureBibStrategy(), which Floating UI's autoUpdate
+    // re-runs on every resize and scroll tick — so the old code did not merely
+    // skip the lock, it released it repeatedly while the dialog was open. That
+    // is why the consuming component could not work around it locally.
+    //
+    // This drives a real resize rather than calling configureBibStrategy()
+    // directly. A direct call picks the strategy for the library, which skips
+    // getPositioningStrategy() — the resolution that decides whether an
+    // auro-dialog is an overlay at all, and the exact gap behind AB#1625424.
+    // Reaching it through autoUpdate also keeps the assertion on observable
+    // page state instead of the library's private _scrollLocked.
+    snapshotPageScrollStyles();
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    onCleanup(() => el.hide());
+    onCleanup(() => setViewport(passViewport));
+
+    el.show();
+    await el.updateComplete;
+    expectPageScrollLocked("dialog is open");
+
+    // Without this the test passes trivially: isPopoverVisible is the guard on
+    // the lock call, so a false value makes the reposition below a no-op under
+    // both the old and new code.
+    expect(
+      el.isPopoverVisible,
+      "the reposition must actually reach the scroll lock",
+    ).to.be.true;
+
+    let repositions = 0;
+    const originalPosition = el.floater.position.bind(el.floater);
+    el.floater.position = () => {
+      repositions += 1;
+      originalPosition();
+    };
+
+    // Stay on this pass's side of the fullscreen breakpoint: each viewport pass
+    // asserts the strategy it actually resolves to ("dialog" on desktop, which
+    // is the one that used to release the lock; "fullscreen" on mobile).
+    await setViewport({ width: passViewport.width - 40, height: 700 });
+    await waitUntil(
+      () => repositions > 0,
+      "autoUpdate did not reposition the dialog after the resize",
+      { timeout: 1000 },
+    );
+
+    expectPageScrollLocked("after repositioning while open");
+  });
+
+  it("scroll lock restores page styles the consumer had already set", async () => {
+    snapshotPageScrollStyles();
+    // A host application may legitimately own these already; the lock must hand
+    // them back rather than wipe them to empty.
+    document.body.style.overflow = "scroll";
+    document.documentElement.style.scrollbarGutter = "auto";
+
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    onCleanup(() => el.hide());
+    el.show();
+    await el.updateComplete;
+
+    expect(document.body.style.overflow).to.equal("hidden");
+    expect(document.documentElement.style.scrollbarGutter).to.equal("stable");
+
+    el.hide();
+    await el.updateComplete;
+
+    expect(
+      document.body.style.overflow,
+      "pre-existing body overflow must be restored, not cleared",
+    ).to.equal("scroll");
+    expect(document.documentElement.style.scrollbarGutter).to.equal("auto");
+  });
+
+  it("scroll lock restores the scroll offset the page was at", async () => {
+    snapshotPageScrollStyles();
+    const savedBodyHeight = document.body.style.height;
+    onCleanup(() => {
+      window.scrollTo(0, 0);
+      document.body.style.height = savedBodyHeight;
+    });
+    // The page has to actually be scrollable, or this asserts nothing: at
+    // offset 0 the lock writes top:-0px, which the browser normalizes to 0px.
+    document.body.style.height = "3000px";
+    window.scrollTo(0, 120);
+    const scrollOffset = window.scrollY;
+    expect(scrollOffset, "test page must be scrolled").to.be.greaterThan(0);
+
+    const el = await fixture(html`<auro-dialog></auro-dialog>`);
+    onCleanup(() => el.hide());
+    el.show();
+    await el.updateComplete;
+
+    // body.top holds the negated offset while locked; that is what the page is
+    // scrolled back to on close.
+    expect(document.body.style.top).to.equal(`-${scrollOffset}px`);
+
+    // Prove the outcome rather than only the mechanism: with the body taken out
+    // of flow the document has no scrollable overflow left, so an attempt to
+    // scroll the page behind the dialog does nothing.
+    window.scrollTo(0, 500);
+    expect(
+      window.scrollY,
+      "the page must not scroll while the dialog is open",
+    ).to.equal(0);
+
+    el.hide();
+    await el.updateComplete;
+
+    expect(document.body.style.top).to.equal("");
+    expect(
+      window.scrollY,
+      "closing must return the page to where the reader left it",
+    ).to.equal(scrollOffset);
+  });
+
+  it("disconnectedCallback releases the page scroll lock while open", async () => {
+    snapshotPageScrollStyles();
+    const el = document.createElement("auro-dialog");
+    onCleanup(() => el.remove());
+    document.body.appendChild(el);
+    await el.updateComplete;
+    el.show();
+    await el.updateComplete;
+
+    expectPageScrollLocked("dialog is open");
+
+    // A real removal, not a direct disconnectedCallback() call: teardown is now
+    // deferred a microtask and skipped when the element is still connected, so
+    // invoking the hook by hand would correctly do nothing.
+    //
+    // Removing the node while its popover is open is safe: the platform takes a
+    // disconnected element out of the top layer itself, and the crash this file
+    // once avoided by never removing an open dialog does not reproduce on
+    // current headless Chrome — this test and the two below exercise exactly
+    // that removal, in both viewport passes.
+    el.remove();
+    await Promise.resolve();
+
+    expect(
+      document.body.style.position,
+      "unmounting while open must not leave the page frozen",
+    ).to.equal("");
+    expect(document.body.style.overflow).to.equal("");
+    expect(document.documentElement.style.overflow).to.equal("");
+  });
+
+  it("keeps an open dialog intact when it is moved in the DOM (AB#1625424)", async () => {
+    // disconnectedCallback also fires on a same-document move. Tearing down
+    // there released the scroll lock and killed autoUpdate, so the dialog came
+    // back visible over a page that scrolled freely behind it.
+    snapshotPageScrollStyles();
+    const firstHost = document.createElement("div");
+    const secondHost = document.createElement("div");
+    onCleanup(() => {
+      firstHost.remove();
+      secondHost.remove();
+    });
+    document.body.append(firstHost, secondHost);
+
+    const el = document.createElement("auro-dialog");
+    onCleanup(() => el.remove());
+    firstHost.appendChild(el);
+    await el.updateComplete;
+    el.show();
+    await el.updateComplete;
+    expectPageScrollLocked("dialog is open before the move");
+
+    let configures = 0;
+    const originalConfigure = el.floater.configure.bind(el.floater);
+    el.floater.configure = (...args) => {
+      configures += 1;
+      originalConfigure(...args);
+    };
+
+    // appendChild of an already-parented node moves it: disconnect + reconnect
+    // in one task.
+    secondHost.appendChild(el);
+    await Promise.resolve();
+    await el.updateComplete;
+
+    expect(el.isConnected, "the dialog is still in the document").to.be.true;
+    expect(el.open, "a DOM move must not close an open dialog").to.be.true;
+    expectPageScrollLocked(
+      "a DOM move must not release the lock behind an open dialog",
+    );
+    // Nothing was torn down, so connectedCallback() must not rewire either: a
+    // second configure() on a live floater is wasted work at best.
+    expect(
+      configures,
+      "a DOM move must not re-configure a floater that is still wired",
+    ).to.equal(0);
+  });
+
+  it("rewires an open dialog that is remounted in a later task (AB#1625424)", async () => {
+    // The other side of the deferred teardown. A cross-task remove/re-insert is
+    // a real unmount — Vue <keep-alive>, a caching tab host, a virtualized list,
+    // or a node parked in a DocumentFragment in one task and inserted in the
+    // next — so _teardown() runs and releases everything. Lit does not re-run
+    // firstUpdated() on reconnect, so without connectedCallback() rewiring the
+    // floater the remounted dialog comes back permanently dead: no trigger
+    // listeners, no autoUpdate, and a page that no longer locks behind it.
+    snapshotPageScrollStyles();
+    const host = document.createElement("div");
+    document.body.appendChild(host);
+    onCleanup(() => host.remove());
+
+    const el = document.createElement("auro-dialog");
+    onCleanup(() => el.remove());
+    host.appendChild(el);
+    await el.updateComplete;
+    el.show();
+    await el.updateComplete;
+    expectPageScrollLocked("dialog is open before the unmount");
+
+    let configures = 0;
+    const originalConfigure = el.floater.configure.bind(el.floater);
+    el.floater.configure = (...args) => {
+      configures += 1;
+      originalConfigure(...args);
+    };
+
+    // A genuine unmount: the deferred teardown runs, and the release it performs
+    // is what the test above asserts.
+    el.remove();
+    await new Promise((resolve) => setTimeout(resolve, 0));
+    expect(el._floaterTornDown, "a cross-task removal is a real unmount").to.be
+      .true;
+
+    host.appendChild(el);
+    await el.updateComplete;
+
+    expect(el.isConnected).to.be.true;
+    expect(el.open, "the dialog is still open across the remount").to.be.true;
+    expect(
+      configures,
+      "the remount must rewire the floater exactly once",
+    ).to.equal(1);
+    expect(el._floaterTornDown, "the floater is live again").to.be.false;
+    // The page ends up locked again too, which is the user-visible contract.
+    // It is asserted second because it is not the discriminating signal on its
+    // own: configureBibStrategy() self-schedules retries for this component (the
+    // bib has no shadow root), so the lock can be reapplied briefly after a
+    // teardown even with nothing rewired.
+    await waitUntil(
+      () => document.body.style.position === "fixed",
+      "remounting an open dialog must lock the page again",
+      { timeout: 1000 },
+    );
+    expectPageScrollLocked("after the remount");
   });
 
   // Note: in WTR/JSDOM, showPopover() is a no-op and the element never enters
@@ -494,17 +888,15 @@ function runFullTest(mobileView) {
 
     expect(el._focusFallbackTimerId).to.exist;
 
-    // Call the lifecycle hook directly to test cleanup without removing an
-    // active popover from the DOM (which crashes headless Chrome).
-    el.disconnectedCallback();
+    // A real removal, not a direct disconnectedCallback() call: teardown is now
+    // deferred a microtask and skipped while the element is still connected, so
+    // invoking the hook by hand would correctly do nothing.
+    el.remove();
+    await Promise.resolve();
 
     expect(el._focusFallbackTimerId).to.be.undefined;
     expect(el.focusTrap).to.be.undefined;
     expect(el._focusTrapActivated).to.be.false;
-
-    el.hide();
-    await el.updateComplete;
-    document.body.removeChild(el);
   });
 
   it("Tab key keeps focus within the open dialog", async () => {

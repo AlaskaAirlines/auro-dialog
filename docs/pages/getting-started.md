@@ -1,4 +1,4 @@
-<auro-header level="1" id="overview">Dialog - Getting Started</auro-header>
+<auro-header level="1" id="overview">Dialog - Getting started</auro-header>
 <div class="contentWrapper">
 <nav>
 <auro-nav anchorNavContent=".scrollWrapper">
@@ -11,9 +11,9 @@
 <auro-anchorlink fluid href="#frameworks">Frameworks</auro-anchorlink>
 <auro-anchorlink fluid href="#react" class="level2 body-xs" onclick="openAccordion('react')">React</auro-anchorlink>
 <auro-anchorlink fluid href="#svelte" class="level2 body-xs" onclick="openAccordion('svelte')">Svelte</auro-anchorlink>
-<auro-anchorlink fluid href="#minimalConfig">Minimal Config</auro-anchorlink>
+<auro-anchorlink fluid href="#minimalConfig">Minimal config</auro-anchorlink>
 <auro-anchorlink fluid href="#slots">Slots</auro-anchorlink>
-<auro-anchorlink fluid href="#stateManagement">State Management</auro-anchorlink>
+<auro-anchorlink fluid href="#stateManagement">State management</auro-anchorlink>
 <auro-anchorlink fluid href="#open" class="level2 body-xs">open</auro-anchorlink>
 <auro-anchorlink fluid href="#modal" class="level2 body-xs">modal</auro-anchorlink>
 <auro-anchorlink fluid href="#triggerElement" class="level2 body-xs">triggerElement</auro-anchorlink>
@@ -27,7 +27,7 @@
 <auro-header level="2" id="setup">Setup</auro-header>
 <auro-accordion-group Emphasis>
 <auro-accordion expanded class="section" id="recommendedAccordion">
-<span slot="trigger">Recommended Installation and Implementation</span>
+<span slot="trigger">Recommended installation and implementation</span>
 <div class="accordion-content">
 <auro-header level="3">Install</auro-header>
 <p>Install the <code>@aurodesignsystem/auro-dialog</code> package from npm:</p>
@@ -36,7 +36,7 @@
 $ npm i @aurodesignsystem/auro-dialog
 ```
 
-<p>Installing as a dependency automatically installs its own dependencies (<code>auro-button</code> and <code>auro-icon</code>), which are registered internally under versioned tag names — you do not need to register them yourself.</p>
+<p>Installing as a dependency automatically installs its own dependencies (<code>auro-button</code> and <code>auro-icon</code>), which are registered internally under versioned tag names, so you don't need to register them yourself.</p>
 <auro-header level="3">Implementation</auro-header>
 
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/getting-started/customRegistration.md) -->
@@ -45,7 +45,7 @@ $ npm i @aurodesignsystem/auro-dialog
 </div>
 </auro-accordion>
 <auro-accordion class="section" id="autoAccordion">
-<span slot="trigger">Auto Installation and Implementation</span>
+<span slot="trigger">Auto installation and implementation</span>
 <div class="accordion-content">
 <p class="warning"><strong>Warning:</strong> Default registration can cause conflicts if another package registers the same tag name using a different version of the component, leading to unexpected behavior. Use custom registration to avoid this risk.</p>
 <auro-header level="3">Implementation</auro-header>
@@ -56,7 +56,7 @@ $ npm i @aurodesignsystem/auro-dialog
 </div>
 </auro-accordion>
 <auro-accordion class="section" id="cdnAccordion">
-<span slot="trigger">CDN Installation</span>
+<span slot="trigger">CDN installation</span>
 <div class="accordion-content">
 <p class="warning"><strong>Warning:</strong> CDN registration can cause conflicts if another package registers the same tag name using a different version of the component, leading to unexpected behavior. Use custom registration to avoid this risk.</p>
 
@@ -94,12 +94,12 @@ $ npm i @aurodesignsystem/auro-dialog
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/getting-started/slots.md) -->
 <!-- AURO-GENERATED-CONTENT:END -->
 
-<auro-header level="2" id="stateManagement">State Management</auro-header>
+<auro-header level="2" id="stateManagement">State management</auro-header>
 <p>The following properties reflect and control the current state of the component and can be accessed via JavaScript.</p>
 <auro-header level="3" id="open">open</auro-header>
 <p>Gets or sets the visibility of the dialog. Setting <code>open</code> to <code>true</code> shows the dialog; setting it to <code>false</code> hides it. Reflected to the <code>open</code> attribute.</p>
 <auro-header level="3" id="modal">modal</auro-header>
-<p>When <code>true</code>, the dialog is blocking: the close button is not rendered, <code>Esc</code> and backdrop clicks do not dismiss it, and the user must resolve it with an explicit footer action.</p>
+<p>When <code>true</code>, the dialog is blocking: the close button isn't rendered, <code>Esc</code> and backdrop clicks don't dismiss it, and the user must resolve it with an explicit footer action.</p>
 <auro-header level="3" id="triggerElement">triggerElement</auro-header>
 <p>A fallback element to focus when the dialog closes. By default focus returns to whatever element was active (<code>document.activeElement</code>) when the dialog opened; <code>triggerElement</code> is used only when no element was active at that moment.</p>
 <auro-header level="2" id="publicFunctions">Functions</auro-header>

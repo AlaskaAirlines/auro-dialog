@@ -1,9 +1,9 @@
 <div>
-  <auro-button id="openAriaLabelSlot">Unformatted Dialog w/ custom close button aria-label</auro-button>
+  <auro-button id="openAriaLabelSlot">Open dialog with a custom close button label</auro-button>
 </div>
 
-<auro-dialog id="ariaLabelMdDialog" unformatted md lg ondark>
-  <span slot="ariaLabel.dialog.close">This will be the new aria label for the close button</span>
+<auro-dialog id="ariaLabelMdDialog" unformatted md lg close-button-appearance="inverse">
+  <span slot="ariaLabel.dialog.close">Close photo dialog</span>
   <span slot="content">
     <img style="display: block; width: 100%" src="https://blog.alaskaair.com/wp-content/uploads/2020/11/111-psp-blog-img-guide.jpg" alt="alaska airlines pride lights" />
     <div class="unformattedWrapper">

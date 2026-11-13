@@ -2,8 +2,8 @@
 <div class="contentWrapper">
 <nav>
 <auro-nav anchorNavContent=".scrollWrapper">
-<span slot="mobileToggleCollapsed">View More</span>
-<span slot="mobileToggleExpanded">View Less</span>
+<span slot="mobileToggleCollapsed">View more</span>
+<span slot="mobileToggleExpanded">View less</span>
 <auro-anchorlink fluid href="#tabBehavior">Tab behavior</auro-anchorlink>
 <auro-anchorlink fluid href="#keyEvents">Key events</auro-anchorlink>
 <auro-anchorlink fluid href="#modalDifferences">Modal differences</auro-anchorlink>

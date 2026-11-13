@@ -2,8 +2,8 @@
 <div class="contentWrapper">
 <nav>
 <auro-nav anchorNavContent=".scrollWrapper">
-<span slot="mobileToggleCollapsed">View More</span>
-<span slot="mobileToggleExpanded">View Less</span>
+<span slot="mobileToggleCollapsed">View more</span>
+<span slot="mobileToggleExpanded">View less</span>
 <auro-anchorlink fluid href="#semantics">Semantics and roles</auro-anchorlink>
 <auro-anchorlink fluid href="#labelling">Labelling</auro-anchorlink>
 <auro-anchorlink fluid href="#focusManagement">Focus management</auro-anchorlink>

@@ -2,8 +2,8 @@
 <div class="contentWrapper">
 <nav>
 <auro-nav anchorNavContent=".scrollWrapper">
-<span slot="mobileToggleCollapsed">View More</span>
-<span slot="mobileToggleExpanded">View Less</span>
+<span slot="mobileToggleCollapsed">View more</span>
+<span slot="mobileToggleExpanded">View less</span>
 <auro-anchorlink fluid href="#cssParts">CSS shadow parts</auro-anchorlink>
 <auro-anchorlink fluid href="#closeButtonPart">Close button</auro-anchorlink>
 <auro-anchorlink fluid href="#tokens">Design tokens</auro-anchorlink>
@@ -42,7 +42,7 @@
 
 </auro-accordion>
 <auro-header level="2" id="tokens">Design tokens</auro-header>
-<p>The component may be restyled by overriding the values of the following component-specific design token(s).</p>
+<p>Override the following component-specific design tokens to restyle the component.</p>
 
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./../src/styles/tokens.scss) -->
 <!-- AURO-GENERATED-CONTENT:END -->

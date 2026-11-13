@@ -1,3 +1,3 @@
-<p>The <code>&lt;auro-dialog&gt;</code> component is an intrusive interactive component, not passive. The component is best used when there is a requirement the user be made aware of the content being shown, moving focus from the main content to the dialog content.</p>
-<p>The component also supports a modal (blocking) state where the user must interact with the content of the component in order to continue. Passive dismissal of the content is not allowed. Users of this state must add a trigger for the user to move beyond this content.</p>
-<p>Auro holds the opinions of the <a class="hyperlink" href="https://www.nngroup.com/articles/modal-nonmodal-dialog/" target="_blank">Nielsen Norman Group</a> on dialog and modal use to be true.</p>
+<p>The <code>&lt;auro-dialog&gt;</code> component interrupts the page and moves focus into the dialog. Use it when people need to notice the content right away.</p>
+<p>Use <code>modal</code> when people must act before they continue. A modal dialog can't be dismissed passively, so add a footer button that closes it.</p>
+<p>Auro follows the <a class="hyperlink" href="https://www.nngroup.com/articles/modal-nonmodal-dialog/" target="_blank">Nielsen Norman Group</a>'s guidance on dialogs and modals.</p>

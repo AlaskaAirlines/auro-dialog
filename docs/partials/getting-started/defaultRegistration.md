@@ -4,7 +4,7 @@
 import '@aurodesignsystem/auro-dialog';
 ```
 
-<p>This import registers the <code>&lt;auro-dialog&gt;</code> custom element globally. You can then use it in your HTML:</p>
+<p>This import registers the <code>&lt;auro-dialog&gt;</code> custom element globally. Then use it in your HTML:</p>
 
 ```html
 <auro-dialog id="default-dialog">

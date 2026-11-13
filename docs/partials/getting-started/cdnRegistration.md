@@ -4,7 +4,7 @@
 <script type="module" src="https://cdn.jsdelivr.net/npm/@aurodesignsystem/auro-dialog@latest/+esm"></script>
 ```
 
-<p>This script registers the <code>&lt;auro-dialog&gt;</code> custom element globally. You can then use it in your HTML:</p>
+<p>This script registers the <code>&lt;auro-dialog&gt;</code> custom element globally. Then use it in your HTML:</p>
 
 ```html
 <auro-dialog id="cdn-dialog">

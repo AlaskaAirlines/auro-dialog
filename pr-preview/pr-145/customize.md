@@ -30,54 +30,6 @@
 </table>
 <auro-header level="2" id="closeButtonPart">Close button</auro-header>
 <p>The close button can be repositioned via the <code>close-button</code> part.</p>
-<div class="exampleWrapper">
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/close-button.html) -->
-<!-- The below content is automatically added from ./../apiExamples/close-button.html -->
-<div>
-<auro-button id="openEditDialog">Open dialog with a custom close button position</auro-button>
-</div>
-<style>
-  .example::part(close-button) {
-    top: var(--ds-size-400);
-    right: var(--ds-size-400);
-  }
-</style>
-<auro-dialog id="unformattedCustomMdDialog" unformatted md lg class="example">
-<span slot="content">
-<img style="display: block; width: 100%" src="https://worldairlinenews.files.wordpress.com/2022/05/alaska-737-800-sswl-n538as-22-star-warstko-sfo-mdblr-5.4.22.jpg" alt="An Alaska Airlines 737-800 aircraft" />
-<div class="unformattedWrapper">
-<h1 id="dialog-header" class="heading-lg">Custom close button position</h1>
-      Notice the custom location of the close button.
-</div>
-</span>
-</auro-dialog>
-<!-- AURO-GENERATED-CONTENT:END -->
-</div>
-<auro-accordion alignRight>
-<span slot="trigger">See code</span>
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/close-button.html) -->
-<!-- The below code snippet is automatically added from ./../apiExamples/close-button.html -->
-
-<pre class="language-html"><code class="language-html">&lt;div&gt;
-  &lt;auro-button id="openEditDialog"&gt;Open dialog with a custom close button position&lt;/auro-button&gt;
-&lt;/div&gt;
-&#10;&lt;style&gt;
-  .example::part(close-button) {
-    top: var(--ds-size-400);
-    right: var(--ds-size-400);
-  }
-&lt;/style&gt;
-&#10;&lt;auro-dialog id="unformattedCustomMdDialog" unformatted md lg class="example"&gt;
-  &lt;span slot="content"&gt;
-    &lt;img style="display: block; width: 100%" src="https://worldairlinenews.files.wordpress.com/2022/05/alaska-737-800-sswl-n538as-22-star-warstko-sfo-mdblr-5.4.22.jpg" alt="An Alaska Airlines 737-800 aircraft" /&gt;
-    &lt;div class="unformattedWrapper"&gt;
-      &lt;h1 id="dialog-header" class="heading-lg"&gt;Custom close button position&lt;/h1&gt;
-      Notice the custom location of the close button.
-    &lt;/div&gt;
-  &lt;/span&gt;
-&lt;/auro-dialog&gt;</code></pre>
-<!-- AURO-GENERATED-CONTENT:END -->
-</auro-accordion>
 <auro-header level="2" id="tokens">Design tokens</auro-header>
 <p>Override the following component-specific design tokens to restyle the component.</p>
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./../src/styles/tokens.scss) -->

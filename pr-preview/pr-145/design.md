@@ -7,7 +7,6 @@
 <auro-anchorlink fluid href="#anatomy">Anatomy</auro-anchorlink>
 <auro-anchorlink fluid href="#dialogVsModal">Dialog vs. modal</auro-anchorlink>
 <auro-anchorlink fluid href="#sizes">Sizes</auro-anchorlink>
-<auro-anchorlink fluid href="#unformatted">Unformatted and padding</auro-anchorlink>
 </auro-nav>
 </nav>
 <div class="mainContent">
@@ -256,48 +255,6 @@
       &lt;auro-icon category="interface" name="check-lg" appearance="inverse"&gt;&lt;/auro-icon&gt;
     &lt;/auro-button&gt;
   &lt;/div&gt;
-&lt;/auro-dialog&gt;</code></pre>
-<!-- AURO-GENERATED-CONTENT:END -->
-</auro-accordion>
-<auro-header level="2" id="unformatted">Unformatted and responsive padding</auro-header>
-<p>For freeform use cases that still want the dialog's behavior and tooling, the <code>unformatted</code> property renders an edge-to-edge window with no built-in header, content, or footer structure. This is ideal for full-bleed media or a fully custom composition.</p>
-<p>Part of the dialog design spec is its responsive padding. To apply that same padding to your own content inside an unformatted dialog, add the <code>unformattedWrapper</code> class to the element that wraps your content, and import the stylesheet from the package:</p>
-
-<pre class="language-css"><code class="language-css">@import '@aurodesignsystem/auro-dialog/dist/style-unformatted.css';</code></pre>
-
-<div class="exampleWrapper">
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/accessibility-unformatted-header.html) -->
-<!-- The below content is automatically added from ./../apiExamples/accessibility-unformatted-header.html -->
-<div>
-<auro-button id="openAccessibility">Open unformatted medium dialog</auro-button>
-</div>
-<auro-dialog id="unformattedMdDialog" unformatted md lg close-button-appearance="inverse">
-<span slot="content">
-<img style="display: block; width: 100%" src="https://blog.alaskaair.com/wp-content/uploads/2020/11/111-psp-blog-img-guide.jpg" alt="Alaska Airlines pride lights" />
-<div class="unformattedWrapper">
-<h1 id="dialog-header" class="heading-lg">This is a header</h1>
-      These are words that are slotted into the scope of the custom element.
-</div>
-</span>
-</auro-dialog>
-<!-- AURO-GENERATED-CONTENT:END -->
-</div>
-<auro-accordion alignRight>
-<span slot="trigger">See code</span>
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/accessibility-unformatted-header.html) -->
-<!-- The below code snippet is automatically added from ./../apiExamples/accessibility-unformatted-header.html -->
-
-<pre class="language-html"><code class="language-html">&lt;div&gt;
-  &lt;auro-button id="openAccessibility"&gt;Open unformatted medium dialog&lt;/auro-button&gt;
-&lt;/div&gt;
-&#10;&lt;auro-dialog id="unformattedMdDialog" unformatted md lg close-button-appearance="inverse"&gt;
-  &lt;span slot="content"&gt;
-    &lt;img style="display: block; width: 100%" src="https://blog.alaskaair.com/wp-content/uploads/2020/11/111-psp-blog-img-guide.jpg" alt="Alaska Airlines pride lights" /&gt;
-    &lt;div class="unformattedWrapper"&gt;
-      &lt;h1 id="dialog-header" class="heading-lg"&gt;This is a header&lt;/h1&gt;
-      These are words that are slotted into the scope of the custom element.
-    &lt;/div&gt;
-  &lt;/span&gt;
 &lt;/auro-dialog&gt;</code></pre>
 <!-- AURO-GENERATED-CONTENT:END -->
 </auro-accordion>

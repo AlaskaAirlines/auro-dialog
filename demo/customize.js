@@ -1,4 +1,3 @@
-import { initEditCloseButtonExample } from "../apiExamples/close-button";
 import { initPopoverAndDropdownExample } from "../apiExamples/popover-and-dropdown";
 
 import "../src/registered";
@@ -8,7 +7,6 @@ export function initExamples(initCount) {
   initCount = initCount || 0;
 
   try {
-    initEditCloseButtonExample();
     initPopoverAndDropdownExample();
   } catch (_err) {
     if (initCount <= 20) {

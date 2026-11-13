@@ -30,17 +30,6 @@
 </table>
 <auro-header level="2" id="closeButtonPart">Close button</auro-header>
 <p>The close button can be repositioned via the <code>close-button</code> part.</p>
-<div class="exampleWrapper">
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/close-button.html) -->
-<!-- AURO-GENERATED-CONTENT:END -->
-</div>
-<auro-accordion alignRight>
-<span slot="trigger">See code</span>
-
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/close-button.html) -->
-<!-- AURO-GENERATED-CONTENT:END -->
-
-</auro-accordion>
 <auro-header level="2" id="tokens">Design tokens</auro-header>
 <p>Override the following component-specific design tokens to restyle the component.</p>
 

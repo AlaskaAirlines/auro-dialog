@@ -7,7 +7,6 @@
 <auro-anchorlink fluid href="#anatomy">Anatomy</auro-anchorlink>
 <auro-anchorlink fluid href="#dialogVsModal">Dialog vs. modal</auro-anchorlink>
 <auro-anchorlink fluid href="#sizes">Sizes</auro-anchorlink>
-<auro-anchorlink fluid href="#unformatted">Unformatted and padding</auro-anchorlink>
 </auro-nav>
 </nav>
 <div class="mainContent">
@@ -54,25 +53,6 @@
 <span slot="trigger">See code</span>
 
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/decoupled.html) -->
-<!-- AURO-GENERATED-CONTENT:END -->
-
-</auro-accordion>
-<auro-header level="2" id="unformatted">Unformatted and responsive padding</auro-header>
-<p>For freeform use cases that still want the dialog's behavior and tooling, the <code>unformatted</code> property renders an edge-to-edge window with no built-in header, content, or footer structure. This is ideal for full-bleed media or a fully custom composition.</p>
-<p>Part of the dialog design spec is its responsive padding. To apply that same padding to your own content inside an unformatted dialog, add the <code>unformattedWrapper</code> class to the element that wraps your content, and import the stylesheet from the package:</p>
-
-```css
-@import '@aurodesignsystem/auro-dialog/dist/style-unformatted.css';
-```
-
-<div class="exampleWrapper">
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/accessibility-unformatted-header.html) -->
-<!-- AURO-GENERATED-CONTENT:END -->
-</div>
-<auro-accordion alignRight>
-<span slot="trigger">See code</span>
-
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/accessibility-unformatted-header.html) -->
 <!-- AURO-GENERATED-CONTENT:END -->
 
 </auro-accordion>

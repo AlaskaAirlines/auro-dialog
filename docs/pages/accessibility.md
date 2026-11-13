@@ -8,7 +8,6 @@
 <auro-anchorlink fluid href="#labelling">Labelling</auro-anchorlink>
 <auro-anchorlink fluid href="#focusManagement">Focus management</auro-anchorlink>
 <auro-anchorlink fluid href="#backgroundScroll">Background scroll</auro-anchorlink>
-<auro-anchorlink fluid href="#unformattedA11y">Unformatted dialogs</auro-anchorlink>
 <auro-anchorlink fluid href="#closeButtonLabel">Close button label</auro-anchorlink>
 </auro-nav>
 </nav>
@@ -43,42 +42,8 @@
 <auro-header level="2" id="backgroundScroll">Background scroll</auro-header>
 <p>Both presentations freeze the page behind the dialog for as long as it's open, and restore the previous scroll position when it closes. This is deliberate. Content drifting out of view behind an open dialog is disorienting, and on touch devices and with a screen reader the page can otherwise move unexpectedly while someone is reading the dialog.</p>
 <p>The lock blocks every scroll vector: wheel, trackpad, touch, and the arrow and space keys. That includes the VoiceOver three-finger swipe, which <code>overflow: hidden</code> alone doesn't prevent. Content <em>inside</em> the dialog still scrolls normally.</p>
-<auro-header level="2" id="unformattedA11y">Unformatted dialogs</auro-header>
-<p>An <code>unformatted</code> dialog doesn't render the default header heading, so the <code>aria-labelledby="dialog-header"</code> relationship has nothing to point at unless you supply it. To keep the dialog properly labelled, add <code>id="dialog-header"</code> to the heading element within your slotted content:</p>
-
-```html
-<auro-dialog unformatted>
-  <span slot="content">
-    <h1 id="dialog-header" class="heading-lg">This is a header</h1>
-    Custom, edge-to-edge content.
-  </span>
-</auro-dialog>
-```
-
-<div class="exampleWrapper">
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/accessibility-unformatted-header.html) -->
-<!-- AURO-GENERATED-CONTENT:END -->
-</div>
-<auro-accordion alignRight>
-<span slot="trigger">See code</span>
-
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/accessibility-unformatted-header.html) -->
-<!-- AURO-GENERATED-CONTENT:END -->
-
-</auro-accordion>
 <auro-header level="2" id="closeButtonLabel">Close button label</auro-header>
 <p>The non-modal close button has an accessible label of <code>"Close"</code> by default. To override it when the surrounding context calls for more specific wording, provide the <code>ariaLabel.dialog.close</code> slot.</p>
-<div class="exampleWrapper">
-<!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/aria-label.html) -->
-<!-- AURO-GENERATED-CONTENT:END -->
-</div>
-<auro-accordion alignRight>
-<span slot="trigger">See code</span>
-
-<!-- AURO-GENERATED-CONTENT:START (CODE:src=./../apiExamples/aria-label.html) -->
-<!-- AURO-GENERATED-CONTENT:END -->
-
-</auro-accordion>
 </div>
 </div>
 </div>

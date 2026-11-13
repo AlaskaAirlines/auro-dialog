@@ -32,6 +32,11 @@ const MOBILE_BREAKPOINT = '--ds-grid-breakpoint-md';
  * @slot footer - Action buttons for the dialog, such as Close. A `modal` dialog needs a button here, because it has no close button. Isn't shown when `unformatted` is set.
  * @slot ariaLabel.dialog.close - Text screen readers read for the close button, for example "Close dialog". Defaults to "Close". Has no effect when `modal` is set, because a modal dialog has no close button.
  * @event toggle - Fires when the dialog closes.
+ * @cssprop --ds-auro-dialog-container-color - Background color of the dialog window.
+ * @cssprop --ds-auro-dialog-text-color - Color of the text in the dialog.
+ * @cssprop --ds-auro-dialog-boxshadow-color - Shadow around the dialog window on desktop.
+ * @cssprop --ds-auro-dialog-overlay-open-background-color - Color of the backdrop behind a non-modal dialog.
+ * @cssprop --ds-auro-dialog-overlay-modal-background-color - Color of the backdrop behind a modal dialog.
  * @csspart close-button - The close button in the dialog header. Isn't rendered when `modal` is set.
  * @csspart dialog-overlay - Deprecated: Use `--ds-auro-dialog-overlay-modal-background-color` or `--ds-auro-dialog-overlay-open-background-color` instead.
  * @csspart dialog - The dialog window.
@@ -132,7 +137,7 @@ export default class ComponentBase extends LitElement {
       },
 
       /**
-       * Shows the dialog. Remove the attribute or set it to `false` to hide it.
+       * Shows the dialog. Remove the `open` attribute or set the property to `false` to hide it.
        */
       isPopoverVisible: {
         type: Boolean,
@@ -177,6 +182,10 @@ export default class ComponentBase extends LitElement {
     };
   }
 
+  /**
+   * Shows the dialog when set to `true` and hides it when set to `false`. Reads as `true` while the dialog is open.
+   * @type {boolean}
+   */
   get open() {
     return this.isPopoverVisible;
   }

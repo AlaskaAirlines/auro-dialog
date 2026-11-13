@@ -2,8 +2,8 @@
 <div class="contentWrapper">
 <nav>
 <auro-nav anchorNavContent=".scrollWrapper">
-<span slot="mobileToggleCollapsed">View More</span>
-<span slot="mobileToggleExpanded">View Less</span>
+<span slot="mobileToggleCollapsed">View more</span>
+<span slot="mobileToggleExpanded">View less</span>
 <auro-anchorlink fluid href="#anatomy">Anatomy</auro-anchorlink>
 <auro-anchorlink fluid href="#dialogVsModal">Dialog vs. modal</auro-anchorlink>
 <auro-anchorlink fluid href="#sizes">Sizes</auro-anchorlink>
@@ -30,7 +30,7 @@
 <auro-header level="2" id="sizes">Sizes</auro-header>
 <p>The dialog supports three sizes: <code>sm</code>, <code>md</code>, and <code>lg</code>. The default is <code>lg</code>.</p>
 <ul>
-<li><strong>Desktop</strong>: Size sets the width of the dialog. Height is driven by content, up to a maximum of 80% of the viewport.</li>
+<li><strong>Desktop</strong>: Size sets the maximum width of the dialog. On wide screens, <code>md</code> and <code>lg</code> reach the same maximum width, and <code>sm</code> stays narrower. Height is driven by content, up to a maximum of 80% of the viewport.</li>
 <li><strong>Mobile</strong>: Size sets the maximum viewport height the dialog occupies. Width is fixed at 100%.</li>
 </ul>
 <p>Sizes can be decoupled between breakpoints. Adding <code>lg</code> in addition to <code>sm</code> or <code>md</code> forces the <code>lg</code> size on mobile while retaining the smaller size on desktop.</p>

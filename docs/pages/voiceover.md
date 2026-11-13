@@ -12,8 +12,8 @@
 <p>Within the dialog, the user navigates with the standard reading and Tab commands. Focus is trapped, so swiping or tabbing past the last element wraps back to the first and never lands on the obscured page behind the dialog. For a modal dialog, the rest of the page is <code>inert</code>, so the screen reader's virtual cursor can't reach it either.</p>
 <auro-header level="2" id="closeGesture">Closing the dialog</auro-header>
 <ul>
-<li><strong>Non-modal:</strong> the dialog can be dismissed with the close button (announced using the <code>ariaLabel.dialog.close</code> slot text, or <em>"Close"</em> by default), the <code>Esc</code> key, or the platform dismiss gesture.</li>
-<li><strong>Modal:</strong> passive dismissal is disabled. The dismiss gesture and <code>Esc</code> have no effect, so the user must activate the explicit action in the footer.</li>
+<li><strong>Non-modal:</strong> the dialog can be dismissed with the close button (announced using the <code>ariaLabel.dialog.close</code> slot text, or <em>"Close"</em> by default) or the <code>Esc</code> key.</li>
+<li><strong>Modal:</strong> passive dismissal is disabled. <code>Esc</code> has no effect, so the user must activate the explicit action in the footer.</li>
 </ul>
-<div class="note"><strong>iOS VoiceOver:</strong> the two-finger <em>"scrub"</em> (a <em>"Z"</em> shape) acts as the <code>Esc</code> key. <strong>Android TalkBack:</strong> the back gesture (swipe inward from a screen edge) dismisses a non-modal dialog.</div>
+<div class="note"><strong>iOS VoiceOver:</strong> the two-finger <em>"scrub"</em> (a <em>"Z"</em> shape) doesn't currently close the dialog. Use the close button instead.</div>
 <p>When the dialog closes, focus returns to the element that was active when the dialog opened, so the screen reader resumes from where the user left off on the page.</p>

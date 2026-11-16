@@ -1,0 +1,49 @@
+<auro-header level="1" id="overview">Dialog - Accessibility</auro-header>
+<div class="contentWrapper">
+<nav>
+<auro-nav anchorNavContent=".scrollWrapper">
+<span slot="mobileToggleCollapsed">View more</span>
+<span slot="mobileToggleExpanded">View less</span>
+<auro-anchorlink fluid href="#semantics">Semantics and roles</auro-anchorlink>
+<auro-anchorlink fluid href="#labelling">Labelling</auro-anchorlink>
+<auro-anchorlink fluid href="#focusManagement">Focus management</auro-anchorlink>
+<auro-anchorlink fluid href="#backgroundScroll">Background scroll</auro-anchorlink>
+<auro-anchorlink fluid href="#closeButtonLabel">Close button label</auro-anchorlink>
+</auro-nav>
+</nav>
+<div class="mainContent">
+<div class="scrollWrapper">
+<auro-header level="2" id="semantics">Semantics and roles</auro-header>
+<p>The component renders its content inside a native HTML <code>&lt;dialog&gt;</code> element, which carries the implicit <code>role="dialog"</code> and the built-in semantics that screen readers expect.</p>
+<ul>
+<li>A <strong>non-modal</strong> dialog is presented using the Popover API. Focus is trapped inside it and the page behind it is frozen while it's open, so it's exposed to screen readers as <code>aria-modal="true"</code>.</li>
+<li>A <strong>modal</strong> dialog is opened with <code>showModal()</code>, which does all of the above and also makes the rest of the page <code>inert</code>. Content outside the dialog can't be focused or interacted with until the dialog closes.</li>
+</ul>
+<auro-header level="2" id="labelling">Labelling</auro-header>
+<p>The dialog wires up two ARIA relationships automatically:</p>
+<table>
+<thead>
+<tr><th>Attribute</th><th>Points to</th><th>Purpose</th></tr>
+</thead>
+<tbody>
+<tr><td><code>aria-labelledby</code></td><td><code>#dialog-header</code></td><td>Gives the dialog its accessible name from the header content.</td></tr>
+<tr><td><code>aria-describedby</code></td><td><code>#dialog-content</code></td><td>Associates the body content as the dialog's description.</td></tr>
+</tbody>
+</table>
+<p>In a formatted dialog, the <code>header</code> slot is rendered inside the <code>#dialog-header</code> heading for you, so providing header content gives you a correctly labelled dialog.</p>
+<auro-header level="2" id="focusManagement">Focus management</auro-header>
+<p>The component manages focus across the full open and close lifecycle:</p>
+<ul>
+<li><strong>On open</strong>: Once the open animation completes, focus moves to the first focusable element inside the dialog.</li>
+<li><strong>While open</strong>: Focus is trapped within the dialog. <code>Tab</code> and <code>Shift</code> + <code>Tab</code> cycle through the dialog's focusable elements and wrap at the ends, and elements outside the dialog aren't reachable.</li>
+<li><strong>On close</strong>: Focus returns to the element that was active (<code>document.activeElement</code>) when the dialog opened. The <code>triggerElement</code> property sets a fallback focus target, used only when no element was active at open time.</li>
+<li><strong>Dismissing with the keyboard</strong>: <code>Escape</code> closes a <strong>non-modal</strong> dialog. A <strong>modal</strong> dialog deliberately ignores <code>Escape</code> and must be dismissed through an explicit action, such as a footer button. People can also dismiss a non-modal dialog by clicking the page behind it, but screen readers don't announce that option while <code>aria-modal="true"</code> is set. <code>Escape</code> is the equivalent path for keyboard and screen reader users.</li>
+</ul>
+<auro-header level="2" id="backgroundScroll">Background scroll</auro-header>
+<p>Both presentations freeze the page behind the dialog for as long as it's open, and restore the previous scroll position when it closes. This is deliberate. Content drifting out of view behind an open dialog is disorienting, and on touch devices and with a screen reader the page can otherwise move unexpectedly while someone is reading the dialog.</p>
+<p>The lock blocks every scroll vector: wheel, trackpad, touch, and the arrow and space keys. That includes the VoiceOver three-finger swipe, which <code>overflow: hidden</code> alone doesn't prevent. Content <em>inside</em> the dialog still scrolls normally.</p>
+<auro-header level="2" id="closeButtonLabel">Close button label</auro-header>
+<p>The non-modal close button has an accessible label of <code>"Close"</code> by default. To override it when the surrounding context calls for more specific wording, provide the <code>ariaLabel.dialog.close</code> slot.</p>
+</div>
+</div>
+</div>

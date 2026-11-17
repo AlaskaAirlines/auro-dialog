@@ -27,17 +27,22 @@ import tokensCss from "./styles/tokens.scss";
 
 const MOBILE_BREAKPOINT = '--ds-grid-breakpoint-md';
 /**
- * @slot header - Text to display as the header of the modal
- * @slot content - Injects content into the body of the modal
- * @slot footer - Used for action options, e.g. buttons
- * @slot ariaLabel.dialog.close - Text to describe the "x" icon close button for screen readers. Default: "Close".
- * @event toggle - Event fires when the element is closed
- * @csspart close-button - adjust position of the close X icon in the dialog window
- * @csspart dialog-overlay - DEPRECATED. Use `--ds-auro-dialog-overlay-modal-background-color` or `--ds-auro-dialog-overlay-open-background-color` for backdrop styling instead.
- * @csspart dialog - apply CSS to the entire dialog
- * @csspart dialog-header - apply CSS to the header of the dialog
- * @csspart dialog-content - apply CSS to the content of the dialog
- * @csspart dialog-footer - apply CSS to the footer of the dialog
+ * @slot header - Text for the dialog's heading, which also names the dialog for screen readers. Isn't shown when `unformatted` is set.
+ * @slot content - Content for the body of the dialog.
+ * @slot footer - Action buttons for the dialog, such as Close. A `modal` dialog needs a button here, because it has no close button. Isn't shown when `unformatted` is set.
+ * @slot ariaLabel.dialog.close - Text screen readers read for the close button, for example "Close dialog". Defaults to "Close". Has no effect when `modal` is set, because a modal dialog has no close button.
+ * @event toggle - Fires when the dialog closes.
+ * @cssprop --ds-auro-dialog-container-color - Background color of the dialog window.
+ * @cssprop --ds-auro-dialog-text-color - Color of the text in the dialog.
+ * @cssprop --ds-auro-dialog-boxshadow-color - Shadow around the dialog window on desktop.
+ * @cssprop --ds-auro-dialog-overlay-open-background-color - Color of the backdrop behind a non-modal dialog.
+ * @cssprop --ds-auro-dialog-overlay-modal-background-color - Color of the backdrop behind a modal dialog.
+ * @csspart close-button - The close button in the dialog header. Isn't rendered when `modal` is set.
+ * @csspart dialog-overlay - Deprecated: Use `--ds-auro-dialog-overlay-modal-background-color` or `--ds-auro-dialog-overlay-open-background-color` instead.
+ * @csspart dialog - The dialog window.
+ * @csspart dialog-header - The header region, which holds the `header` slot and the close button. Isn't rendered when `unformatted` is set.
+ * @csspart dialog-content - The body region that holds the `content` slot. Isn't rendered when `unformatted` is set.
+ * @csspart dialog-footer - The footer region that holds the `footer` slot. Isn't rendered when `unformatted` is set.
  */
 export default class ComponentBase extends LitElement {
   constructor() {
@@ -89,7 +94,7 @@ export default class ComponentBase extends LitElement {
     return {
 
       /**
-       * Defines whether the close button should be light colored for use on dark backgrounds.
+       * Sets the close button's color. Use `inverse` for a light button over dark content, such as a dark image in an unformatted dialog. Has no effect when `modal` is set.
        * @type {'default'|'inverse'}
        * @default 'default'
        */
@@ -100,8 +105,7 @@ export default class ComponentBase extends LitElement {
       },
 
       /**
-       * Sets dialog box to large style. Adding both lg and sm/md will set the dialog to lg for mobile and sm/md for desktop.
-       * Must be used in conjunction with sm or md to have an effect.
+       * Sets the large size, which is the default. Add `lg` with `sm` or `md` to use the large size on mobile and the smaller size on desktop. Has no effect on its own.
        */
       lg: {
         type: Boolean,
@@ -109,7 +113,7 @@ export default class ComponentBase extends LitElement {
       },
 
       /**
-       * Sets dialog box to medium style. Adding both md and lg will set the dialog to md for desktop and lg for mobile.
+       * Sets the medium size. Add `lg` with `md` to use the large size on mobile and the medium size on desktop.
        */
       md: {
         type: Boolean,
@@ -117,12 +121,13 @@ export default class ComponentBase extends LitElement {
       },
 
       /**
-       * Modal dialog restricts the user to take an action (no default close actions).
+       * Requires people to take an explicit action to close the dialog. The close button is hidden, and `Esc` and clicks outside the dialog don't close it, so add a button in the `footer` slot that closes it. Use it only when people must decide or acknowledge something before continuing.
        */
       modal: { type: Boolean },
 
       /**
-       * DEPRECATED - use `close-button-appearance="inverse" instead.
+       * Deprecated: Use `close-button-appearance="inverse"` instead.
+       * Sets the close button to a light color for use on dark backgrounds.
        * @deprecated Use `close-button-appearance="inverse"` instead.
        */
       onDark: {
@@ -132,7 +137,7 @@ export default class ComponentBase extends LitElement {
       },
 
       /**
-       * Sets state of dialog to open.
+       * Shows the dialog. Remove the `open` attribute or set the property to `false` to hide it.
        */
       isPopoverVisible: {
         type: Boolean,
@@ -151,7 +156,7 @@ export default class ComponentBase extends LitElement {
       },
 
       /**
-       * Sets dialog box to small style. Adding both sm and lg will set the dialog to sm for desktop and lg for mobile.
+       * Sets the small size, the narrowest on desktop and the shortest on mobile. Add `lg` with `sm` to use the large size on mobile and the small size on desktop.
        */
       sm: {
         type: Boolean,
@@ -159,7 +164,7 @@ export default class ComponentBase extends LitElement {
       },
 
       /**
-       * The element to focus when the dialog is closed. If not set, defaults to the value of document.activeElement when the dialog is opened.
+       * Sets a fallback element to focus when the dialog closes. Focus returns to the element that was active when the dialog opened, and uses `triggerElement` only when no element was active.
        * @type {HTMLElement}
       */
       triggerElement: {
@@ -168,7 +173,7 @@ export default class ComponentBase extends LitElement {
       },
 
       /**
-       * Unformatted dialog window, edge-to-edge fill for content.
+       * Removes the built-in header, content, and footer layout so the `content` slot fills the dialog edge to edge. The close button is still shown unless `modal` is set.
        */
       unformatted: {
         type: Boolean,
@@ -177,6 +182,10 @@ export default class ComponentBase extends LitElement {
     };
   }
 
+  /**
+   * Shows the dialog when set to `true` and hides it when set to `false`. Reads as `true` while the dialog is open.
+   * @type {boolean}
+   */
   get open() {
     return this.isPopoverVisible;
   }
@@ -260,8 +269,8 @@ export default class ComponentBase extends LitElement {
   }
 
   /**
-   * LitElement lifecycle method. Called after the DOM has been updated.
-   * @param {Map<string, any>} changedProperties - Keys are the names of changed properties, values are the corresponding previous values.
+   * Called after the element's properties change and the DOM updates.
+   * @param {Map<string, any>} changedProperties - A map of the properties that changed, with their previous values.
    * @returns {void}
    */
   updated(changedProperties) {
@@ -488,7 +497,7 @@ export default class ComponentBase extends LitElement {
   }
 
   /**
-   * Focus the dialog.
+   * Moves focus to the dialog.
    * @private
    * @returns {void}
    */

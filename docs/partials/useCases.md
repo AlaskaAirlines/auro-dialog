@@ -1,5 +1,5 @@
-<p>The <code>&lt;auro-dialog&gt;</code> component should be used in situations where users may:</p>
+<p>Use <code>&lt;auro-dialog&gt;</code> when people need to:</p>
 <ul>
-<li>Be prompted to take an action before doing anything else or going back</li>
-<li>Be prompted to view content with the option of closing it</li>
+<li>Take an action before they do anything else or go back</li>
+<li>View content that they can close when they're done</li>
 </ul>

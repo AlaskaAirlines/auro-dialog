@@ -12,31 +12,31 @@ The following sections are editable by making changes to the following files:
 | SECTION                | DESCRIPTION                                       | FILE LOCATION                       |
 |------------------------|---------------------------------------------------|-------------------------------------|
 | Description            | Description of the component                      | `./docs/partials/description.md`    |
-| Use Cases              | Examples for when to use this component           | `./docs/partials/useCases.md`       |
-| Additional Information | For use to add any component specific information | `./docs/partials/readmeAddlInfo.md` |
-| Component Example Code | HTML sample code of the components use            | `./apiExamples/basic.html`          |
+| Use cases              | Examples for when to use this component           | `./docs/partials/useCases.md`       |
+| Additional information | For use to add any component specific information | `./docs/partials/readmeAddlInfo.md` |
+| Component example code | HTML sample code of the components use            | `./apiExamples/basic.html`          |
 -->
 
 # Dialog
 
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./docs/partials/description.md) -->
 <!-- The below content is automatically added from ./docs/partials/description.md -->
-<p>The <code>&lt;auro-dialog&gt;</code> component is an intrusive interactive component, not passive. The component is best used when there is a requirement the user be made aware of the content being shown, moving focus from the main content to the dialog content.</p>
-<p>The component also supports a modal (blocking) state where the user must interact with the content of the component in order to continue. Passive dismissal of the content is not allowed. Users of this state must add a trigger for the user to move beyond this content.</p>
-<p>Auro holds the opinions of the <a class="hyperlink" href="https://www.nngroup.com/articles/modal-nonmodal-dialog/" target="_blank">Nielsen Norman Group</a> on dialog and modal use to be true.</p>
+<p>The <code>&lt;auro-dialog&gt;</code> component interrupts the page and moves focus into the dialog. Use it when people need to notice the content right away.</p>
+<p>Use <code>modal</code> when people must act before they continue. A modal dialog can't be dismissed passively, so add a footer button that closes it.</p>
+<p>Auro follows the <a class="hyperlink" href="https://www.nngroup.com/articles/modal-nonmodal-dialog/" target="_blank">Nielsen Norman Group</a>'s guidance on dialogs and modals.</p>
 <!-- AURO-GENERATED-CONTENT:END -->
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./docs/partials/readmeAddlInfo.md) -->
 <!-- The below content is automatically added from ./docs/partials/readmeAddlInfo.md -->
 <!-- AURO-GENERATED-CONTENT:END -->
 
-## Use Cases
+## Use cases
 
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./docs/partials/useCases.md) -->
 <!-- The below content is automatically added from ./docs/partials/useCases.md -->
-<p>The <code>&lt;auro-dialog&gt;</code> component should be used in situations where users may:</p>
+<p>Use <code>&lt;auro-dialog&gt;</code> when people need to:</p>
 <ul>
-<li>Be prompted to take an action before doing anything else or going back</li>
-<li>Be prompted to view content with the option of closing it</li>
+<li>Take an action before they do anything else or go back</li>
+<li>View content that they can close when they're done</li>
 </ul>
 <!-- AURO-GENERATED-CONTENT:END -->
 
@@ -52,10 +52,10 @@ The following sections are editable by making changes to the following files:
 
 <!-- AURO-GENERATED-CONTENT:END -->
 
-### Define Dependency in Project
+### Define dependency in project
 
 <!-- AURO-GENERATED-CONTENT:START (REMOTE:url=https://raw.githubusercontent.com/AlaskaAirlines/auro-templates/main/templates/default/partials/usage/componentImportDescription.md) -->
-Defining the dependency within each project that is using the `<auro-dialog>` component.
+Import the component in each project that uses `<auro-dialog>`.
 
 <!-- AURO-GENERATED-CONTENT:END -->
 <!-- AURO-GENERATED-CONTENT:START (REMOTE:url=https://raw.githubusercontent.com/AlaskaAirlines/auro-templates/main/templates/default/partials/usage/componentImport.md) -->
@@ -67,13 +67,13 @@ Defining the dependency within each project that is using the `<auro-dialog>` co
 ### Use CDN
 
 <!-- AURO-GENERATED-CONTENT:START (REMOTE:url=https://raw.githubusercontent.com/AlaskaAirlines/auro-templates/main/templates/default/partials/usage/bundleInstallDescription.md) -->
-In cases where the project is not able to process JS assets, there are pre-processed assets available for use. Legacy browsers such as IE11 are no longer supported.
+If your project can't process JS assets, use the pre-processed assets. Legacy browsers, such as IE11, aren't supported.
 
 <pre class="language-html"><code class="language-html">&lt;script type="module" src="https://cdn.jsdelivr.net/npm/@aurodesignsystem/auro-dialog@latest/+esm"&gt;&lt;/script&gt;</code></pre>
 
 <!-- AURO-GENERATED-CONTENT:END -->
 
-## Basic Example
+## Basic example
 
 <!-- AURO-GENERATED-CONTENT:START (CODE:src=./apiExamples/basic.html) -->
 <!-- The below code snippet is automatically added from ./apiExamples/basic.html -->
@@ -81,8 +81,8 @@ In cases where the project is not able to process JS assets, there are pre-proce
 <pre class="language-html"><code class="language-html">&lt;div&gt;
   &lt;auro-button id="openBasic"&gt;Open default dialog&lt;/auro-button&gt;
 &lt;/div&gt;
-&lt;auro-dialog id="defaultDialog"&gt;
-  &lt;span slot="header"&gt;Default Dialog&lt;/span&gt;
+&#10;&lt;auro-dialog id="defaultDialog"&gt;
+  &lt;span slot="header"&gt;Default dialog&lt;/span&gt;
   &lt;div slot="content"&gt;
     &lt;p&gt;When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See &lt;auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank"&gt;alaskaair.com/bagrules&lt;/auro-hyperlink&gt; for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.&lt;/p&gt;
     &lt;p&gt;Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.&lt;/p&gt;
@@ -95,32 +95,31 @@ In cases where the project is not able to process JS assets, there are pre-proce
     &lt;/ul&gt;
   &lt;/div&gt;
   &lt;div slot="footer"&gt;
-    &lt;auro-button secondary id="closeBasic"&gt;Close&lt;/auro-button&gt;
+    &lt;auro-button variant="secondary" id="closeBasic"&gt;Close&lt;/auro-button&gt;
   &lt;/div&gt;
 &lt;/auro-dialog&gt;</code></pre>
 <!-- AURO-GENERATED-CONTENT:END -->
 
-## Custom Component Registration for Version Management
+## Custom component registration for version management
 
-There are two key parts to every Auro component: the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">class</a> and the custom element definition.
+Every Auro component has two key parts: the <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes">class</a> and the custom element definition.
 The class defines the component’s behavior, while the custom element registers it under a specific name so it can be used in HTML.
 
-When you install the component as described on the `Install` page, the class is imported automatically, and the component is registered globally for you.
+Installing the component as described in the Install section imports the class and registers the component globally for you.
 
-However, if you need to load multiple versions of the same component on a single page (for example, when two projects depend on different versions), you can manually register the class under a custom element name to avoid conflicts.
+However, if you need to load multiple versions of the same component on a single page (for example, when two projects depend on different versions), register the class manually under a custom element name to avoid conflicts.
 
-You can do this by importing only the component class and using the `register(name)` method with a unique name:
+To do this, import only the component class and call the `register(name)` method with a unique name:
 
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./docs/partials/customRegistration.md) -->
 <!-- The below content is automatically added from ./docs/partials/customRegistration.md -->
 
 <pre class="language-js"><code class="language-js">// Import the class only
 import { AuroDialog } from '@aurodesignsystem/auro-dialog/class';
-​
-// Register with a custom name if desired
+&#10;// Register with a custom name if desired
 AuroDialog.register('custom-dialog');</code></pre>
 
-This will create a new custom element `<custom-dialog>` that behaves exactly like `<auro-dialog>`, allowing both to coexist on the same page without interfering with each other.
+This creates a new custom element `<custom-dialog>` that behaves exactly like `<auro-dialog>`, allowing both to coexist on the same page without interfering with each other.
 <!-- AURO-GENERATED-CONTENT:END -->
 <div class="exampleWrapper exampleWrapper--flex">
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./apiExamples/custom.html) -->
@@ -129,7 +128,7 @@ This will create a new custom element `<custom-dialog>` that behaves exactly lik
 <auro-button id="openCustom">Open default dialog</auro-button>
 </div>
 <custom-dialog id="customDialog">
-<span slot="header">Default Dialog</span>
+<span slot="header">Default dialog</span>
 <div slot="content">
 <p>When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See <auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank">alaskaair.com/bagrules</auro-hyperlink> for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.</p>
 <p>Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.</p>
@@ -142,7 +141,7 @@ This will create a new custom element `<custom-dialog>` that behaves exactly lik
 </ul>
 </div>
 <div slot="footer">
-<auro-button secondary id="closeCustom">Close</auro-button>
+<auro-button variant="secondary" id="closeCustom">Close</auro-button>
 </div>
 </custom-dialog>
 <!-- AURO-GENERATED-CONTENT:END -->
@@ -155,8 +154,8 @@ This will create a new custom element `<custom-dialog>` that behaves exactly lik
 <pre class="language-html"><code class="language-html">&lt;div&gt;
   &lt;auro-button id="openCustom"&gt;Open default dialog&lt;/auro-button&gt;
 &lt;/div&gt;
-&lt;custom-dialog id="customDialog"&gt;
-  &lt;span slot="header"&gt;Default Dialog&lt;/span&gt;
+&#10;&lt;custom-dialog id="customDialog"&gt;
+  &lt;span slot="header"&gt;Default dialog&lt;/span&gt;
   &lt;div slot="content"&gt;
     &lt;p&gt;When traveling on Alaska Airlines flights, Alaska Airlines checked baggage fees may apply. See &lt;auro-hyperlink href="https://www.alaskaair.com/bagrules" target="_blank"&gt;alaskaair.com/bagrules&lt;/auro-hyperlink&gt; for our rules. For itineraries that include other airlines, their checked baggage fees may apply, as displayed on their websites.&lt;/p&gt;
     &lt;p&gt;Baggage rules and fees will be based on the specific itinerary chosen. The applicable first and second bag fees will be displayed after you have added flights to the cart.&lt;/p&gt;
@@ -169,7 +168,7 @@ This will create a new custom element `<custom-dialog>` that behaves exactly lik
     &lt;/ul&gt;
   &lt;/div&gt;
   &lt;div slot="footer"&gt;
-    &lt;auro-button secondary id="closeCustom"&gt;Close&lt;/auro-button&gt;
+    &lt;auro-button variant="secondary" id="closeCustom"&gt;Close&lt;/auro-button&gt;
   &lt;/div&gt;
 &lt;/custom-dialog&gt;</code></pre>
 <!-- AURO-GENERATED-CONTENT:END -->

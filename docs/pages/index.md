@@ -1,12 +1,12 @@
-<auro-header level="1" id="overview">Dialog - Overview and UX Guide</auro-header>
+<auro-header level="1" id="overview">Dialog - Overview and UX guide</auro-header>
 <div class="contentWrapper">
 <nav>
 <auro-nav anchorNavContent=".scrollWrapper">
-<span slot="mobileToggleCollapsed">View More</span>
-<span slot="mobileToggleExpanded">View Less</span>
+<span slot="mobileToggleCollapsed">View more</span>
+<span slot="mobileToggleExpanded">View less</span>
 <auro-anchorlink fluid href="#description">Description</auro-anchorlink>
-<auro-anchorlink fluid href="#useCases">Use Cases</auro-anchorlink>
-<auro-anchorlink fluid href="#userStories">User Stories</auro-anchorlink>
+<auro-anchorlink fluid href="#useCases">Use cases</auro-anchorlink>
+<auro-anchorlink fluid href="#userStories">User stories</auro-anchorlink>
 <auro-anchorlink fluid href="#modalExample">Modal</auro-anchorlink>
 </auro-nav>
 </nav>
@@ -28,19 +28,19 @@
 <!-- AURO-GENERATED-CONTENT:END -->
 
 </auro-accordion>
-<auro-header level="2" id="useCases">Use Cases</auro-header>
+<auro-header level="2" id="useCases">Use cases</auro-header>
 
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/useCases.md) -->
 <!-- AURO-GENERATED-CONTENT:END -->
 
-<auro-header level="2" id="userStories">User Stories</auro-header>
+<auro-header level="2" id="userStories">User stories</auro-header>
 
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../docs/partials/index/userStories.md) -->
 <!-- AURO-GENERATED-CONTENT:END -->
 
 <auro-header level="2" id="modalExample">Modal</auro-header>
-<p>The <code>modal</code> attribute locks the user into interacting with the dialog. The close icon is not rendered and clicking outside the dialog will not dismiss it, so a <code>modal</code> dialog must include an explicit action button in the footer to dismiss it.</p>
-<p>Freezing the page behind the dialog is not what <code>modal</code> controls — every dialog does that while it is open, and restores the scroll position on close. What <code>modal</code> changes is how the dialog can be dismissed. See the Accessibility page for details.</p>
+<p>The <code>modal</code> attribute locks the user into interacting with the dialog. The close icon isn't rendered and clicking outside the dialog doesn't dismiss it, so a <code>modal</code> dialog must include an explicit action button in the footer to dismiss it.</p>
+<p>Freezing the page behind the dialog isn't what <code>modal</code> controls. Every dialog does that while it's open, and restores the scroll position on close. What <code>modal</code> changes is how the dialog can be dismissed. See the Accessibility page for details.</p>
 <div class="exampleWrapper">
 <!-- AURO-GENERATED-CONTENT:START (FILE:src=./../apiExamples/modal.html) -->
 <!-- AURO-GENERATED-CONTENT:END -->
